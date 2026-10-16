@@ -166,10 +166,19 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
-      - name: Build and upload with Fastlane
-        env:
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-          APPSTORE_KEY_ID: ${{ secrets.APPSTORE_KEY_ID }}
-          APPSTORE_PRIVATE_KEY: ${{ secrets.APPSTORE_PRIVATE_KEY }}
-        run: bundle exec fastlane mac testflight_canary
+      - name: Build macOS app
+        run: flutter build macos --release
+
+      - name: Package app
+        run: |
+          APP="build/macos/Build/Products/Release/Fluxer.app"
+          test -d "$APP" || { echo "App not found at $APP"; exit 1; }
+          ditto -c -k --sequesterRsrc --keepParent "$APP" Fluxer-macos.zip
+
+      - name: Upload app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-canary
+          path: Fluxer-macos.zip
+          if-no-files-found: error
+          retention-days: 14
