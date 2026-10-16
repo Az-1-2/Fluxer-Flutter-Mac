@@ -76,7 +76,7 @@ jobs:
           bundle install --jobs 4 --retry 3
 
       - name: Build macOS app
-        run: flutter build macos --release --no-codesign
+        run: flutter build macos --release
 
       - name: Package app
         run: |
