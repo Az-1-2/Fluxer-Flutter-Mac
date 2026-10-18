@@ -79,10 +79,15 @@ jobs:
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
+      - name: Prepare macOS project files
+        run: |
+          flutter build macos --config-only
+          pod install --project-directory=macos
+
       - name: Build macOS app (unsigned)
         run: |
           xcodebuild \
-            -project macos/Runner.xcodeproj \
+            -workspace macos/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -derivedDataPath build/macos \
@@ -103,3 +108,4 @@ jobs:
           path: Fluxer-macos.zip
           if-no-files-found: error
           retention-days: 14
+
