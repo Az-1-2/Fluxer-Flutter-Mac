@@ -14,6 +14,7 @@ jobs:
       LC_ALL: en_US.UTF-8
       LANGUAGE: en_US.UTF-8
       FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -24,7 +25,7 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Set up Flutter
-        # Temp use while waiting for a pr: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        # Temp use while waiting for a PR: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
         uses: axi92/flutter-action@72633a794ba0b23276fa4fc465a6cacb758a90c5
         with:
           channel: stable
@@ -39,6 +40,7 @@ jobs:
           fi
           rustup show active-toolchain || rustup toolchain install stable
           flutter config --enable-native-assets
+
       - name: Restore pub cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
@@ -58,11 +60,12 @@ jobs:
 
       - name: Run build_runner
         run: dart run build_runner build
-        
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@4c56a21280b36d862b5fc31348f463d60bdc55d5
         with:
           ruby-version: "4.0"
+
       - name: Restore Bundler cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
@@ -70,13 +73,22 @@ jobs:
           key: ${{ runner.os }}-bundler-ruby-4.0-${{ hashFiles('Gemfile.lock', 'Gemfile') }}
           restore-keys: |
             ${{ runner.os }}-bundler-ruby-4.0-
+
       - name: Install Ruby gems
         run: |
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
-      - name: Build macOS app
-        run: flutter build macos --release
+      - name: Build macOS app (unsigned)
+        run: |
+          xcodebuild \
+            -project macos/Runner.xcodeproj \
+            -scheme Runner \
+            -configuration Release \
+            -derivedDataPath build/macos \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build
 
       - name: Package app
         run: |
