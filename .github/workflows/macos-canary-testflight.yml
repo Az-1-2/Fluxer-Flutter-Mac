@@ -3,7 +3,7 @@ name: Compile macOS on Desktop
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # Daily at midnight UTC
+    - cron: "0 0 * * *" 
 
 permissions:
   contents: write
@@ -131,12 +131,26 @@ jobs:
           path: xcodebuild.log
           retention-days: 7
 
+      - name: Get next release number
+        id: version
+        shell: bash
+        run: |
+          latest=$(git tag --list '[0-9]*' --sort=-version:refname | head -n 1)
+          next=$(( ${latest:-0} + 1 ))
+          echo "number=$next" >> "$GITHUB_OUTPUT"
+
       - name: Publish daily GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="canary-$(date -u +%Y%m%d)"
+          LATEST=$(gh release list \
+           --repo "$GITHUB_REPOSITORY" \
+           --limit 1000 \
+           --json tagName \
+           --jq '[.[].tagName | select(test("^[0-9]+$")) | tonumber] | max // 0')
+
+          TAG=$((LATEST + 1))
           gh release create "$TAG" Fluxer-macos.zip \
             --repo "$GITHUB_REPOSITORY" \
-            --title "Daily macOS canary $(date -u +%Y-%m-%d)" \
-            --notes "Automated daily macOS canary build from upstream."
+            --title "Daily macOS canary" \
+            --notes "Automated daily macOS canary build. This contains the newest changes from upstream, review commits for more information on the changes. "
