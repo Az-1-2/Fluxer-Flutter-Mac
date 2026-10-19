@@ -84,39 +84,14 @@ jobs:
           flutter build macos --config-only
           pod install --project-directory=macos
 
-      - name: Diagnose duplicate media-kit frameworks
+      - name: Disable Flutter Swift Package Manager
+        run: flutter config --no-enable-swift-package-manager
+
+      - name: Clean and resolve Flutter dependencies
         run: |
-          echo "=== CocoaPods embed script ==="
-          grep -nE 'Png16|Swresample|Swscale|Uchardet|Xml2' \
-            macos/Pods/Target\ Support\ Files/Pods-Runner/Pods-Runner-frameworks.sh || true
-
-          echo "=== Project references ==="
-          grep -RInE 'media_kit_libs_macos_video|Png16.framework|Swresample.framework' \
-            macos --exclude-dir=Pods --exclude-dir=Flutter --exclude='*.xcuserstate' || true
-
-          echo "=== Flutter dependency ==="
-          grep -n -A5 -B2 'media_kit' pubspec.yaml pubspec.lock || true
-
-      - name: Locate the SPM framework dependency
-        if: always()
-        run: |
-          echo "=== Swift package references in macOS projects ==="
-          find macos -name project.pbxproj -print0 |
-          while IFS= read -r -d '' FILE; do
-            echo "--- $FILE"
-            grep -nEi 'XCRemoteSwiftPackageReference|XCLocalSwiftPackageReference|XCSwiftPackageProductDependency|media.?kit|webrtc|mpv' \
-              "$FILE" || true
-          done
-
-          echo "=== Package manifests and resolved package files ==="
-          find macos -type f \( -name Package.swift -o -name Package.resolved \) -print
-
-          echo "=== References in generated Flutter files and project files ==="
-          grep -RInEi 'media.?kit|WebRTC|Png16|Swresample|SourcePackages/artifacts' \
-            macos/Flutter macos/Runner.xcodeproj macos/Runner.xcworkspace \
-            --exclude='*.xcuserstate' 2>/dev/null || true
-
-          
+          flutter clean
+          flutter pub get
+    
       - name: Build macOS app (unsigned)
         run: |
           set -o pipefail
@@ -129,45 +104,6 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             build 2>&1 | tee xcodebuild.log
-
-      - name: Identify duplicate framework sources
-        if: always()
-        run: |
-          LOG="duplicate-framework-diagnostics.log"
-
-          {
-            echo "=== CocoaPods script entries ==="
-            grep -nE 'WebRTC|Ass\.framework|Avcodec|Avfilter|Avformat|Avutil|Dav1d|Freetype|Fribidi|Harfbuzz|Mbedcrypto|Mbedtls|Mbedx509|Mpv|Png16|Swresample|Swscale|Uchardet|Xml2' \
-              "macos/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh" || true
-
-            echo
-            echo "=== Pods that may provide them ==="
-            grep -niE 'webrtc|media.?kit|ffmpeg|mpv' macos/Podfile.lock || true
-
-            echo
-            echo "=== Swift package references ==="
-            grep -RIn 'media_kit_libs_macos_video' macos --exclude-dir=Pods --exclude-dir=Flutter || true
-          } > "$LOG" 2>&1
-
-          echo "Diagnostics written to $LOG"
-
-      - name: Upload Xcode diagnostics
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: xcode-diagnostics
-          path: |
-            xcodebuild.log
-            build/macos/Runner.xcresult
-            duplicate-framework-diagnostics.log
-          if-no-files-found: warn
-
-      - name: Print Xcode build errors from result bundle
-        if: always()
-        run: |
-          xcrun xcresulttool get build-results \
-            --path build/macos/Runner.xcresult
-
 
       - name: Package app
         run: |
