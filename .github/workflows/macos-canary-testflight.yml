@@ -116,7 +116,7 @@ jobs:
 
       - name: Package app
         run: |
-          APP="build/macos/Build/Products/Release/Fluxer.app"
+          APP="build/macos/Build/Products/Release/Fluxer Lite.app"
           test -d "$APP" || { echo "App not found at $APP"; exit 1; }
           ditto -c -k --sequesterRsrc --keepParent "$APP" Fluxer-macos.zip
 
