@@ -110,6 +110,27 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             build 2>&1 | tee xcodebuild.log
 
+      - name: Identify duplicate framework sources
+        if: always()
+        run: |
+          LOG="duplicate-framework-diagnostics.log"
+
+          {
+            echo "=== CocoaPods script entries ==="
+            grep -nE 'WebRTC|Ass\.framework|Avcodec|Avfilter|Avformat|Avutil|Dav1d|Freetype|Fribidi|Harfbuzz|Mbedcrypto|Mbedtls|Mbedx509|Mpv|Png16|Swresample|Swscale|Uchardet|Xml2' \
+              "macos/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh" || true
+
+            echo
+            echo "=== Pods that may provide them ==="
+            grep -niE 'webrtc|media.?kit|ffmpeg|mpv' macos/Podfile.lock || true
+
+            echo
+            echo "=== Swift package references ==="
+            grep -RIn 'media_kit_libs_macos_video' macos --exclude-dir=Pods --exclude-dir=Flutter || true
+          } > "$LOG" 2>&1
+
+          echo "Diagnostics written to $LOG"
+
       - name: Upload Xcode diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -118,6 +139,7 @@ jobs:
           path: |
             xcodebuild.log
             build/macos/Runner.xcresult
+            duplicate-framework-diagnostics.log
           if-no-files-found: warn
 
       - name: Print Xcode build errors from result bundle
