@@ -107,6 +107,13 @@ jobs:
             build/macos/Runner.xcresult
           if-no-files-found: warn
 
+      - name: Print Xcode build errors from result bundle
+        if: always()
+        run: |
+          xcrun xcresulttool get build-results \
+            --path build/macos/Runner.xcresult
+
+
       - name: Package app
         run: |
           APP="build/macos/Build/Products/Release/Fluxer.app"
