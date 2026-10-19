@@ -97,55 +97,24 @@ jobs:
           echo "=== Flutter dependency ==="
           grep -n -A5 -B2 'media_kit' pubspec.yaml pubspec.lock || true
 
-      - name: Remove duplicate media-kit SPM dependency
+           - name: Locate the SPM framework dependency
+        if: always()
         run: |
-          bundle exec ruby <<'RUBY'
-          require "xcodeproj"
+          echo "=== Swift package references in macOS projects ==="
+          find macos -name project.pbxproj -print0 |
+          while IFS= read -r -d '' FILE; do
+            echo "--- $FILE"
+            grep -nEi 'XCRemoteSwiftPackageReference|XCLocalSwiftPackageReference|XCSwiftPackageProductDependency|media.?kit|webrtc|mpv' \
+              "$FILE" || true
+          done
 
-          project_path = "macos/Runner.xcodeproj"
-          project = Xcodeproj::Project.open(project_path)
-          marker = "media_kit_libs_macos_video"
+          echo "=== Package manifests and resolved package files ==="
+          find macos -type f \( -name Package.swift -o -name Package.resolved \) -print
 
-          packages = project.root_object.package_references.select do |package|
-            package.to_hash.values.any? do |value|
-              value.is_a?(String) && value.downcase.include?(marker.downcase)
-            end
-          end
-
-          if packages.empty?
-            abort "No SPM package reference matching #{marker.inspect} found in #{project_path}"
-          end
-
-          package_ids = packages.map(&:uuid)
-          removed_products = []
-
-          project.targets.each do |target|
-            products = target.package_product_dependencies.select do |product|
-              package_ids.include?(product.package)
-            end
-
-            products.each do |product|
-              # Remove the product from build phases that embed/link it.
-              target.build_phases.each do |phase|
-                next unless phase.respond_to?(:files)
-
-                phase.files.delete_if do |build_file|
-                  build_file.respond_to?(:product_ref) &&
-                    build_file.product_ref == product
-                end
-              end
-
-              target.package_product_dependencies.delete(product)
-              removed_products << product.product_name
-            end
-          end
-
-          packages.each { |package| project.root_object.package_references.delete(package) }
-          project.save
-
-          puts "Removed SPM package reference(s): #{packages.map(&:uuid).join(', ')}"
-          puts "Removed package product(s): #{removed_products.join(', ')}"
-          RUBY
+          echo "=== References in generated Flutter files and project files ==="
+          grep -RInEi 'media.?kit|WebRTC|Png16|Swresample|SourcePackages/artifacts' \
+            macos/Flutter macos/Runner.xcodeproj macos/Runner.xcworkspace \
+            --exclude='*.xcuserstate' 2>/dev/null || true
 
           
       - name: Build macOS app (unsigned)
