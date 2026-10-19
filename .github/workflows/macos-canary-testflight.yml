@@ -84,6 +84,19 @@ jobs:
           flutter build macos --config-only
           pod install --project-directory=macos
 
+      - name: Diagnose duplicate media-kit frameworks
+        run: |
+          echo "=== CocoaPods embed script ==="
+          grep -nE 'Png16|Swresample|Swscale|Uchardet|Xml2' \
+            macos/Pods/Target\ Support\ Files/Pods-Runner/Pods-Runner-frameworks.sh || true
+
+          echo "=== Project references ==="
+          grep -RInE 'media_kit_libs_macos_video|Png16.framework|Swresample.framework' \
+            macos --exclude-dir=Pods --exclude-dir=Flutter --exclude='*.xcuserstate' || true
+
+          echo "=== Flutter dependency ==="
+          grep -n -A5 -B2 'media_kit' pubspec.yaml pubspec.lock || true
+          
       - name: Build macOS app (unsigned)
         run: |
           set -o pipefail
