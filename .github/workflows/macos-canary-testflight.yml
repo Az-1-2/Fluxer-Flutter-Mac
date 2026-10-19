@@ -97,7 +97,7 @@ jobs:
           echo "=== Flutter dependency ==="
           grep -n -A5 -B2 'media_kit' pubspec.yaml pubspec.lock || true
 
-                - name: Remove duplicate media-kit SPM dependency
+      - name: Remove duplicate media-kit SPM dependency
         run: |
           bundle exec ruby <<'RUBY'
           require "xcodeproj"
