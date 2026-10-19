@@ -97,7 +97,7 @@ jobs:
           echo "=== Flutter dependency ==="
           grep -n -A5 -B2 'media_kit' pubspec.yaml pubspec.lock || true
 
-           - name: Locate the SPM framework dependency
+      - name: Locate the SPM framework dependency
         if: always()
         run: |
           echo "=== Swift package references in macOS projects ==="
