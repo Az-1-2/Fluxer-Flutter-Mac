@@ -10,3 +10,7 @@ If you want it despite the warnings you can install it by:
 2. Opening it and placing the Fluxer Lite executeable into your applications folder (this should work on both arm and intel macs)
 3. Open the app, then when you get the warning about it being insecure, go to mac settings, privacy and security, scroll down, and click open anyway and use touch id or your password when prompted. 
 4. Open the app and login. 
+
+Releases are made daily with the latest code from upstream.
+
+All credits to https://github.com/fluxerapp/flutter_client for actually coding the flutter client. 
