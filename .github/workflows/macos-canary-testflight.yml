@@ -1,10 +1,12 @@
-name: Compile MacOS on Desktop
+name: Compile macOS on Desktop
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # Daily at midnight UTC
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-macos:
@@ -18,9 +20,11 @@ jobs:
       PUSH_PROVIDER: unifiedpush
 
     steps:
-      - name: Checkout repository
+      - name: Checkout upstream repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
+          repository: fluxerapp/flutter_client
+          ref: canary
           submodules: recursive
 
       - name: Sync submodules
@@ -67,7 +71,7 @@ jobs:
       - name: Patch secure storage to use the legacy macOS keychain
         run: |
           CACHE_DIR="${PUB_CACHE:-$HOME/.pub-cache}/hosted/pub.dev"
-          FILES=$(grep -rl "usesDataProtectionKeychain" "$CACHE_DIR"/flutter_secure_storage* --include=*.dart || true)
+          FILES=$(grep -rl "usesDataProtectionKeychain" "$CACHE_DIR"/flutter_secure_storage* --include="*.dart" || true)
           if [ -z "$FILES" ]; then
             echo "No usesDataProtectionKeychain declarations found"
             exit 1
@@ -127,10 +131,12 @@ jobs:
           path: xcodebuild.log
           retention-days: 7
 
-      - name: Upload app artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-canary
-          path: Fluxer-macos.zip
-          if-no-files-found: error
-          retention-days: 14
+      - name: Publish daily GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="canary-$(date -u +%Y%m%d)"
+          gh release create "$TAG" Fluxer-macos.zip \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Daily macOS canary $(date -u +%Y-%m-%d)" \
+            --notes "Automated daily macOS canary build from upstream."
