@@ -30,6 +30,11 @@ jobs:
         with:
           channel: stable
 
+      - name: Disable Flutter Swift Package Manager
+        run: |
+         flutter config --no-enable-swift-package-manager
+         flutter clean   
+
       - name: Set up Rust and native asset build hooks
         run: |
           if ! command -v cargo >/dev/null 2>&1; then
@@ -83,14 +88,6 @@ jobs:
         run: |
           flutter build macos --config-only
           pod install --project-directory=macos
-
-      - name: Disable Flutter Swift Package Manager
-        run: flutter config --no-enable-swift-package-manager
-
-      - name: Clean and resolve Flutter dependencies
-        run: |
-          flutter clean
-          flutter pub get
     
       - name: Build macOS app (unsigned)
         run: |
