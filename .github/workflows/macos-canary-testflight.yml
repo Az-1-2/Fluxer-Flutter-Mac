@@ -1,19 +1,21 @@
-name: macOS Test Build
+name: Compile MacOS on Desktop
 
 on:
   workflow_dispatch:
-  workflow_call:
+
+permissions:
+  contents: read
 
 jobs:
-  build-and-upload:
-    name: Build and release as artifact
+  build-macos:
+    name: Build macOS (unsigned)
     runs-on: macos-26
-    environment: release-builds
+
     env:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
       LANGUAGE: en_US.UTF-8
-      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 60
+      PUSH_PROVIDER: unifiedpush
 
     steps:
       - name: Checkout repository
@@ -25,15 +27,14 @@ jobs:
         run: git submodule update --init --recursive
 
       - name: Set up Flutter
-        # Temp use while waiting for a PR: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
         uses: axi92/flutter-action@72633a794ba0b23276fa4fc465a6cacb758a90c5
         with:
           channel: stable
 
       - name: Disable Flutter Swift Package Manager
         run: |
-         flutter config --no-enable-swift-package-manager
-         flutter clean   
+          flutter config --no-enable-swift-package-manager
+          flutter clean
 
       - name: Set up Rust and native asset build hooks
         run: |
@@ -63,32 +64,37 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
+      - name: Patch secure storage to use the legacy macOS keychain
+        run: |
+          CACHE_DIR="${PUB_CACHE:-$HOME/.pub-cache}/hosted/pub.dev"
+          FILES=$(grep -rl "usesDataProtectionKeychain" "$CACHE_DIR"/flutter_secure_storage* --include=*.dart || true)
+          if [ -z "$FILES" ]; then
+            echo "No usesDataProtectionKeychain declarations found"
+            exit 1
+          fi
+          for f in $FILES; do
+            sed -i '' 's/usesDataProtectionKeychain = true/usesDataProtectionKeychain = false/g' "$f"
+          done
+          grep -rn "usesDataProtectionKeychain" $FILES | head -30
+          if ! grep -rq "usesDataProtectionKeychain = false" $FILES; then
+            echo "Default value was not patched"
+            exit 1
+          fi
+
+      - name: Show secure storage usage in app code
+        run: |
+          grep -rn "usesDataProtectionKeychain\|MacOsOptions\|FlutterSecureStorage(" lib packages --include=*.dart | head -20 || true
+
       - name: Run build_runner
         run: dart run build_runner build
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@4c56a21280b36d862b5fc31348f463d60bdc55d5
-        with:
-          ruby-version: "4.0"
-
-      - name: Restore Bundler cache
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-bundler-ruby-4.0-${{ hashFiles('Gemfile.lock', 'Gemfile') }}
-          restore-keys: |
-            ${{ runner.os }}-bundler-ruby-4.0-
-
-      - name: Install Ruby gems
+      - name: Prepare macOS project files with dart defines
         run: |
-          bundle config set path 'vendor/bundle'
-          bundle install --jobs 4 --retry 3
-
-      - name: Prepare macOS project files
-        run: |
-          flutter build macos --config-only
+          flutter build macos --config-only --release \
+            --dart-define-from-file=tool/dart_defines/canary.json \
+            --dart-define=PUSH_PROVIDER=${PUSH_PROVIDER}
           pod install --project-directory=macos
-    
+
       - name: Build macOS app (unsigned)
         run: |
           set -o pipefail
@@ -102,11 +108,24 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             build 2>&1 | tee xcodebuild.log
 
-      - name: Package app
+      - name: Ad-hoc sign app
         run: |
           APP="build/macos/Build/Products/Release/Fluxer Lite.app"
           test -d "$APP" || { echo "App not found at $APP"; exit 1; }
+          codesign --force --deep --sign - "$APP"
+
+      - name: Package app
+        run: |
+          APP="build/macos/Build/Products/Release/Fluxer Lite.app"
           ditto -c -k --sequesterRsrc --keepParent "$APP" Fluxer-macos.zip
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-build-log
+          path: xcodebuild.log
+          retention-days: 7
 
       - name: Upload app artifact
         uses: actions/upload-artifact@v4
