@@ -6049,6 +6049,9 @@ class FluxerLocalizationsHu extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Fejhallgató';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Csak a videók megjelenítése';
 
   @override

@@ -9765,6 +9765,12 @@ abstract class FluxerLocalizations {
   /// **'Headphones'**
   String get voiceOutputRouteHeadset;
 
+  /// Opens the system audio route picker for voice calls on iOS.
+  ///
+  /// In en, this message translates to:
+  /// **'Change audio output'**
+  String get voiceChangeAudioOutputLabel;
+
   /// Switch label to hide voice participants who do not have their camera on.
   ///
   /// In en, this message translates to:

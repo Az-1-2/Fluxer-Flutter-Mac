@@ -5664,6 +5664,9 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => '耳机';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => '仅显示视频';
 
   @override

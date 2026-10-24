@@ -6034,6 +6034,9 @@ class FluxerLocalizationsIt extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Cuffie';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Mostra solo video';
 
   @override

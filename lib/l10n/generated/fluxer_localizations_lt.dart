@@ -6075,6 +6075,9 @@ class FluxerLocalizationsLt extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Ausinės';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Rodyti tik vaizdo įrašus';
 
   @override

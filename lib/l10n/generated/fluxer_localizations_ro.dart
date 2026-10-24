@@ -6036,6 +6036,9 @@ class FluxerLocalizationsRo extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Căști';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Afișează doar videoclipuri';
 
   @override

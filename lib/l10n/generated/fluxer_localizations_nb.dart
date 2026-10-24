@@ -6003,6 +6003,9 @@ class FluxerLocalizationsNb extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Hodetelefoner';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Vis kun video';
 
   @override

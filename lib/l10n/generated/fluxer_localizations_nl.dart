@@ -6025,6 +6025,9 @@ class FluxerLocalizationsNl extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Koptelefoon';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Alleen video\'s tonen';
 
   @override

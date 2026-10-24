@@ -6040,6 +6040,9 @@ class FluxerLocalizationsUk extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Навушники';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Показувати лише відео';
 
   @override

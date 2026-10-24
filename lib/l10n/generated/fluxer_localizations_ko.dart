@@ -5776,6 +5776,9 @@ class FluxerLocalizationsKo extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => '헤드폰';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => '동영상만 표시';
 
   @override

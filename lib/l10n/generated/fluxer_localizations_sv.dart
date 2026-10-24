@@ -6013,6 +6013,9 @@ class FluxerLocalizationsSv extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Hörlurar';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Visa bara videor';
 
   @override

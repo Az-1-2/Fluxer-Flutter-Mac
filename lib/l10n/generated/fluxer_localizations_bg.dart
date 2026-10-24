@@ -6048,6 +6048,9 @@ class FluxerLocalizationsBg extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Слушалки';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Показвай само видеа';
 
   @override

@@ -6017,6 +6017,9 @@ class FluxerLocalizationsCs extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Sluchátka';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Zobrazit jen videa';
 
   @override

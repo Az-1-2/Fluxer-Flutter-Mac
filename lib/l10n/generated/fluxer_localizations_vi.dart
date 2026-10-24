@@ -5996,6 +5996,9 @@ class FluxerLocalizationsVi extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Tai nghe';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Chỉ hiển thị video';
 
   @override

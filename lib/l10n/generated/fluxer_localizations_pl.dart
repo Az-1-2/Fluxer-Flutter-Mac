@@ -6055,6 +6055,9 @@ class FluxerLocalizationsPl extends FluxerLocalizations {
   String get voiceOutputRouteHeadset => 'Słuchawki';
 
   @override
+  String get voiceChangeAudioOutputLabel => 'Change audio output';
+
+  @override
   String get voicePanelOnlyShowVideosLabel => 'Pokaż tylko wideo';
 
   @override
