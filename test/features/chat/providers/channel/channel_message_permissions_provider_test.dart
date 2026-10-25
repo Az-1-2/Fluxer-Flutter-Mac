@@ -120,7 +120,7 @@ void main() {
             const AsyncValue<ChannelMessagePermissions>.loading(),
           );
       expect(perms, ChannelMessagePermissions.unresolved);
-      expect(perms.isComposerEnabled, isTrue);
+      expect(perms.isComposerEnabled, isFalse);
       expect(perms.showsNoSendPermissionHint, isFalse);
     });
 
@@ -133,7 +133,7 @@ void main() {
             ),
           );
       expect(perms, ChannelMessagePermissions.unresolved);
-      expect(perms.isComposerEnabled, isTrue);
+      expect(perms.isComposerEnabled, isFalse);
       expect(perms.showsNoSendPermissionHint, isFalse);
     });
 
@@ -148,14 +148,17 @@ void main() {
       expect(perms.isVoiceEnabled, isFalse);
     });
 
-    test('unresolved keeps the composer open without a deny hint', () {
-      const ChannelMessagePermissions perms =
-          ChannelMessagePermissions.unresolved;
-      expect(perms.isComposerEnabled, isTrue);
-      expect(perms.showsNoSendPermissionHint, isFalse);
-      expect(perms.canShowAttachControls, isTrue);
-      expect(perms.isVoiceEnabled, isTrue);
-    });
+    test(
+      'permissions still loading keep the composer disabled without the no-permission hint',
+      () {
+        const ChannelMessagePermissions perms =
+            ChannelMessagePermissions.unresolved;
+        expect(perms.isComposerEnabled, isFalse);
+        expect(perms.showsNoSendPermissionHint, isFalse);
+        expect(perms.canShowAttachControls, isFalse);
+        expect(perms.isVoiceEnabled, isFalse);
+      },
+    );
 
     test('async unresolved data stays unresolved for the composer', () {
       final ChannelMessagePermissions perms =
@@ -163,7 +166,7 @@ void main() {
             const AsyncValue.data(ChannelMessagePermissions.unresolved),
           );
       expect(perms, ChannelMessagePermissions.unresolved);
-      expect(perms.isComposerEnabled, isTrue);
+      expect(perms.isComposerEnabled, isFalse);
       expect(perms.showsNoSendPermissionHint, isFalse);
     });
 
@@ -1222,6 +1225,43 @@ void main() {
       addTearDown(container.dispose);
       return container;
     }
+
+    test(
+      'a permission change in another channel does not reload this channel',
+      () async {
+        final FluxerDatabase db = await seedGuildChannel(withMember: true);
+        final ProviderContainer container = containerFor(
+          db,
+          _RecordingGuildSync(),
+        );
+        final ProviderSubscription<AsyncValue<ChannelMessagePermissions>> sub =
+            container.listen(
+              channelMessagePermissionsProvider(channelId),
+              (_, _) {},
+            );
+        addTearDown(sub.close);
+        await container.read(
+          channelMessagePermissionsProvider(channelId).future,
+        );
+
+        container
+            .read(channelPermissionCacheProvider.notifier)
+            .cacheEffectiveBits(
+              channelId: 'channel_other',
+              outcome: (
+                value: Permission.sendMessages.value,
+                shouldCache: true,
+              ),
+            );
+
+        expect(
+          container
+              .read(channelMessagePermissionsProvider(channelId))
+              .isLoading,
+          isFalse,
+        );
+      },
+    );
 
     test('missing own member row is pending, not denied', () async {
       final FluxerDatabase db = await seedGuildChannel(withMember: false);

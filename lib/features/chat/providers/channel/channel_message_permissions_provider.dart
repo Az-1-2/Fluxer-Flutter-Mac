@@ -60,7 +60,7 @@ class ChannelMessagePermissions {
     canUseExternalStickers: true,
   );
 
-  bool get isComposerEnabled => !isResolved || canSendMessages;
+  bool get isComposerEnabled => isResolved && canSendMessages;
 
   bool get showsNoSendPermissionHint => isResolved && !canSendMessages;
 
@@ -156,7 +156,11 @@ Future<ChannelMessagePermissions> channelMessagePermissions(
   ref
     ..watch(guildListViewModelProvider)
     ..watch(guildRolePermissionsIdentityProvider(guildId))
-    ..watch(channelPermissionCacheProvider);
+    ..watch(
+      channelPermissionCacheProvider.select(
+        (ChannelPermissionCaches caches) => caches.effective[channelId],
+      ),
+    );
   await ref
       .read(channelPermissionCacheProvider.notifier)
       .rebuildChannel(channelId);

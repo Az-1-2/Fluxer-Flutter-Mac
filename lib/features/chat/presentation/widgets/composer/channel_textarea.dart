@@ -945,13 +945,13 @@ class _ChannelTextareaState extends ConsumerState<ChannelTextarea>
       AsyncValue<ChannelMessagePermissions>? previous,
       AsyncValue<ChannelMessagePermissions> next,
     ) {
-      final bool wasEnabled = channelMessagePermissionsForComposer(
+      final bool wasDenied = channelMessagePermissionsForComposer(
         previous ?? const AsyncValue<ChannelMessagePermissions>.loading(),
-      ).isComposerEnabled;
-      final bool isEnabled = channelMessagePermissionsForComposer(
+      ).showsNoSendPermissionHint;
+      final bool isDenied = channelMessagePermissionsForComposer(
         next,
-      ).isComposerEnabled;
-      if (wasEnabled && !isEnabled) {
+      ).showsNoSendPermissionHint;
+      if (!wasDenied && isDenied) {
         _clearComposerForBlockedAccess();
       }
     });
