@@ -11,7 +11,10 @@ If you want it despite the warnings you can install it by:
 3. Open the app, then when you get the warning about it being insecure, go to mac settings, privacy and security, scroll down, and click open anyway and use touch id or your password when prompted. 
 4. Open the app and login. 
 
+To update, follow the same process, and replace the current app with the new one in the Applications folder. You will be asked to enter your macos password when opening the app about 4 times to allow the app to access the keychain. 
+
 Releases are made daily with the latest code from upstream.
+
 
 # Compiling Yourself
 If you'd like to compile the Macos Flutter client yourself and not use builds from this repo, you should fork the Fluxer Flutter client repo, then copy the [macos-canary-testflight.yml](https://github.com/Az-1-2/Fluxer-Flutter-Mac/blob/canary/.github/workflows/macos-canary-testflight.yml) file into the .github/workflows directory as a seperate file, then run the new workflow from Github Actions, I do not recommend forking *this* repo as merge conflicts are possible if you modify the workflow file in your fork, and I then modify it in this repo. Forking the Fluxer repo itself is thus recommended. 
