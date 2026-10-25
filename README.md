@@ -13,4 +13,7 @@ If you want it despite the warnings you can install it by:
 
 Releases are made daily with the latest code from upstream.
 
+# Compiling Yourself
+If you'd like to compile the Macos Flutter client yourself and not use builds from this repo, you should fork the Fluxer Flutter client repo, then copy the [macos-canary-testflight.yml](https://github.com/Az-1-2/Fluxer-Flutter-Mac/blob/canary/.github/workflows/macos-canary-testflight.yml) file into the .github/workflows directory as a seperate file, then run the new workflow from Github Actions, I do not recommend forking *this* repo as merge conflicts are possible if you modify the workflow file in your fork, and I then modify it in this repo. Forking the Fluxer repo itself is thus recommended. 
+
 All credits to https://github.com/fluxerapp/flutter_client for actually coding the flutter client. 
