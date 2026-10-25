@@ -257,7 +257,12 @@ class _UserProfileState extends ConsumerState<UserProfile> {
         context,
         title: l10n.plutoniumNotAvailableTitle,
         builder: (sheetContext, _) => Padding(
-          padding: EdgeInsets.all(sheetContext.layout.s4),
+          padding: EdgeInsets.fromLTRB(
+            sheetContext.layout.s4,
+            sheetContext.layout.s4,
+            sheetContext.layout.s4,
+            0,
+          ),
           child: Text(
             l10n.plutoniumNotAvailableBody,
             style: sheetContext.textStyles.bodyMedium.copyWith(
@@ -324,7 +329,12 @@ class _UserProfileState extends ConsumerState<UserProfile> {
           context,
           title: l10n.animatedAvifNotSupported,
           builder: (sheetContext, _) => Padding(
-            padding: EdgeInsets.all(sheetContext.layout.s4),
+            padding: EdgeInsets.fromLTRB(
+              sheetContext.layout.s4,
+              sheetContext.layout.s4,
+              sheetContext.layout.s4,
+              0,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
