@@ -9,6 +9,7 @@ import 'package:fluxer_app/features/dm/domain/dm_channel_types.dart';
 import 'package:fluxer_app/features/dm/domain/dm_conversation.dart';
 import 'package:fluxer_app/features/dm/providers/dm_view_model.dart';
 import 'package:fluxer_app/features/guilds/providers/guild_list_view_model.dart';
+import 'package:fluxer_app/features/guilds/providers/guild_sync_provider.dart';
 import 'package:fluxer_app/features/members/providers/member_providers.dart';
 import 'package:fluxer_app/shared/utils/chat_context_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -149,9 +150,11 @@ Future<ChannelMessagePermissions> channelMessagePermissions(
     return ChannelMessagePermissions.none;
   }
   final String guildId = channel.guildId;
+  final AsyncValue<CurrentUserMemberIdentity?> memberIdentity = ref.watch(
+    currentUserMemberIdentityProvider(guildId),
+  );
   ref
     ..watch(guildListViewModelProvider)
-    ..watch(currentUserMemberIdentityProvider(guildId))
     ..watch(guildRolePermissionsIdentityProvider(guildId))
     ..watch(channelPermissionCacheProvider);
   await ref
@@ -160,8 +163,15 @@ Future<ChannelMessagePermissions> channelMessagePermissions(
   final int? bits = ref
       .read(channelPermissionCacheProvider.notifier)
       .getChannelBits(channelId);
+  final GuildSync guildSync = ref.read(guildSyncProvider.notifier);
+  if (memberIdentity.value != null) {
+    guildSync.ownMemberPresent(guildId);
+  }
   if (bits == null) {
-    return ChannelMessagePermissions.none;
+    if (memberIdentity.hasValue && memberIdentity.value == null) {
+      guildSync.requestOwnMemberSync(guildId);
+    }
+    return ChannelMessagePermissions.unresolved;
   }
   return channelMessagePermissionsFromBits(
     bits: bits,
