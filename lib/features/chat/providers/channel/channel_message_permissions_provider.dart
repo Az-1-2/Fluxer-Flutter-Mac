@@ -127,7 +127,13 @@ Future<ChannelMessagePermissions> channelMessagePermissions(
       .read(fluxerDatabaseProvider)
       .dmChannelDao
       .getDmChannelById(channelId);
-  if (dmRow != null && isDmPersonalNotesType(dmRow.type)) {
+  if (dmRow != null) {
+    if (isDmPersonalNotesType(dmRow.type)) {
+      return ChannelMessagePermissions.all;
+    }
+    if (!isDmGroupType(dmRow.type) && dmRow.recipientId == fluxerBotUserId) {
+      return ChannelMessagePermissions.none;
+    }
     return ChannelMessagePermissions.all;
   }
   await ref.watch(channelPermissionIdentityProvider(channelId).future);
@@ -136,7 +142,7 @@ Future<ChannelMessagePermissions> channelMessagePermissions(
       .channelDao
       .getChannelById(channelId);
   if (channelRow == null) {
-    return ChannelMessagePermissions.none;
+    return ChannelMessagePermissions.unresolved;
   }
   final Channel channel = Channel.fromRow(channelRow);
   if (channel.guildId.isEmpty) {

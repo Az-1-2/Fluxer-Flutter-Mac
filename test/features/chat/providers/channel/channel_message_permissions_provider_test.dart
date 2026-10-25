@@ -290,6 +290,91 @@ void main() {
 
       expect(perms, ChannelMessagePermissions.all);
     });
+    test(
+      'DM stored locally but missing from the in-memory list is sendable',
+      () async {
+        const String channelId = '1000000000000000210';
+        final FluxerDatabase db = openTestDatabase();
+        await db.dmChannelDao.upsertDmChannels(<DmChannelsCompanion>[
+          DmChannelsCompanion.insert(
+            id: channelId,
+            recipientId: '1000000000000000300',
+          ),
+        ]);
+
+        final ProviderContainer container = ProviderContainer(
+          overrides: [
+            fluxerDatabaseProvider.overrideWithValue(db),
+            dmViewModelProvider.overrideWith(_EmptyDmViewModel.new),
+            currentUserIdProvider.overrideWithValue('1000000000000000001'),
+            guildListViewModelProvider.overrideWith(
+              _EmptyGuildListViewModel.new,
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
+
+        final ChannelMessagePermissions perms = await container.read(
+          channelMessagePermissionsProvider(channelId).future,
+        );
+
+        expect(perms, ChannelMessagePermissions.all);
+      },
+    );
+
+    test(
+      'group DM stored locally but missing from the in-memory list is sendable',
+      () async {
+        const String channelId = '1000000000000000220';
+        final FluxerDatabase db = openTestDatabase();
+        await db.dmChannelDao.upsertDmChannels(<DmChannelsCompanion>[
+          DmChannelsCompanion.insert(
+            id: channelId,
+            type: const Value(3),
+            recipientId: '1000000000000000300',
+          ),
+        ]);
+
+        final ProviderContainer container = ProviderContainer(
+          overrides: [
+            fluxerDatabaseProvider.overrideWithValue(db),
+            dmViewModelProvider.overrideWith(_EmptyDmViewModel.new),
+            currentUserIdProvider.overrideWithValue('1000000000000000001'),
+            guildListViewModelProvider.overrideWith(
+              _EmptyGuildListViewModel.new,
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
+
+        final ChannelMessagePermissions perms = await container.read(
+          channelMessagePermissionsProvider(channelId).future,
+        );
+
+        expect(perms, ChannelMessagePermissions.all);
+      },
+    );
+
+    test('channel with no local rows is pending, not denied', () async {
+      const String channelId = '1000000000000000230';
+      final FluxerDatabase db = openTestDatabase();
+
+      final ProviderContainer container = ProviderContainer(
+        overrides: [
+          fluxerDatabaseProvider.overrideWithValue(db),
+          dmViewModelProvider.overrideWith(_EmptyDmViewModel.new),
+          currentUserIdProvider.overrideWithValue('1000000000000000001'),
+          guildListViewModelProvider.overrideWith(_EmptyGuildListViewModel.new),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      final ChannelMessagePermissions perms = await container.read(
+        channelMessagePermissionsProvider(channelId).future,
+      );
+
+      expect(perms, ChannelMessagePermissions.unresolved);
+    });
   });
 
   group('channelMessagePermissionsFromBits', () {
