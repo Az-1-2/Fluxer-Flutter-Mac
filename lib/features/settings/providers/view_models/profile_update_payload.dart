@@ -1,5 +1,20 @@
 part of 'user_settings_view_model.dart';
 
+List<String> _decodeHiddenProfileBadgesJson(String? json) {
+  if (json == null || json.isEmpty) {
+    return const <String>[];
+  }
+  try {
+    final Object? decoded = jsonDecode(json);
+    if (decoded is! List) {
+      return const <String>[];
+    }
+    return decoded.whereType<String>().toList(growable: false);
+  } on Object {
+    return const <String>[];
+  }
+}
+
 JsonNullable<T> _patchField<T>(bool include, T? value) {
   if (include) {
     return JsonNullable.of(value);
@@ -14,6 +29,13 @@ bool _guildAssetCleared(GuildAssetMode mode) {
 UserUpdateWithVerificationRequest buildCurrentUserProfileUpdateRequest(
   UserSettingsViewState state,
 ) {
+  final bool hiddenBadgesChanged =
+      state.isEditedHiddenProfileBadgesSet &&
+      !profileBadgeKeyListsEqual(
+        state.editedHiddenProfileBadges!,
+        state.hiddenProfileBadges,
+      );
+
   return UserUpdateWithVerificationRequest(
     globalName: _patchField(
       state.isEditedDisplayNameSet &&
@@ -50,10 +72,8 @@ UserUpdateWithVerificationRequest buildCurrentUserProfileUpdateRequest(
       state.editedBannerBase64 != null || state.bannerCleared,
       state.editedBannerBase64,
     ),
-    premiumBadgeHidden:
-        state.isEditedPremiumBadgeHiddenSet &&
-            state.editedPremiumBadgeHidden != state.premiumBadgeHidden
-        ? state.editedPremiumBadgeHidden
+    hiddenProfileBadges: hiddenBadgesChanged
+        ? sortedProfileBadgeKeys(state.effectiveHiddenProfileBadges)
         : null,
     premiumBadgeMasked:
         state.isEditedPremiumBadgeMaskedSet &&
@@ -71,11 +91,6 @@ UserUpdateWithVerificationRequest buildCurrentUserProfileUpdateRequest(
             state.editedPremiumBadgeSequenceHidden !=
                 state.premiumBadgeSequenceHidden
         ? state.editedPremiumBadgeSequenceHidden
-        : null,
-    operatorPassBadgeHidden:
-        state.isEditedOperatorPassBadgeHiddenSet &&
-            state.editedOperatorPassBadgeHidden != state.operatorPassBadgeHidden
-        ? state.editedOperatorPassBadgeHidden
         : null,
     operatorPassBadgeTimestampHidden:
         state.isEditedOperatorPassBadgeTimestampHiddenSet &&

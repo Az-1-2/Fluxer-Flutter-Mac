@@ -161,14 +161,17 @@ User _onlineUser() {
     system: false,
     status: 'online',
     mobile: false,
+    hiddenProfileBadgesJson: '[]',
   );
 }
 
 ProfileBadgeResponse _plutoniumProfileBadge({required bool hideTimestamp}) {
   return ProfileBadgeResponse(
+    key: 'plutonium',
     kind: 'plutonium',
     label: 'Fluxer Plutonium',
     asset: '42cd5fbc480b7847',
+    assetUrl: null,
     aspectRatio: null,
     caption: null,
     href: null,
@@ -183,9 +186,11 @@ ProfileBadgeResponse _plutoniumProfileBadge({required bool hideTimestamp}) {
 
 ProfileBadgeResponse _visionaryProfileBadge({required bool hideTimestamp}) {
   return ProfileBadgeResponse(
+    key: 'visionary',
     kind: 'visionary',
     label: 'Fluxer Visionary',
     asset: '42cd5fbc480b7847',
+    assetUrl: null,
     aspectRatio: null,
     caption: null,
     href: null,
@@ -292,6 +297,7 @@ User _cachedOtherUser() {
     system: false,
     status: 'online',
     mobile: false,
+    hiddenProfileBadgesJson: '[]',
   );
 }
 

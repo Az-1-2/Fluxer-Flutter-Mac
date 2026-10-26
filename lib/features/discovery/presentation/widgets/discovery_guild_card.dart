@@ -143,7 +143,10 @@ class DiscoveryGuildCard extends ConsumerWidget {
                                   ),
                                   if (badgeFeatures.isNotEmpty) ...<Widget>[
                                     const SizedBox(width: 4),
-                                    FluxerGuildBadge(features: badgeFeatures),
+                                    FluxerGuildBadge(
+                                      features: badgeFeatures,
+                                      badgeIds: guild.badgeIds,
+                                    ),
                                   ],
                                 ],
                               ),

@@ -452,6 +452,7 @@ class _GuildInviteContent extends ConsumerWidget {
               iconUrl: _iconUrl,
               guildName: invite.guild.name,
               features: features,
+              badgeIds: localGuild?.badgeIds ?? invite.guild.badgeIds,
               subtitle: l10n.inviteAcceptTitle,
               onlineLabel: l10n.embedInviteOnline(onlineStr),
               membersLabel: l10n.embedInviteMembers(memberStr),
@@ -506,6 +507,7 @@ class _InviteGuildHeader extends StatelessWidget {
     required this.iconUrl,
     required this.guildName,
     required this.features,
+    required this.badgeIds,
     required this.subtitle,
     required this.onlineLabel,
     required this.membersLabel,
@@ -514,6 +516,7 @@ class _InviteGuildHeader extends StatelessWidget {
   final String? iconUrl;
   final String guildName;
   final List<String> features;
+  final List<String> badgeIds;
   final String subtitle;
   final String onlineLabel;
   final String membersLabel;
@@ -546,7 +549,7 @@ class _InviteGuildHeader extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 6),
-              child: FluxerGuildBadge(features: features),
+              child: FluxerGuildBadge(features: features, badgeIds: badgeIds),
             ),
           ],
         ),

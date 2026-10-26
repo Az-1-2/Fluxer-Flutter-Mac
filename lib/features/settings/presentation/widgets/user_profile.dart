@@ -15,13 +15,12 @@ import 'package:fluxer_app/features/settings/domain/guild_asset_mode.dart';
 import 'package:fluxer_app/features/settings/domain/user_settings_section.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/fluxer_tag_change_sheet.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/image_crop_sheet.dart';
-import 'package:fluxer_app/features/settings/presentation/widgets/operator_pass/operator_pass_wall_settings.dart';
+import 'package:fluxer_app/features/settings/presentation/widgets/profile_badge_settings_section.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/profile_local_time_settings_section.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/profile_preview_card.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/wide_settings_content_layout.dart';
 import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
 import 'package:fluxer_app/features/settings/utils/commerce/open_user_billing_settings.dart';
-import 'package:fluxer_app/features/settings/utils/commerce/operator_pass_utils.dart';
 import 'package:fluxer_app/features/settings/utils/commerce/user_settings_billing_nav.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
 import 'package:fluxer_app/features/ui/input/emoji_text_editing_controller.dart';
@@ -31,7 +30,6 @@ import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 import 'package:fluxer_app/material_ui.dart';
 import 'package:fluxer_app/shared/utils/api_error_presentation.dart';
 import 'package:fluxer_app/shared/utils/image_utils.dart';
-import 'package:fluxer_app/shared/utils/user_date_formatting.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 const int _kMaxDisplayNameLength = 32;
@@ -435,11 +433,6 @@ class _UserProfileState extends ConsumerState<UserProfile> {
     final bool shouldShowPremiumCommerce = ref.watch(
       shouldShowPremiumCommerceProvider,
     );
-    final bool showsPremiumFeatures = ref.watch(
-      instanceRuntimeConfigProvider.select(
-        (config) => config.showsPremiumFeatures,
-      ),
-    );
     _syncControllers(state);
 
     ref
@@ -659,21 +652,13 @@ class _UserProfileState extends ConsumerState<UserProfile> {
                           behavior: HitTestBehavior.opaque,
                           child: ProfilePreviewCard(state: state),
                         ),
-                        if (_showBadgePrivacySection(
-                          state,
-                          showsPremiumFeatures,
-                        )) ...[
+                        if (!state.isPerGuildProfile) ...[
                           SizedBox(height: layout.s8),
                           FluxerGestureDetector(
                             onTap: () =>
                                 FocusManager.instance.primaryFocus?.unfocus(),
                             behavior: HitTestBehavior.opaque,
-                            child: _buildPremiumBadgeSection(
-                              state,
-                              vm,
-                              layout,
-                              l10n,
-                            ),
+                            child: ProfileBadgeSettingsSection(state: state),
                           ),
                         ],
                       ],
@@ -1174,153 +1159,6 @@ class _UserProfileState extends ConsumerState<UserProfile> {
         SizedBox(height: layout.s3),
         FluxerHintText(l10n.bannerDescription),
       ],
-    );
-  }
-
-  bool _showBadgePrivacySection(
-    UserSettingsViewState state,
-    bool showsPremiumFeatures,
-  ) {
-    if (state.isPerGuildProfile) {
-      return false;
-    }
-    final bool selfHosted = ref.read(
-      instanceRuntimeConfigProvider.select((config) => config.selfHosted),
-    );
-    final bool hasOperatorPass =
-        isOperatorPassAvailable(selfHosted: selfHosted) &&
-        state.hasOperatorPassProfileBadge;
-    return (showsPremiumFeatures && state.isPremium) || hasOperatorPass;
-  }
-
-  Widget _buildPremiumBadgeSection(
-    UserSettingsViewState state,
-    UserSettingsViewModel vm,
-    FluxerLayoutTheme layout,
-    FluxerLocalizations l10n,
-  ) {
-    final bool selfHosted = ref.watch(
-      instanceRuntimeConfigProvider.select((config) => config.selfHosted),
-    );
-    final bool showsPremium = ref.watch(shouldShowPremiumCommerceProvider);
-    final bool hasPremium = showsPremium && state.isPremium;
-    final bool hasOperatorPass =
-        isOperatorPassAvailable(selfHosted: selfHosted) &&
-        state.hasOperatorPassProfileBadge;
-    final List<Widget> children = <Widget>[];
-
-    if (hasPremium) {
-      final badgeHidden = state.effectivePremiumBadgeHidden;
-      final badgeMasked = state.effectivePremiumBadgeMasked;
-
-      String timestampLabel = l10n.hidePlutoniumPurchaseDate;
-      if (state.premiumSince != null) {
-        final date = DateTime.tryParse(state.premiumSince!);
-        if (date != null) {
-          final formatted = formatUserMediumDate(
-            date.toLocal(),
-            l10n.localeName,
-          );
-          timestampLabel = l10n.hidePlutoniumPurchaseDateWithDate(formatted);
-        }
-      }
-
-      String sequenceLabel = l10n.hideVisionaryIdBadge;
-      if (state.premiumLifetimeSequence != null) {
-        sequenceLabel = l10n.hideVisionaryIdBadgeWithSequence(
-          state.premiumLifetimeSequence!,
-        );
-      }
-
-      children.add(
-        FluxerSettingsSection(
-          title: l10n.plutoniumBadgePrivacyTitle,
-          description: l10n.plutoniumBadgePrivacyDescription,
-          children: [
-            FluxerSettingsSubsection(
-              children: [
-                FluxerSwitchGroupItem(
-                  label: l10n.hidePlutoniumBadgeLabel,
-                  description: l10n.hidePlutoniumBadgeDescription,
-                  value: badgeHidden,
-                  onChanged: (value) => vm.setPremiumBadgeHidden(value: value),
-                ),
-                FluxerSwitchGroupItem(
-                  label: timestampLabel,
-                  description: l10n.hidePurchaseDateDescription,
-                  value: state.effectivePremiumBadgeTimestampHidden,
-                  enabled: !badgeHidden,
-                  onChanged: (value) =>
-                      vm.setPremiumBadgeTimestampHidden(value: value),
-                ),
-                if (state.hasLifetimePremium) ...[
-                  FluxerSwitchGroupItem(
-                    label: l10n.maskVisionaryAsSubscription,
-                    description: l10n.maskVisionaryDescription,
-                    value: badgeMasked,
-                    enabled: !badgeHidden,
-                    onChanged: (value) =>
-                        vm.setPremiumBadgeMasked(value: value),
-                  ),
-                  FluxerSwitchGroupItem(
-                    label: sequenceLabel,
-                    description: l10n.hideVisionaryIdDescription,
-                    value: state.effectivePremiumBadgeSequenceHidden,
-                    enabled: !badgeHidden && !badgeMasked,
-                    onChanged: (value) =>
-                        vm.setPremiumBadgeSequenceHidden(value: value),
-                  ),
-                ],
-              ],
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (hasOperatorPass) {
-      final String? since = state.operatorPassSince;
-      children.add(
-        FluxerSettingsSection(
-          title: l10n.operatorPassName,
-          description: since == null
-              ? null
-              : l10n.operatorPassSince(
-                  formatOperatorPassSinceMonth(since, l10n.localeName),
-                ),
-          children: [
-            FluxerSettingsSubsection(
-              children: [
-                FluxerSwitchGroupItem(
-                  label: l10n.operatorPassShowBadgeOnProfile,
-                  value: !state.effectiveOperatorPassBadgeHidden,
-                  onChanged: (bool value) =>
-                      vm.setOperatorPassBadgeHidden(value: !value),
-                ),
-                FluxerSwitchGroupItem(
-                  label: l10n.operatorPassHideDate(l10n.operatorPassName),
-                  value: state.effectiveOperatorPassBadgeTimestampHidden,
-                  enabled: !state.effectiveOperatorPassBadgeHidden,
-                  onChanged: (bool value) =>
-                      vm.setOperatorPassBadgeTimestampHidden(value: value),
-                ),
-                FluxerSwitchGroupItem(
-                  label: l10n.operatorPassHideCount,
-                  value: state.effectiveOperatorPassBadgeCountHidden,
-                  onChanged: (bool value) =>
-                      vm.setOperatorPassBadgeCountHidden(value: value),
-                ),
-              ],
-            ),
-            const OperatorPassWallSettings(),
-          ],
-        ),
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: children,
     );
   }
 }

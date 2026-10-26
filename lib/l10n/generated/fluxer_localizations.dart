@@ -3494,6 +3494,42 @@ abstract class FluxerLocalizations {
   /// **'Emoji'**
   String get emojiPickerTitle;
 
+  /// Title of the profile settings section that lists held badges and visibility toggles.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges'**
+  String get profileBadgesSettingsTitle;
+
+  /// Description under the Badges title in profile settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose which badges other people see on your profile.'**
+  String get profileBadgesSettingsDescription;
+
+  /// Shown in profile badge settings when the user holds no badges.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have any badges yet.'**
+  String get profileBadgesSettingsEmpty;
+
+  /// Shown when the badge list fails to load in profile settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Your badges couldn\'t be loaded.'**
+  String get profileBadgesSettingsLoadFailed;
+
+  /// Screen reader label for a badge visibility switch in profile settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Show {badgeLabel} on your profile'**
+  String profileBadgesShowOnProfile(String badgeLabel);
+
+  /// Note under the Visionary ID row when its visibility switch is disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown only when your Visionary badge is visible and not masked.'**
+  String get profileBadgesVisionaryNumberNote;
+
   /// Heading for the premium badge privacy settings section.
   ///
   /// In en, this message translates to:

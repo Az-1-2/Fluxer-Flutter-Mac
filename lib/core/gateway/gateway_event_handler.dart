@@ -915,6 +915,9 @@ class GatewayEventHandler {
           operatorPassBadgeCountHidden: Value(
             event.user.operatorPassBadgeCountHidden,
           ),
+          hiddenProfileBadgesJson: Value(
+            jsonEncode(event.user.hiddenProfileBadges),
+          ),
           customStatus: Value(
             serializeCustomStatus(event.userSettings?.customStatus),
           ),
@@ -2513,6 +2516,9 @@ class GatewayEventHandler {
           ),
           operatorPassBadgeCountHidden: Value(
             event.user.operatorPassBadgeCountHidden,
+          ),
+          hiddenProfileBadgesJson: Value(
+            jsonEncode(event.user.hiddenProfileBadges),
           ),
         ),
       ),

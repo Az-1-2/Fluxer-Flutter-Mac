@@ -90,6 +90,7 @@ List<Override> _overrides(Map<String, List<UserPartialResponse>> byEmoji) {
           system: false,
           status: 'online',
           mobile: false,
+          hiddenProfileBadgesJson: '[]',
         ),
       ),
     ),

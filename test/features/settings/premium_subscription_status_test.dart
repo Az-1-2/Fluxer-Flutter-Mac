@@ -54,6 +54,7 @@ UserPrivateResponse _user({
     lastVoiceActivitySharingChangeAt: null,
     premiumBadgeHidden: false,
     premiumPerksDisabled: false,
+    hiddenProfileBadges: const <String>[],
   );
 }
 

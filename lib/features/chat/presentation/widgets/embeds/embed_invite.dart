@@ -202,7 +202,10 @@ class _GuildInviteCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 4),
-              child: FluxerGuildBadge(features: features),
+              child: FluxerGuildBadge(
+                features: features,
+                badgeIds: localGuild?.badgeIds ?? invite.guild.badgeIds,
+              ),
             ),
           ],
         ),

@@ -1275,6 +1275,7 @@ User _testUser({required String id, required String status}) {
     system: false,
     status: status,
     mobile: false,
+    hiddenProfileBadgesJson: '[]',
   );
 }
 
