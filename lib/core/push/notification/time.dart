@@ -1,4 +1,4 @@
-import 'package:fluxer_app/core/push/push_notification_ids.dart';
+import 'package:fluxer_app/core/push/notification/ids.dart';
 import 'package:fluxer_app/shared/utils/snowflake_time.dart';
 
 const int _kMaxFutureSkewMs = 60 * 1000;

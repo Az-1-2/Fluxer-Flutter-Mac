@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:fluxer_app/core/badge/app_icon_badge_service.dart';
 import 'package:fluxer_app/core/badge/push_badge_count_parser.dart';
-import 'package:fluxer_app/core/push/local_push_notifications.dart';
-import 'package:fluxer_app/core/push/push_notification_payload.dart';
+import 'package:fluxer_app/core/push/android/local_notifications.dart';
+import 'package:fluxer_app/core/push/notification/payload.dart';
 
 final class PushNotificationClear {
   PushNotificationClear._();

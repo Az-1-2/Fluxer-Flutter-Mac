@@ -4,7 +4,7 @@ import 'package:fluxer_app/core/build/push_provider_kind.dart';
 import 'package:fluxer_app/core/instance/instance_runtime_config.dart';
 import 'package:fluxer_app/core/platform/fluxer_platform.dart';
 import 'package:fluxer_app/core/providers/instance_runtime_config_provider.dart';
-import 'package:fluxer_app/core/push/push_delivery_display.dart';
+import 'package:fluxer_app/core/push/delivery/display.dart';
 import 'package:fluxer_app/core/synced_preferences/engine/synced_preference_field.dart';
 import 'package:fluxer_app/core/synced_preferences/engine/synced_preferences_store.dart';
 import 'package:fluxer_app/core/theme/fluxer_layout_theme.dart';

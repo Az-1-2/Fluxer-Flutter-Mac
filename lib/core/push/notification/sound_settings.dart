@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:fluxer_app/core/push/push_notification_payload.dart';
+import 'package:fluxer_app/core/push/notification/payload.dart';
 import 'package:fluxer_app/features/settings/providers/sound_preferences_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

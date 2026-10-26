@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:fluxer_app/core/push/android_push_channels.dart';
-import 'package:fluxer_app/core/push/android_push_conversation_history.dart';
-import 'package:fluxer_app/core/push/push_notification_payload.dart';
-import 'package:fluxer_app/core/push/push_notification_sound.dart';
+import 'package:fluxer_app/core/push/android/channels.dart';
+import 'package:fluxer_app/core/push/android/conversation/history.dart';
+import 'package:fluxer_app/core/push/notification/payload.dart';
+import 'package:fluxer_app/core/push/notification/sound.dart';
 
 const String kPushLocalUserPersonName = 'Me';
 

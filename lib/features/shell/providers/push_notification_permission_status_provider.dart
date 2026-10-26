@@ -1,5 +1,5 @@
 import 'package:fluxer_app/core/providers/app_ui_lifecycle_provider.dart';
-import 'package:fluxer_app/core/push/push_notification_permission.dart';
+import 'package:fluxer_app/core/push/notification/permission.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'push_notification_permission_status_provider.g.dart';

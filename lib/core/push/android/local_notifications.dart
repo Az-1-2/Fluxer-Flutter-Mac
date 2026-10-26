@@ -4,27 +4,27 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluxer_app/core/badge/push_badge_count_parser.dart';
-import 'package:fluxer_app/core/push/android_notification_reply_bridge.dart';
-import 'package:fluxer_app/core/push/android_push_channels.dart';
-import 'package:fluxer_app/core/push/android_push_conversation_history.dart';
-import 'package:fluxer_app/core/push/android_push_conversation_notification.dart';
-import 'package:fluxer_app/core/push/push_message.dart';
-import 'package:fluxer_app/core/push/push_notification_ids.dart'
+import 'package:fluxer_app/core/push/android/channels.dart';
+import 'package:fluxer_app/core/push/android/conversation/history.dart';
+import 'package:fluxer_app/core/push/android/conversation/messaging_style.dart';
+import 'package:fluxer_app/core/push/android/media/cache.dart';
+import 'package:fluxer_app/core/push/android/media/instance_urls.dart';
+import 'package:fluxer_app/core/push/android/reply_bridge.dart';
+import 'package:fluxer_app/core/push/notification/ids.dart'
     show
         kLocalNotificationMessageIdKey,
         pushGroupSummaryNotificationId,
         pushMessageNotificationId,
         pushNotificationCancelIds;
-import 'package:fluxer_app/core/push/push_notification_instance_media.dart';
-import 'package:fluxer_app/core/push/push_notification_media.dart';
-import 'package:fluxer_app/core/push/push_notification_payload.dart';
-import 'package:fluxer_app/core/push/push_notification_reply.dart';
-import 'package:fluxer_app/core/push/push_notification_reply_background.dart';
-import 'package:fluxer_app/core/push/push_notification_sound.dart';
-import 'package:fluxer_app/core/push/push_notification_sound_settings.dart';
-import 'package:fluxer_app/core/push/push_notification_time.dart';
+import 'package:fluxer_app/core/push/notification/payload.dart';
+import 'package:fluxer_app/core/push/notification/reply.dart';
+import 'package:fluxer_app/core/push/notification/reply_background.dart';
+import 'package:fluxer_app/core/push/notification/sound.dart';
+import 'package:fluxer_app/core/push/notification/sound_settings.dart';
+import 'package:fluxer_app/core/push/notification/time.dart';
+import 'package:fluxer_app/core/push/push_message.dart';
 
-export 'package:fluxer_app/core/push/android_push_channels.dart'
+export 'package:fluxer_app/core/push/android/channels.dart'
     show androidPushChannelId;
 
 const int _kReplyFailedNotificationId = 900001;

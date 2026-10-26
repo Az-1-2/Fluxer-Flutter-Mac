@@ -7,7 +7,7 @@ import 'dart:typed_data';
 import 'package:cryptography/cryptography.dart';
 import 'package:fluxer_app/core/instance/instance_endpoints.dart';
 import 'package:fluxer_app/core/media/fluxer_media_url.dart';
-import 'package:fluxer_app/core/push/push_notification_instance_media.dart';
+import 'package:fluxer_app/core/push/android/media/instance_urls.dart';
 import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
 

@@ -3,10 +3,10 @@ import 'dart:typed_data';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fluxer_app/core/push/android/android_push_pipeline.dart';
+import 'package:fluxer_app/core/push/android/media/cache.dart';
+import 'package:fluxer_app/core/push/android/media/instance_urls.dart';
+import 'package:fluxer_app/core/push/android/pipeline.dart';
 import 'package:fluxer_app/core/push/push_message.dart';
-import 'package:fluxer_app/core/push/push_notification_instance_media.dart';
-import 'package:fluxer_app/core/push/push_notification_media.dart';
 import 'package:fluxer_app/core/push/web_push/web_push_codec.dart';
 import 'package:fluxer_app/core/push/web_push/web_push_crypto.dart';
 import 'package:fluxer_app/core/push/web_push/web_push_key_store.dart';

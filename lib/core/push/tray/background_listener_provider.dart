@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:fluxer_app/core/providers/app_ui_lifecycle_provider.dart';
-import 'package:fluxer_app/core/push/push_tray_drain.dart';
-import 'package:fluxer_app/core/push/push_tray_registry_provider.dart';
+import 'package:fluxer_app/core/push/tray/drain.dart';
+import 'package:fluxer_app/core/push/tray/registry_provider.dart';
 import 'package:fluxer_app/features/channels/providers/ack_batcher_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'push_tray_background_listener_provider.g.dart';
+part 'background_listener_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 Raw<void> pushTrayBackgroundListener(Ref ref) {

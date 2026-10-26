@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:fluxer_app/core/push/push_notification_clear.dart';
-import 'package:fluxer_app/core/push/push_tray_registry.dart';
+import 'package:fluxer_app/core/push/notification/clear.dart';
+import 'package:fluxer_app/core/push/tray/registry.dart';
 
 Future<void> drainPushTrayRegistry(PushTrayRegistry registry) async {
   final List<MapEntry<String, String>> entries = registry.drain();

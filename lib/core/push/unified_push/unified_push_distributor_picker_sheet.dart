@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluxer_app/core/push/push_delivery_display.dart';
+import 'package:fluxer_app/core/push/delivery/display.dart';
 import 'package:fluxer_app/core/push/services/unified_push_service.dart';
 import 'package:fluxer_app/core/push/unified_push/unified_push_functions.dart';
 import 'package:fluxer_app/core/theme/fluxer_theme_extension.dart';

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fluxer_app/core/push/android_push_conversation_history.dart';
+import 'package:fluxer_app/core/push/android/conversation/history.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

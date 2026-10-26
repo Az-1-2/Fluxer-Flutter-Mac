@@ -1,5 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:fluxer_app/core/push/push_notification_payload.dart';
+import 'package:fluxer_app/core/push/notification/payload.dart';
 
 const String kPushNotificationMessageSoundRaw = 'message';
 const String kPushNotificationDirectMessageSoundRaw = 'direct_message';

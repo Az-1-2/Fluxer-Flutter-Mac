@@ -1,4 +1,4 @@
-import 'package:fluxer_app/core/push/push_notification_payload.dart';
+import 'package:fluxer_app/core/push/notification/payload.dart';
 import 'package:fluxer_app/features/channels/data/read_state_utils.dart';
 
 const int kPushTrayRegistryMaxEntries = 64;

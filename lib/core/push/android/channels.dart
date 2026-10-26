@@ -1,4 +1,4 @@
-import 'package:fluxer_app/core/push/push_notification_payload.dart';
+import 'package:fluxer_app/core/push/notification/payload.dart';
 
 const String kAndroidPushMessageChannelId = 'fluxer_messages';
 const String kAndroidPushDirectMessageChannelId = 'fluxer_direct_messages';

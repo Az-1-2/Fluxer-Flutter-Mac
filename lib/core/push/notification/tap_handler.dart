@@ -5,18 +5,18 @@ import 'package:flutter/foundation.dart';
 import 'package:fluxer_app/core/providers/gateway_ready_provider.dart';
 import 'package:fluxer_app/core/providers/gateway_reconnect_provider.dart';
 import 'package:fluxer_app/core/providers/splash_exit_allowed_provider.dart';
-import 'package:fluxer_app/core/push/pending_push_notification_path_provider.dart'
+import 'package:fluxer_app/core/push/notification/clear.dart';
+import 'package:fluxer_app/core/push/notification/path_resolver.dart';
+import 'package:fluxer_app/core/push/notification/payload.dart';
+import 'package:fluxer_app/core/push/notification/pending_path_provider.dart'
     show pendingPushNotificationPathProvider, shouldApplyPendingPushNavigation;
-import 'package:fluxer_app/core/push/push_notification_clear.dart';
-import 'package:fluxer_app/core/push/push_notification_path_resolver.dart';
-import 'package:fluxer_app/core/push/push_notification_payload.dart';
 import 'package:fluxer_app/core/router/fluxer_router.dart';
 import 'package:fluxer_app/core/talker.dart';
 import 'package:fluxer_app/features/auth/domain/stored_account.dart';
 import 'package:fluxer_app/features/auth/providers/account_manager_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'push_notification_tap_handler.g.dart';
+part 'tap_handler.g.dart';
 
 enum PushNotificationTapSource { local, fcm }
 

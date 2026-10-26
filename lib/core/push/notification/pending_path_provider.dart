@@ -3,12 +3,12 @@ import 'package:fluxer_app/core/providers/gateway_ready_provider.dart';
 import 'package:fluxer_app/core/providers/gateway_reconnect_provider.dart';
 import 'package:fluxer_app/core/providers/gateway_session_recovery_provider.dart';
 import 'package:fluxer_app/core/providers/splash_exit_allowed_provider.dart';
-import 'package:fluxer_app/core/push/pending_push_notification_route.dart';
+import 'package:fluxer_app/core/push/notification/pending_route.dart';
 import 'package:fluxer_app/core/router/fluxer_router.dart';
 import 'package:fluxer_app/core/talker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'pending_push_notification_path_provider.g.dart';
+part 'pending_path_provider.g.dart';
 
 bool isPendingNavigationReady({
   required bool isAuthenticated,
