@@ -1,3 +1,5 @@
+// Root ProviderScope built by a helper; the lint only exempts a
+// ProviderScope written inline in pumpWidget.
 // ignore_for_file: riverpod_lint/scoped_providers_should_specify_dependencies
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
