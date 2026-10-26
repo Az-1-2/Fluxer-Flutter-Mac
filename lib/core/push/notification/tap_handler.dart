@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:fluxer_app/core/providers/gateway_ready_provider.dart';
-import 'package:fluxer_app/core/providers/gateway_reconnect_provider.dart';
-import 'package:fluxer_app/core/providers/splash_exit_allowed_provider.dart';
+import 'package:fluxer_app/core/providers/app/splash_exit_allowed_provider.dart';
+import 'package:fluxer_app/core/providers/gateway/gateway_ready_provider.dart';
+import 'package:fluxer_app/core/providers/gateway/gateway_reconnect_provider.dart';
 import 'package:fluxer_app/core/push/notification/clear.dart';
 import 'package:fluxer_app/core/push/notification/path_resolver.dart';
 import 'package:fluxer_app/core/push/notification/payload.dart';

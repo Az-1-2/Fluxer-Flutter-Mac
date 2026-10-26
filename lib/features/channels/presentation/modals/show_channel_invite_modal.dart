@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluxer_app/core/providers/database_provider.dart';
-import 'package:fluxer_app/core/providers/well_known_provider.dart';
+import 'package:fluxer_app/core/providers/instance/well_known_provider.dart';
 import 'package:fluxer_app/features/guilds/presentation/invite_people_flow.dart';
 import 'package:fluxer_app/features/guilds/utils/invite_people_actions.dart';
 import 'package:fluxer_app/features/guilds/utils/invite_people_recipients.dart';

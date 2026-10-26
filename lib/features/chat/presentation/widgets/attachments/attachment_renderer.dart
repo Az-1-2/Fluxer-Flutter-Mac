@@ -13,8 +13,8 @@ import 'package:fluxer_app/features/chat/presentation/widgets/messages/spoiler_o
 import 'package:fluxer_app/features/chat/utils/attachments/uploading_attachment_utils.dart';
 import 'package:fluxer_app/features/chat/utils/attachments/voice_message_attachment.dart';
 import 'package:fluxer_app/features/mature_content/presentation/widgets/mature_media_overlay.dart';
-import 'package:fluxer_app/features/settings/providers/advanced_preferences_provider.dart';
-import 'package:fluxer_app/features/settings/providers/chat_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/advanced_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/chat_preferences_provider.dart';
 import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 import 'package:fluxer_app/material_ui.dart';
 import 'package:fluxer_app/shared/utils/user_date_formatting.dart';

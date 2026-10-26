@@ -5,7 +5,7 @@ import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluxer_app/core/media/fluxer_media_url.dart';
-import 'package:fluxer_app/core/providers/active_instance_provider.dart';
+import 'package:fluxer_app/core/providers/instance/active_instance_provider.dart';
 import 'package:fluxer_app/core/router/navigate_to_content.dart';
 import 'package:fluxer_app/core/theme/fluxer_theme_extension.dart';
 import 'package:fluxer_app/features/guilds/domain/guild.dart';

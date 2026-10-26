@@ -8,7 +8,7 @@ import 'package:drift/drift.dart' show Value;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fluxer_app/core/database/fluxer_database.dart' as db;
-import 'package:fluxer_app/core/providers/app_ui_lifecycle_provider.dart';
+import 'package:fluxer_app/core/providers/app/app_ui_lifecycle_provider.dart';
 import 'package:fluxer_app/features/chat/domain/message.dart';
 import 'package:fluxer_app/features/chat/domain/message_window.dart';
 import 'package:fluxer_app/features/chat/presentation/widgets/composer/wide_composer_layout.dart';

@@ -5,7 +5,7 @@ import 'package:fluxer_app/core/push/android/conversation/history.dart';
 import 'package:fluxer_app/core/push/android/conversation/messaging_style.dart';
 import 'package:fluxer_app/core/push/notification/sound.dart';
 import 'package:fluxer_app/core/push/notification/sound_settings.dart';
-import 'package:fluxer_app/features/settings/providers/sound_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/sound_preferences_provider.dart';
 
 const Map<String, String> _guildPush = <String, String>{'guild_id': 'g1'};
 const Map<String, String> _dmPush = <String, String>{'guild_id': '@me'};

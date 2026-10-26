@@ -1,5 +1,5 @@
 import 'package:fluxer_app/core/audio/enums/fluxer_sfx_clip.dart';
-import 'package:fluxer_app/features/settings/providers/sound_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/sound_preferences_provider.dart';
 import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 
 const String kSoundTypeDeaf = 'deaf';

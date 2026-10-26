@@ -8,7 +8,7 @@ import 'package:fluxer_app/features/profile/domain/time_window_presets.dart';
 import 'package:fluxer_app/features/profile/presentation/sheets/custom_status_sheet.dart';
 import 'package:fluxer_app/features/profile/providers/user_settings_status_provider.dart';
 import 'package:fluxer_app/features/profile/providers/user_status_service.dart';
-import 'package:fluxer_app/features/settings/providers/user_settings_view_model.dart';
+import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
 import 'package:fluxer_app/features/ui/bottom_sheet/fluxer_bottom_sheet.dart';
 import 'package:fluxer_app/features/ui/selected_check/fluxer_selected_check.dart';
 import 'package:fluxer_app/features/ui/status_indicator/fluxer_status_indicator.dart';

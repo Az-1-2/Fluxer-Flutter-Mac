@@ -5,7 +5,7 @@ import 'package:fluxer_app/core/deep_links/deep_link_path_policy.dart';
 import 'package:fluxer_app/core/deep_links/user_settings_deep_link.dart';
 import 'package:fluxer_app/core/instance/instance_endpoints.dart';
 import 'package:fluxer_app/core/media/fluxer_media_url.dart';
-import 'package:fluxer_app/core/providers/instance_runtime_config_provider.dart';
+import 'package:fluxer_app/core/providers/instance/instance_runtime_config_provider.dart';
 import 'package:fluxer_app/core/theme/fluxer_theme_extension.dart';
 import 'package:fluxer_app/core/utils/channel_jump_link.dart';
 import 'package:fluxer_app/features/channels/utils/channel_mention_utils.dart';

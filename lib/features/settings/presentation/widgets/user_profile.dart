@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluxer_app/core/limits/instance_limit_provider.dart';
 import 'package:fluxer_app/core/limits/limit_key.dart';
 import 'package:fluxer_app/core/premium/should_show_premium_commerce_provider.dart';
-import 'package:fluxer_app/core/providers/instance_runtime_config_provider.dart';
+import 'package:fluxer_app/core/providers/instance/instance_runtime_config_provider.dart';
 import 'package:fluxer_app/core/theme/fluxer_layout_theme.dart';
 import 'package:fluxer_app/core/theme/fluxer_theme_extension.dart';
 import 'package:fluxer_app/features/chat/presentation/widgets/composer/composer_autocomplete_field.dart';
@@ -19,7 +19,7 @@ import 'package:fluxer_app/features/settings/presentation/widgets/operator_pass/
 import 'package:fluxer_app/features/settings/presentation/widgets/profile_local_time_settings_section.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/profile_preview_card.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/wide_settings_content_layout.dart';
-import 'package:fluxer_app/features/settings/providers/user_settings_view_model.dart';
+import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
 import 'package:fluxer_app/features/settings/utils/open_user_billing_settings.dart';
 import 'package:fluxer_app/features/settings/utils/operator_pass_utils.dart';
 import 'package:fluxer_app/features/settings/utils/user_settings_billing_nav.dart';

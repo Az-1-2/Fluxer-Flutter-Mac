@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:fluxer_app/core/build/push_provider_guard.dart';
-import 'package:fluxer_app/core/providers/app_ui_lifecycle_provider.dart';
+import 'package:fluxer_app/core/providers/app/app_ui_lifecycle_provider.dart';
 import 'package:fluxer_app/core/providers/push_provider.dart';
 import 'package:fluxer_app/core/push/android/local_notifications.dart';
 import 'package:fluxer_app/core/push/android/pipeline.dart';
@@ -27,7 +27,7 @@ import 'package:fluxer_app/core/push/unified_push/unified_push_distributor_setup
 import 'package:fluxer_app/core/push/unified_push/unified_push_mobile_device_registration.dart';
 import 'package:fluxer_app/core/router/fluxer_router.dart';
 import 'package:fluxer_app/core/synced_preferences/engine/synced_preferences_store.dart';
-import 'package:fluxer_app/features/settings/providers/sound_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/sound_preferences_provider.dart';
 import 'package:fluxer_app/features/voice/utils/voice_call_ring.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

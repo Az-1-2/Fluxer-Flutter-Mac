@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:fluxer_app/core/api/fluxer_client_provider.dart';
-import 'package:fluxer_app/core/providers/app_startup_provider.dart';
+import 'package:fluxer_app/core/providers/app/app_startup_provider.dart';
 import 'package:fluxer_app/core/providers/database_provider.dart';
 import 'package:fluxer_app/core/push/account/lifecycle.dart';
 import 'package:fluxer_app/core/router/fluxer_router.dart';

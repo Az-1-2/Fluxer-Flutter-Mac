@@ -1,8 +1,8 @@
 import 'package:fluxer_app/core/deep_links/deep_link_handler.dart';
-import 'package:fluxer_app/core/providers/gateway_ready_provider.dart';
-import 'package:fluxer_app/core/providers/gateway_reconnect_provider.dart';
-import 'package:fluxer_app/core/providers/gateway_session_recovery_provider.dart';
-import 'package:fluxer_app/core/providers/splash_exit_allowed_provider.dart';
+import 'package:fluxer_app/core/providers/app/splash_exit_allowed_provider.dart';
+import 'package:fluxer_app/core/providers/gateway/gateway_ready_provider.dart';
+import 'package:fluxer_app/core/providers/gateway/gateway_reconnect_provider.dart';
+import 'package:fluxer_app/core/providers/gateway/gateway_session_recovery_provider.dart';
 import 'package:fluxer_app/core/push/notification/pending_route.dart';
 import 'package:fluxer_app/core/router/fluxer_router.dart';
 import 'package:fluxer_app/core/talker.dart';

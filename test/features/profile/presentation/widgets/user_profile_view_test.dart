@@ -25,7 +25,7 @@ import 'package:fluxer_app/features/profile/providers/user_note_view_model.dart'
 import 'package:fluxer_app/features/profile/providers/user_presence_provider.dart';
 import 'package:fluxer_app/features/profile/providers/user_profile_guild_provider.dart';
 import 'package:fluxer_app/features/profile/providers/user_settings_status_provider.dart';
-import 'package:fluxer_app/features/settings/providers/user_settings_view_model.dart';
+import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
 import 'package:fluxer_app/features/ui/avatar/fluxer_avatar.dart';
 import 'package:fluxer_app/features/ui/status_indicator/fluxer_status_indicator.dart';
 import 'package:fluxer_app/features/ui/toast/fluxer_toast_overlay.dart';

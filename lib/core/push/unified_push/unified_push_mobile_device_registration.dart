@@ -13,7 +13,7 @@ import 'package:fluxer_app/core/database/fluxer_database.dart';
 import 'package:fluxer_app/core/instance/instance_config_snapshot.dart';
 import 'package:fluxer_app/core/instance/instance_endpoint_normalizer.dart';
 import 'package:fluxer_app/core/instance/well_known_compat.dart';
-import 'package:fluxer_app/core/providers/app_ui_lifecycle_provider.dart';
+import 'package:fluxer_app/core/providers/app/app_ui_lifecycle_provider.dart';
 import 'package:fluxer_app/core/providers/database_provider.dart';
 import 'package:fluxer_app/core/push/account/sync_retry.dart';
 import 'package:fluxer_app/core/push/services/unified_push_service.dart';

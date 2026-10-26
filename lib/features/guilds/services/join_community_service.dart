@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluxer_app/core/api/fluxer_client_provider.dart';
-import 'package:fluxer_app/core/providers/well_known_provider.dart';
+import 'package:fluxer_app/core/providers/instance/well_known_provider.dart';
 import 'package:fluxer_app/core/router/navigate_to_content.dart';
 import 'package:fluxer_app/core/router/route_names.dart';
 import 'package:fluxer_app/features/channels/providers/channel_list_view_model.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fluxer_app/core/audio/enums/fluxer_sfx_clip.dart';
 import 'package:fluxer_app/core/audio/sound_effect_policy.dart';
-import 'package:fluxer_app/features/settings/providers/sound_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/sound_preferences_provider.dart';
 import 'package:fluxer_app/features/settings/utils/sound_type_utils.dart';
 
 void main() {

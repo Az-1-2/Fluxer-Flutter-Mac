@@ -6,7 +6,7 @@ import 'package:fluxer_app/features/chat/presentation/widgets/pickers/expression
 import 'package:fluxer_app/features/profile/domain/custom_status_utils.dart';
 import 'package:fluxer_app/features/profile/domain/time_window_presets.dart';
 import 'package:fluxer_app/features/profile/providers/user_status_service.dart';
-import 'package:fluxer_app/features/settings/providers/user_settings_view_model.dart';
+import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
 import 'package:fluxer_app/features/ui/bottom_sheet/fluxer_bottom_sheet.dart';
 import 'package:fluxer_app/features/ui/button/fluxer_button.dart';

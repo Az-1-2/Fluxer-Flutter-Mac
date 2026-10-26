@@ -1,4 +1,4 @@
-import 'package:fluxer_app/features/settings/providers/sound_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/sound_preferences_provider.dart';
 
 const double kDefaultSfxBaseVolume = 0.4;
 const double kDefaultMasterVolumePercent = 100;

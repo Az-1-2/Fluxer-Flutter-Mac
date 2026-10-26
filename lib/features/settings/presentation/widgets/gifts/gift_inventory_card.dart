@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluxer_app/core/premium/current_user_entitlements_provider.dart';
-import 'package:fluxer_app/core/providers/well_known_provider.dart';
+import 'package:fluxer_app/core/providers/instance/well_known_provider.dart';
 import 'package:fluxer_app/core/theme/fluxer_theme_extension.dart';
 import 'package:fluxer_app/features/gifts/services/gift_redeem_service.dart';
 import 'package:fluxer_app/features/gifts/utils/gift_code_utils.dart';

@@ -18,7 +18,7 @@ import 'package:fluxer_app/features/guilds/presentation/widgets/guild_navbar.dar
     show GuildNavbarIconShape, GuildNavbarPill;
 import 'package:fluxer_app/features/guilds/providers/guild_drag_provider.dart'
     show kGuildNavbarWidth;
-import 'package:fluxer_app/features/settings/providers/appearance_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/appearance_preferences_provider.dart';
 import 'package:fluxer_app/features/ui/ui.dart';
 import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 import 'package:fluxer_app/material_ui.dart';

@@ -9,7 +9,7 @@ import 'package:fluxer_app/core/providers/instance_runtime_config_provider.dart'
 import 'package:fluxer_app/core/router/fluxer_router.dart';
 import 'package:fluxer_app/features/auth/providers/instance_selector_provider.dart';
 import 'package:fluxer_app/features/settings/presentation/user_settings_modal.dart';
-import 'package:fluxer_app/features/settings/providers/user_settings_view_model.dart';
+import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
 import 'package:fluxer_app/features/ui/button/fluxer_button.dart';
 import 'package:fluxer_app/features/ui/checkbox/fluxer_checkbox.dart';
 import 'package:fluxer_app/features/ui/input/fluxer_input.dart';

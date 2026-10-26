@@ -12,7 +12,7 @@ import 'package:fluxer_app/core/router/fluxer_router.dart';
 import 'package:fluxer_app/core/theme/fluxer_theme_extension.dart';
 import 'package:fluxer_app/features/channels/providers/channel_providers.dart';
 import 'package:fluxer_app/features/profile/providers/user_presence_provider.dart';
-import 'package:fluxer_app/features/settings/providers/voice_settings_provider.dart';
+import 'package:fluxer_app/features/settings/providers/preferences/voice_settings_provider.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
 import 'package:fluxer_app/features/ui/button/fluxer_button.dart';
 import 'package:fluxer_app/features/ui/button/fluxer_button_size.dart';
