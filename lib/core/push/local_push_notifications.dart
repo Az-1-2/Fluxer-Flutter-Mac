@@ -15,6 +15,7 @@ import 'package:fluxer_app/core/push/push_notification_ids.dart'
         pushGroupSummaryNotificationId,
         pushMessageNotificationId,
         pushNotificationCancelIds;
+import 'package:fluxer_app/core/push/push_notification_instance_media.dart';
 import 'package:fluxer_app/core/push/push_notification_media.dart';
 import 'package:fluxer_app/core/push/push_notification_payload.dart';
 import 'package:fluxer_app/core/push/push_notification_reply.dart';
@@ -347,13 +348,15 @@ final class LocalPushNotifications {
       Map<String, String>.from(payload)
         ..[kLocalNotificationMessageIdKey] = messageId,
     );
+    final PushMediaInstanceUrls mediaEndpoints =
+        await loadPushMediaInstanceUrls(payload['target_user_id']);
     final List<String?> media = await Future.wait<String?>(<Future<String?>>[
       _downloadOptional(
-        pushAuthorAvatarUrl(payload),
+        pushAuthorAvatarUrl(payload, endpoints: mediaEndpoints),
         downloadPushNotificationAvatar,
       ),
       _downloadOptional(
-        pushAttachmentImageUrl(payload),
+        pushAttachmentImageUrl(payload, endpoints: mediaEndpoints),
         downloadPushNotificationImage,
       ),
     ]);
@@ -611,6 +614,7 @@ final class LocalPushNotifications {
     }
     if (defaultTargetPlatform == TargetPlatform.android) {
       await AndroidPushConversationHistoryStore.clearAll();
+      await clearPushNotificationMediaCache();
     }
     try {
       await _plugin.cancelAll();

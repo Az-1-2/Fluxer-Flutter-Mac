@@ -100,9 +100,13 @@ final class AndroidPushConversationHistoryStore {
         (PushConversationLine entry) => entry.messageId == line.messageId,
       );
       if (lineIndex >= 0) {
-        lines[lineIndex] = line;
+        lines[lineIndex] = _mergeConversationLineMedia(
+          line,
+          previous: lines[lineIndex],
+          existing: lines,
+        );
       } else {
-        lines.add(line);
+        lines.add(_inheritSenderAvatar(line, existing: lines));
       }
       while (lines.length > kPushConversationHistoryMaxLines) {
         lines.removeAt(0);
@@ -297,4 +301,60 @@ String? _nonEmpty(String? value) {
     return null;
   }
   return value;
+}
+
+PushConversationLine _inheritSenderAvatar(
+  PushConversationLine line, {
+  required List<PushConversationLine> existing,
+}) {
+  final String? avatarPath =
+      line.avatarPath ?? _avatarPathForSender(line.senderKey, existing);
+  if (avatarPath == line.avatarPath) {
+    return line;
+  }
+  return PushConversationLine(
+    messageId: line.messageId,
+    senderName: line.senderName,
+    senderKey: line.senderKey,
+    body: line.body,
+    timestampMs: line.timestampMs,
+    avatarPath: avatarPath,
+    imagePath: line.imagePath,
+  );
+}
+
+PushConversationLine _mergeConversationLineMedia(
+  PushConversationLine line, {
+  required PushConversationLine previous,
+  required List<PushConversationLine> existing,
+}) {
+  final String? avatarPath =
+      line.avatarPath ??
+      previous.avatarPath ??
+      _avatarPathForSender(line.senderKey, existing);
+  final String? imagePath = line.imagePath ?? previous.imagePath;
+  if (avatarPath == line.avatarPath && imagePath == line.imagePath) {
+    return line;
+  }
+  return PushConversationLine(
+    messageId: line.messageId,
+    senderName: line.senderName,
+    senderKey: line.senderKey,
+    body: line.body,
+    timestampMs: line.timestampMs,
+    avatarPath: avatarPath,
+    imagePath: imagePath,
+  );
+}
+
+String? _avatarPathForSender(
+  String senderKey,
+  List<PushConversationLine> lines,
+) {
+  for (final PushConversationLine line in lines.reversed) {
+    if (line.senderKey == senderKey && line.avatarPath != null) {
+      return line.avatarPath;
+    }
+  }
+  return null;
 }
