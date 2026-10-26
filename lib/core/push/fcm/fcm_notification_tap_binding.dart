@@ -47,6 +47,7 @@ Future<void> _handleFcmNotificationTap(
   Ref ref,
   Map<String, String> payload,
 ) async {
+  Map<String, String> resolvedPayload = payload;
   final String? ciphertext = payload['p'];
   if (ciphertext != null &&
       ciphertext.isNotEmpty &&
@@ -59,7 +60,9 @@ Future<void> _handleFcmNotificationTap(
     if (message == null) {
       return;
     }
-    payload = message.payload;
+    resolvedPayload = message.payload;
   }
-  ref.read(pushNotificationTapHandlerProvider.notifier).handlePayload(payload);
+  ref
+      .read(pushNotificationTapHandlerProvider.notifier)
+      .handlePayload(resolvedPayload);
 }

@@ -15,9 +15,9 @@ String normalizeOperatorPassWallName(String name) {
 }
 
 OperatorPassWallNameProblem? getOperatorPassWallNameProblem(
-  String name,
-  bool optOut,
-) {
+  String name, {
+  required bool optOut,
+}) {
   if (optOut) {
     return null;
   }

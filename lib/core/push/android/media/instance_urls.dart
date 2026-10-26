@@ -11,7 +11,7 @@ final class PushMediaInstanceUrls {
   final String mediaBaseUrl;
   final String staticCdn;
 
-  static PushMediaInstanceUrls official() {
+  factory PushMediaInstanceUrls.official() {
     return const PushMediaInstanceUrls(
       mediaBaseUrl: InstanceEndpoints.defaultMedia,
       staticCdn: InstanceEndpoints.defaultStaticCdn,

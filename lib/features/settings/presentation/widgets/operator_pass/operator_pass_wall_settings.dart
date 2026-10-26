@@ -87,7 +87,7 @@ class _OperatorPassWallSettingsState
       return;
     }
     final OperatorPassWallNameProblem? nextProblem =
-        getOperatorPassWallNameProblem(_nameController.text, _optOut);
+        getOperatorPassWallNameProblem(_nameController.text, optOut: _optOut);
     setState(() => _problem = nextProblem);
     if (nextProblem != null) {
       return;

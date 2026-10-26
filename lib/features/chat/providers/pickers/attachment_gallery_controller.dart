@@ -75,6 +75,8 @@ class AttachmentGalleryController extends _$AttachmentGalleryController {
     return const AttachmentGalleryState();
   }
 
+  // Wired from the panel when scroll dependencies are available
+  // ignore: use_setters_to_change_properties
   void attachScrollController(ScrollController scrollController) {
     _scrollController = scrollController;
   }

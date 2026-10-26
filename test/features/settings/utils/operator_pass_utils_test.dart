@@ -4,15 +4,15 @@ import 'package:fluxer_app/features/settings/utils/commerce/operator_pass_utils.
 void main() {
   test('getOperatorPassWallNameProblem validates name', () {
     expect(
-      getOperatorPassWallNameProblem('', false),
+      getOperatorPassWallNameProblem('', optOut: false),
       OperatorPassWallNameProblem.required,
     );
-    expect(getOperatorPassWallNameProblem('ok', false), isNull);
+    expect(getOperatorPassWallNameProblem('ok', optOut: false), isNull);
     expect(
-      getOperatorPassWallNameProblem('x' * 33, false),
+      getOperatorPassWallNameProblem('x' * 33, optOut: false),
       OperatorPassWallNameProblem.tooLong,
     );
-    expect(getOperatorPassWallNameProblem('', true), isNull);
+    expect(getOperatorPassWallNameProblem('', optOut: true), isNull);
   });
 
   test('normalizeOperatorPassWallName trims and collapses newlines', () {

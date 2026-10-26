@@ -23,7 +23,7 @@ void main() {
   test('does not retry unrelated platform failures', () async {
     var attempts = 0;
     await expectLater(
-      runFluxerSecureStorage<void>(() async {
+      runFluxerSecureStorage<void>(() {
         attempts++;
         throw PlatformException(code: 'not_found');
       }),

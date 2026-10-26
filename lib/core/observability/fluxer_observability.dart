@@ -483,7 +483,9 @@ class FluxerObservability {
         await clearVoiceLifecycleBreadcrumb();
       }
       _trackSessionContext(runtimeInfo);
-    } on Object {}
+    } on Object catch (_) {
+      return;
+    }
   }
 
   void _trackSessionContext(AppRuntimeInfo? runtimeInfo) {
@@ -529,7 +531,9 @@ class FluxerObservability {
       final SharedPreferences preferences =
           await SharedPreferences.getInstance();
       await preferences.setBool(_kObservabilitySessionActiveKey, false);
-    } on Object {}
+    } on Object catch (_) {
+      return;
+    }
   }
 
   void _startRuntimeObservers() {
