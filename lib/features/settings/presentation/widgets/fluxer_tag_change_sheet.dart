@@ -346,7 +346,10 @@ class _FluxerTagChangeContentState
 
     final String message;
     if (expiryDate != null) {
-      final formatted = formatUserMediumDate(expiryDate, l10n.localeName);
+      final formatted = formatUserMediumDate(
+        expiryDate.toLocal(),
+        l10n.localeName,
+      );
       message = l10n.customTagTemporaryBodyWithDate(formatted);
     } else {
       message = l10n.customTagTemporaryBody;
