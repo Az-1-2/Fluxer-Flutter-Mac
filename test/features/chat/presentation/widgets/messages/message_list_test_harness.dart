@@ -550,9 +550,9 @@ List<Override> messageListOverrides({
 
 class InstrumentedChatViewModel extends ChatViewModel {
   InstrumentedChatViewModel(
-    this._initialState, {
+    ChatViewState initialState, {
     this.enableTrimToNewestWindow = false,
-  });
+  }) : _initialState = initialState;
 
   final ChatViewState _initialState;
   final bool enableTrimToNewestWindow;
@@ -701,7 +701,7 @@ class InstrumentedChatViewModel extends ChatViewModel {
 
 class PagingInstrumentedChatViewModel extends InstrumentedChatViewModel {
   PagingInstrumentedChatViewModel(
-    super._initialState, {
+    super.initialState, {
     required List<List<Message>> newerPages,
     super.enableTrimToNewestWindow,
   }) : _newerPages = newerPages.map(List<Message>.from).toList();
