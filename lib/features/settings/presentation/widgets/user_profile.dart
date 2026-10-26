@@ -23,6 +23,7 @@ import 'package:fluxer_app/features/settings/providers/view_models/user_settings
 import 'package:fluxer_app/features/settings/utils/commerce/open_user_billing_settings.dart';
 import 'package:fluxer_app/features/settings/utils/commerce/user_settings_billing_nav.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
+import 'package:fluxer_app/features/ui/icons/plutonium_product_icon.dart';
 import 'package:fluxer_app/features/ui/input/emoji_text_editing_controller.dart';
 import 'package:fluxer_app/features/ui/input/inline_token_text_editing_controller.dart';
 import 'package:fluxer_app/features/ui/ui.dart';
@@ -574,7 +575,7 @@ class _UserProfileState extends ConsumerState<UserProfile> {
                             shouldShowPremiumCommerce &&
                             !state.isLoadingGuildProfile) ...[
                           SizedBox(height: layout.s6),
-                          _buildPerGuildPremiumUpsell(layout, l10n),
+                          _buildPerGuildPremiumUpsell(l10n),
                         ],
                         if (!state.isPerGuildProfile) ...[
                           SizedBox(height: layout.s6),
@@ -712,51 +713,11 @@ class _UserProfileState extends ConsumerState<UserProfile> {
     );
   }
 
-  Widget _buildPerGuildPremiumUpsell(
-    FluxerLayoutTheme layout,
-    FluxerLocalizations l10n,
-  ) {
-    final colors = context.colors;
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: colors.brandPrimary,
-        borderRadius: layout.radiusMd,
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(layout.s3),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PhosphorIcon(
-              PhosphorIconsFill.crown,
-              color: colors.textOnBrandPrimary,
-              size: 16,
-            ),
-            SizedBox(width: layout.s2),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.perGuildPremiumUpsellText,
-                    style: context.textStyles.bodySmall.copyWith(
-                      color: colors.textOnBrandPrimary,
-                      fontSize: 13,
-                      height: 1.4,
-                    ),
-                  ),
-                  SizedBox(height: layout.s2),
-                  FluxerButton.inverted(
-                    onPressed: () => _showPlutoniumSheet(context),
-                    label: l10n.getPlutonium,
-                    size: FluxerButtonSize.small,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+  Widget _buildPerGuildPremiumUpsell(FluxerLocalizations l10n) {
+    return FluxerPlutoniumUpsell(
+      text: l10n.perGuildPremiumUpsellText,
+      buttonSize: FluxerButtonSize.small,
+      onButtonPressed: () => _showPlutoniumSheet(context),
     );
   }
 
@@ -994,8 +955,7 @@ class _UserProfileState extends ConsumerState<UserProfile> {
                       horizontal: layout.s2,
                       vertical: layout.s1_5,
                     ),
-                    child: PhosphorIcon(
-                      PhosphorIconsFill.crown,
+                    child: PlutoniumProductIcon(
                       size: 16,
                       color: colors.textOnBrandPrimary,
                     ),
@@ -1072,9 +1032,6 @@ class _UserProfileState extends ConsumerState<UserProfile> {
     FluxerLayoutTheme layout,
     FluxerLocalizations l10n,
   ) {
-    final colors = context.colors;
-    final textStyles = context.textStyles;
-
     if (!state.isPremium) {
       if (!ref.watch(shouldShowPremiumCommerceProvider)) {
         return const SizedBox.shrink();
@@ -1084,46 +1041,10 @@ class _UserProfileState extends ConsumerState<UserProfile> {
         children: [
           FluxerFieldLabel(l10n.bannerLabel),
           SizedBox(height: layout.s2),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: colors.brandPrimary,
-              borderRadius: layout.radiusMd,
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(layout.s3),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 2, right: layout.s2),
-                    child: PhosphorIcon(
-                      PhosphorIconsFill.crown,
-                      size: 16,
-                      color: colors.textOnBrandPrimary,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.bannerPlutoniumUpsell,
-                          style: textStyles.bodySmall.copyWith(
-                            color: colors.textOnBrandPrimary,
-                          ),
-                        ),
-                        SizedBox(height: layout.s2),
-                        FluxerButton.inverted(
-                          onPressed: () => _showPlutoniumSheet(context),
-                          label: l10n.getPlutonium,
-                          size: FluxerButtonSize.small,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          FluxerPlutoniumUpsell(
+            text: l10n.bannerPlutoniumUpsell,
+            buttonSize: FluxerButtonSize.small,
+            onButtonPressed: () => _showPlutoniumSheet(context),
           ),
         ],
       );

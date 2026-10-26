@@ -12,6 +12,7 @@ import 'package:fluxer_app/features/settings/utils/commerce/user_settings_billin
 import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_nav_l10n.dart';
 import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_search.dart';
 import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_staff_only_utils.dart';
+import 'package:fluxer_app/features/ui/icons/plutonium_product_icon.dart';
 import 'package:fluxer_app/features/ui/ui.dart';
 import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 import 'package:fluxer_app/material_ui.dart';
@@ -169,7 +170,7 @@ const _userSettingsDesktopNavBilling = [
   UserSettingsDesktopNavEntry.separator(UserSettingsNavGroup.billing),
   UserSettingsDesktopNavEntry.link(
     UserSettingsSection.fluxerPlutonium,
-    icon: PhosphorIconsFill.crown,
+    icon: kPlutoniumProductIcon,
   ),
   UserSettingsDesktopNavEntry.link(
     UserSettingsSection.giftsAndCodes,
@@ -391,7 +392,7 @@ List<FluxerSettingsNavGroup> buildUserSettingsMobileNavGroups({
       FluxerSettingsNavGroup(
         label: userSettingsNavGroupLabel(l10n, UserSettingsNavGroup.billing),
         items: [
-          link(UserSettingsSection.fluxerPlutonium, PhosphorIconsFill.crown),
+          link(UserSettingsSection.fluxerPlutonium, kPlutoniumProductIcon),
           if (showGifts)
             link(UserSettingsSection.giftsAndCodes, PhosphorIconsFill.gift),
         ],
