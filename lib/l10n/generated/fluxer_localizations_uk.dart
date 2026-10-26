@@ -6243,6 +6243,11 @@ class FluxerLocalizationsUk extends FluxerLocalizations {
       'Вийти з повноекранного режиму';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Ви транслюєте';
 
   @override

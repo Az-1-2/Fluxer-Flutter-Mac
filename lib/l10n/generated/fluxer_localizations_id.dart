@@ -6197,6 +6197,11 @@ class FluxerLocalizationsId extends FluxerLocalizations {
   String get voiceScreenShareExitFullscreenTooltip => 'Keluar dari layar penuh';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Anda sedang siaran';
 
   @override

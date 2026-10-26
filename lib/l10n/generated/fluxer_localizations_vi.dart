@@ -6198,6 +6198,11 @@ class FluxerLocalizationsVi extends FluxerLocalizations {
   String get voiceScreenShareExitFullscreenTooltip => 'Thoát toàn màn hình';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Bạn đang phát sóng';
 
   @override

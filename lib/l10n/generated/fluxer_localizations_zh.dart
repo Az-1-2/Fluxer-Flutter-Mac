@@ -5860,6 +5860,11 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
   String get voiceScreenShareExitFullscreenTooltip => '退出全屏';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => '你正在直播';
 
   @override

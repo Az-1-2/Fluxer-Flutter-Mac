@@ -6252,6 +6252,11 @@ class FluxerLocalizationsHu extends FluxerLocalizations {
       'Kilépés a teljes képernyőből';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Te közvetítesz';
 
   @override

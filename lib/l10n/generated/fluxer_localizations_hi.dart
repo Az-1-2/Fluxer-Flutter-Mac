@@ -6197,6 +6197,11 @@ class FluxerLocalizationsHi extends FluxerLocalizations {
       'फ़ुल स्क्रीन से बाहर निकलें';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'आप प्रसारण कर रहे हैं';
 
   @override

@@ -5972,6 +5972,11 @@ class FluxerLocalizationsKo extends FluxerLocalizations {
   String get voiceScreenShareExitFullscreenTooltip => '전체 화면 종료';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => '방송 중입니다';
 
   @override

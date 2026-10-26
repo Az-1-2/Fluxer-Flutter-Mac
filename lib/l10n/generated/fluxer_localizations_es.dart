@@ -6271,6 +6271,11 @@ class FluxerLocalizationsEs extends FluxerLocalizations {
       'Salir de pantalla completa';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Estás transmitiendo';
 
   @override

@@ -6239,6 +6239,11 @@ class FluxerLocalizationsRo extends FluxerLocalizations {
       'Ieși din ecranul complet';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Transmiteți';
 
   @override

@@ -6250,6 +6250,11 @@ class FluxerLocalizationsBg extends FluxerLocalizations {
   String get voiceScreenShareExitFullscreenTooltip => 'Изход от цял екран';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Излъчвате';
 
   @override

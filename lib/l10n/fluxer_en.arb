@@ -7916,6 +7916,15 @@
     "@voiceScreenShareExitFullscreenTooltip": {
         "description": "Tooltip for leaving full screen while watching a screen share."
     },
+    "voiceVideoZoomLevel": "Zoom {scale}",
+    "@voiceVideoZoomLevel": {
+        "description": "Accessibility label for the fullscreen call video pinch-zoom level indicator.",
+        "placeholders": {
+            "scale": {
+                "type": "String"
+            }
+        }
+    },
     "voiceOwnScreenShareTitle": "You are broadcasting",
     "@voiceOwnScreenShareTitle": {
         "description": "Title on the participant's own screen-share tile when they are sharing their screen."

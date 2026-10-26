@@ -6270,6 +6270,11 @@ class FluxerLocalizationsEl extends FluxerLocalizations {
   String get voiceScreenShareExitFullscreenTooltip => 'Έξοδος από πλήρη οθόνη';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Προβάλλετε';
 
   @override

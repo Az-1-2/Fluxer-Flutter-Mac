@@ -6250,6 +6250,11 @@ class FluxerLocalizationsRu extends FluxerLocalizations {
       'Выйти из полноэкранного режима';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Вы транслируете';
 
   @override

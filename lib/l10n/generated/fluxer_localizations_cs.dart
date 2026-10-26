@@ -6220,6 +6220,11 @@ class FluxerLocalizationsCs extends FluxerLocalizations {
       'Ukončit režim celé obrazovky';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Vysíláte';
 
   @override

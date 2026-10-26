@@ -6227,6 +6227,11 @@ class FluxerLocalizationsNl extends FluxerLocalizations {
   String get voiceScreenShareExitFullscreenTooltip => 'Volledig scherm sluiten';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'Je zendt uit';
 
   @override

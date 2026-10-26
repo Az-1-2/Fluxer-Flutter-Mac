@@ -6162,6 +6162,11 @@ class FluxerLocalizationsTh extends FluxerLocalizations {
   String get voiceScreenShareExitFullscreenTooltip => 'ออกจากโหมดเต็มหน้าจอ';
 
   @override
+  String voiceVideoZoomLevel(String scale) {
+    return 'Zoom $scale';
+  }
+
+  @override
   String get voiceOwnScreenShareTitle => 'คุณกำลังถ่ายทอดสด';
 
   @override

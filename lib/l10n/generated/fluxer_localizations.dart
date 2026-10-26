@@ -3386,7 +3386,7 @@ abstract class FluxerLocalizations {
   /// **'Change username'**
   String get changeFluxerTag;
 
-  /// Tooltip on the crown upsell button next to the username button.
+  /// Tooltip on the Plutonium upsell button next to the username button.
   ///
   /// In en, this message translates to:
   /// **'Customize your 4-digit tag (#{discriminator}) to your liking with Plutonium'**
@@ -10094,6 +10094,12 @@ abstract class FluxerLocalizations {
   /// In en, this message translates to:
   /// **'Exit full screen'**
   String get voiceScreenShareExitFullscreenTooltip;
+
+  /// Accessibility label for the fullscreen call video pinch-zoom level indicator.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom {scale}'**
+  String voiceVideoZoomLevel(String scale);
 
   /// Title on the participant's own screen-share tile when they are sharing their screen.
   ///
