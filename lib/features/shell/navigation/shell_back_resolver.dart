@@ -66,5 +66,8 @@ ShellBackAction resolveShellBackAction({
     }
     return ShellBackAction.closeDrawer;
   }
+  if (isThreadChat) {
+    return ShellBackAction.leaveChat;
+  }
   return ShellBackAction.revealDrawer;
 }

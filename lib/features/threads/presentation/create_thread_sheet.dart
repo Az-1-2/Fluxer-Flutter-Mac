@@ -20,6 +20,7 @@ import 'package:fluxer_app/features/chat/providers/messages/message_references_p
 import 'package:fluxer_app/features/mature_content/providers/mature_content_agreements_provider.dart';
 import 'package:fluxer_app/features/threads/data/threads_repository.dart';
 import 'package:fluxer_app/features/threads/domain/thread_channel.dart';
+import 'package:fluxer_app/features/threads/providers/thread_entered_from_parent_provider.dart';
 import 'package:fluxer_app/features/threads/providers/thread_ui_providers.dart';
 import 'package:fluxer_app/features/threads/utils/thread_actions.dart';
 import 'package:fluxer_app/features/ui/ui.dart';
@@ -337,6 +338,9 @@ class _CreateThreadBodyState extends ConsumerState<_CreateThreadBody> {
     if (!mounted || !hostContext.mounted) {
       return;
     }
+    widget.hostRef
+        .read(threadEnteredFromParentProvider.notifier)
+        .enter(threadId, fromParent: true);
     await navigateToChannelContent(
       context: hostContext,
       ref: widget.hostRef,

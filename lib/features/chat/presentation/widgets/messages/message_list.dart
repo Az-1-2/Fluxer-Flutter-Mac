@@ -3494,6 +3494,7 @@ class _MessageListState extends ConsumerState<MessageList> {
                     ref,
                     guildId: guildId,
                     threadId: message.messageReference?.channelId ?? '',
+                    fromParent: true,
                   ),
                 )
               : null,

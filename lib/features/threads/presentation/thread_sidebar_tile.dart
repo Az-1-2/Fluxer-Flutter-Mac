@@ -124,7 +124,9 @@ class ThreadSidebarTile extends ConsumerWidget {
                   mentionCount: showMentionBadge ? mentionCount : 0,
                   isMuted: muted,
                 ),
-                onTap: () => unawaited(openThread(context, ref, thread)),
+                onTap: () => unawaited(
+                  openThread(context, ref, thread, fromParent: false),
+                ),
                 onLongPress: () =>
                     unawaited(showThreadMenuSheet(context, ref, thread)),
                 onSecondaryTapUp: (_) =>

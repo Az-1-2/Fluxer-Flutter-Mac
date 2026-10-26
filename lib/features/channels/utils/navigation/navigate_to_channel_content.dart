@@ -186,13 +186,11 @@ Future<void> openGuildChannelContent({
             isThread: channel.isThread,
           );
     }
-    if (isAnnouncementConvertibleChannel(channel.type) || channel.isThread) {
-      unawaited(
-        ref
-            .read(chatViewModelProvider.notifier)
-            .switchChannel(channel.id, targetMessageId: targetMessageId),
-      );
-    }
+    switchChatAheadOfNavigation(
+      ref.container,
+      channel,
+      targetMessageId: targetMessageId,
+    );
     if (context.mounted) {
       navigateToContent(context, chatPath);
       return;
@@ -294,6 +292,22 @@ Future<void> openGuildChannelContent({
   }
 
   recordAndNavigate();
+}
+
+/// Switches the chat window before navigation, for channels with a chat view.
+void switchChatAheadOfNavigation(
+  ProviderContainer container,
+  Channel channel, {
+  String? targetMessageId,
+}) {
+  if (!isAnnouncementConvertibleChannel(channel.type) && !channel.isThread) {
+    return;
+  }
+  unawaited(
+    container
+        .read(chatViewModelProvider.notifier)
+        .switchChannel(channel.id, targetMessageId: targetMessageId),
+  );
 }
 
 Future<Channel?> loadGuildChannelById(WidgetRef ref, String channelId) async {

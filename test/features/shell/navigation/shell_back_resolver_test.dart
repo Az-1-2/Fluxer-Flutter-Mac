@@ -206,6 +206,35 @@ void main() {
       );
     });
 
+    test('phone thread chat entered from parent leaves to the parent', () {
+      expect(
+        resolveShellBackAction(
+          hasPopupOverlay: false,
+          hasManualGestureBlock: false,
+          hasExpressionPanelOpen: false,
+          hasChannelDetailsDrawerOpen: false,
+          revealSide: RevealSide.main,
+          shellLocation: '/channels/guild-1/thread-1',
+          isThreadChat: true,
+        ),
+        ShellBackAction.leaveChat,
+      );
+    });
+
+    test('phone thread chat entered from the list reveals the drawer', () {
+      expect(
+        resolveShellBackAction(
+          hasPopupOverlay: false,
+          hasManualGestureBlock: false,
+          hasExpressionPanelOpen: false,
+          hasChannelDetailsDrawerOpen: false,
+          revealSide: RevealSide.main,
+          shellLocation: '/channels/guild-1/thread-1',
+        ),
+        ShellBackAction.revealDrawer,
+      );
+    });
+
     test('channel details drawer closes before guild drawer reveal', () {
       expect(
         resolveShellBackAction(
