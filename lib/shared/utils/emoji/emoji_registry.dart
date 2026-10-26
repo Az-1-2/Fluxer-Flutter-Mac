@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:fluxer_app/shared/utils/emoji_search.dart';
-import 'package:fluxer_app/shared/utils/emoji_utils.dart'
+import 'package:fluxer_app/shared/utils/emoji/emoji_search.dart';
+import 'package:fluxer_app/shared/utils/emoji/emoji_utils.dart'
     show kSkinToneSurrogates;
 
 class EmojiEntry {

@@ -8,9 +8,9 @@ import 'package:fluxer_app/features/channels/domain/channel.dart';
 import 'package:fluxer_app/features/channels/domain/guild_channel_ordering.dart';
 import 'package:fluxer_app/features/chat/providers/core/chat_providers.dart';
 import 'package:fluxer_app/features/dm/providers/dm_providers.dart';
-import 'package:fluxer_app/features/guilds/utils/invitable_channel.dart';
-import 'package:fluxer_app/features/guilds/utils/invite_code.dart';
-import 'package:fluxer_app/features/settings/utils/guild_invites_utils.dart';
+import 'package:fluxer_app/features/guilds/utils/invites/invitable_channel.dart';
+import 'package:fluxer_app/features/guilds/utils/invites/invite_code.dart';
+import 'package:fluxer_app/features/settings/utils/guild/guild_invites_utils.dart';
 import 'package:fluxer_dart/export.dart' hide ChannelType;
 
 const int kDefaultInviteMaxAgeSeconds = 604800;

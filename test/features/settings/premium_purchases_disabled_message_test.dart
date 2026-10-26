@@ -12,9 +12,9 @@ import 'package:fluxer_app/core/theme/themes/dark.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/plutonium/store/plutonium_store_bar.dart';
 import 'package:fluxer_app/features/settings/providers/commerce/plutonium_store_provider.dart';
 import 'package:fluxer_app/features/settings/services/premium_checkout_service.dart';
-import 'package:fluxer_app/features/settings/utils/plutonium_store_bar_mode.dart';
-import 'package:fluxer_app/features/settings/utils/premium_purchases_disabled_l10n.dart';
-import 'package:fluxer_app/features/settings/utils/premium_subscription_status.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/plutonium_store_bar_mode.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/premium_purchases_disabled_l10n.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/premium_subscription_status.dart';
 import 'package:fluxer_app/material_ui.dart';
 import 'package:fluxer_dart/export.dart';
 

@@ -1,5 +1,5 @@
 import 'package:fluxer_app/core/media/fluxer_media_cdn.dart';
-import 'package:fluxer_app/shared/utils/emoji_registry.dart';
+import 'package:fluxer_app/shared/utils/emoji/emoji_registry.dart';
 
 const _kTwemojiVersion = '2';
 

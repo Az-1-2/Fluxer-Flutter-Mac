@@ -11,10 +11,10 @@ import 'package:fluxer_app/features/settings/presentation/widgets/wide_settings_
 import 'package:fluxer_app/features/settings/providers/commerce/premium_settings_state_provider.dart';
 import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
 import 'package:fluxer_app/features/settings/services/premium_checkout_service.dart';
-import 'package:fluxer_app/features/settings/utils/open_user_billing_settings.dart';
-import 'package:fluxer_app/features/settings/utils/premium_formatting.dart';
-import 'package:fluxer_app/features/settings/utils/premium_subscription_manage.dart';
-import 'package:fluxer_app/features/settings/utils/premium_subscription_status.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/open_user_billing_settings.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/premium_formatting.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/premium_subscription_manage.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/premium_subscription_status.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
 import 'package:fluxer_app/features/shell/providers/user/current_user_private_provider.dart';
 import 'package:fluxer_app/features/ui/bottom_sheet/fluxer_confirm_sheet.dart';

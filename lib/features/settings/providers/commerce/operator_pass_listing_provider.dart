@@ -3,7 +3,7 @@ import 'package:fluxer_app/core/instance/instance_runtime_config.dart';
 import 'package:fluxer_app/core/providers/instance/instance_runtime_config_provider.dart';
 import 'package:fluxer_app/features/profile/providers/own_profile_badges_provider.dart';
 import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
-import 'package:fluxer_app/features/settings/utils/operator_pass_utils.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/operator_pass_utils.dart';
 import 'package:fluxer_app/shared/providers/user_profile.dart';
 import 'package:fluxer_dart/export.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

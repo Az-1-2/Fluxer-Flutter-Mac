@@ -20,9 +20,9 @@ import 'package:fluxer_app/features/settings/presentation/widgets/profile_local_
 import 'package:fluxer_app/features/settings/presentation/widgets/profile_preview_card.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/wide_settings_content_layout.dart';
 import 'package:fluxer_app/features/settings/providers/view_models/user_settings_view_model.dart';
-import 'package:fluxer_app/features/settings/utils/open_user_billing_settings.dart';
-import 'package:fluxer_app/features/settings/utils/operator_pass_utils.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_billing_nav.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/open_user_billing_settings.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/operator_pass_utils.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/user_settings_billing_nav.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
 import 'package:fluxer_app/features/ui/input/emoji_text_editing_controller.dart';
 import 'package:fluxer_app/features/ui/input/inline_token_text_editing_controller.dart';

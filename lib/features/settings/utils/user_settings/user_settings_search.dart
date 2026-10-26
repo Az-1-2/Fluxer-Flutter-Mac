@@ -2,10 +2,10 @@ import 'package:fluxer_app/core/instance/instance_constants.dart';
 import 'package:fluxer_app/core/platform/alternate_app_icon_settings.dart';
 import 'package:fluxer_app/core/platform/fluxer_platform.dart';
 import 'package:fluxer_app/features/settings/domain/user_settings_section.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_billing_utils.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_field_registry.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_search_index.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_staff_only_utils.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/user_settings_billing_utils.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_field_registry.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_search_index.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_staff_only_utils.dart';
 import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 
 final class UserSettingsSearchHit {

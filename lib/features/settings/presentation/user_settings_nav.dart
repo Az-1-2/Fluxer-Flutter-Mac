@@ -8,10 +8,10 @@ import 'package:fluxer_app/features/settings/domain/user_settings_nav_group.dart
 import 'package:fluxer_app/features/settings/domain/user_settings_section.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/settings_fluxer_logo_icon.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/settings_sidebar.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_billing_utils.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_nav_l10n.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_search.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_staff_only_utils.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/user_settings_billing_utils.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_nav_l10n.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_search.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_staff_only_utils.dart';
 import 'package:fluxer_app/features/ui/ui.dart';
 import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 import 'package:fluxer_app/material_ui.dart';

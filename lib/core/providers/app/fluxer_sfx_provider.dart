@@ -18,9 +18,9 @@ import 'package:fluxer_app/features/profile/domain/presence_notification_policy.
 import 'package:fluxer_app/features/profile/providers/user_settings_status_provider.dart';
 import 'package:fluxer_app/features/settings/providers/preferences/notification_preferences_provider.dart';
 import 'package:fluxer_app/features/settings/providers/preferences/sound_preferences_provider.dart';
-import 'package:fluxer_app/features/settings/utils/sound_sfx_playback.dart';
-import 'package:fluxer_app/features/settings/utils/sound_type_utils.dart';
-import 'package:fluxer_app/features/settings/utils/sound_volume_utils.dart';
+import 'package:fluxer_app/features/settings/utils/sound/sound_sfx_playback.dart';
+import 'package:fluxer_app/features/settings/utils/sound/sound_type_utils.dart';
+import 'package:fluxer_app/features/settings/utils/sound/sound_volume_utils.dart';
 import 'package:fluxer_app/features/voice/providers/pending_incoming_voice_calls_provider.dart';
 import 'package:fluxer_app/features/voice/utils/voice_callkit_policy.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

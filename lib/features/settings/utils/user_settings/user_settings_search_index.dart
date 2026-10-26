@@ -1,6 +1,6 @@
 import 'package:fluxer_app/features/settings/domain/user_settings_section.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_field_registry.dart';
-import 'package:fluxer_app/features/settings/utils/user_settings_nav_l10n.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_field_registry.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/user_settings_nav_l10n.dart';
 import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 
 typedef UserSettingsSearchLabel =

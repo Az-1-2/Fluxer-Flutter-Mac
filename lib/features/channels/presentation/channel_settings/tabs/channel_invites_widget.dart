@@ -12,7 +12,7 @@ import 'package:fluxer_app/features/settings/domain/guild/guild_invite_entry.dar
 import 'package:fluxer_app/features/settings/domain/guild/guild_invites_state.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/guild/invites/guild_disable_invites_button.dart';
 import 'package:fluxer_app/features/settings/presentation/widgets/guild/invites/guild_invites_list_item.dart';
-import 'package:fluxer_app/features/settings/utils/guild_invites_utils.dart';
+import 'package:fluxer_app/features/settings/utils/guild/guild_invites_utils.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
 import 'package:fluxer_app/features/ui/bottom_sheet/fluxer_bottom_sheet.dart';
 import 'package:fluxer_app/features/ui/bottom_sheet/fluxer_confirm_sheet.dart';

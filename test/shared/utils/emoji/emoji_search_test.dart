@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fluxer_app/shared/utils/emoji_search.dart';
+import 'package:fluxer_app/shared/utils/emoji/emoji_search.dart';
 
 int? tierOf(
   List<String> names,

@@ -1,4 +1,4 @@
-import 'package:fluxer_app/features/settings/utils/premium_subscription_status.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/premium_subscription_status.dart';
 
 enum PremiumStoreBarMode { subscribe, manage, visionary, gift, waiting }
 

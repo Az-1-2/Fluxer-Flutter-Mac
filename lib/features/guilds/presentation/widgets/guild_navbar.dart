@@ -78,8 +78,8 @@ import 'package:fluxer_app/features/guilds/providers/visible_unavailable_guild_c
 import 'package:fluxer_app/features/guilds/utils/guild_folder_icon.dart';
 import 'package:fluxer_app/features/guilds/utils/guild_folder_menu_actions.dart';
 import 'package:fluxer_app/features/guilds/utils/guild_settings_actions.dart';
-import 'package:fluxer_app/features/guilds/utils/invite_people_actions.dart';
-import 'package:fluxer_app/features/guilds/utils/invite_people_recipients.dart';
+import 'package:fluxer_app/features/guilds/utils/invites/invite_people_actions.dart';
+import 'package:fluxer_app/features/guilds/utils/invites/invite_people_recipients.dart';
 import 'package:fluxer_app/features/guilds/utils/leave_guild_action.dart';
 import 'package:fluxer_app/features/settings/domain/guild/guild_settings_tab.dart';
 import 'package:fluxer_app/features/settings/presentation/user_settings_modal.dart';

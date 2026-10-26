@@ -1,4 +1,4 @@
-import 'package:fluxer_app/features/guilds/utils/invite_link_parser.dart';
+import 'package:fluxer_app/features/guilds/utils/invites/invite_link_parser.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -9,7 +9,7 @@ import 'package:fluxer_app/features/dm/domain/group_dm_utils.dart';
 import 'package:fluxer_app/features/dm/providers/group_dm_invites_provider.dart';
 import 'package:fluxer_app/features/settings/domain/guild/guild_invite_entry.dart';
 import 'package:fluxer_app/features/settings/domain/guild/guild_invites_state.dart';
-import 'package:fluxer_app/features/settings/utils/guild_invites_utils.dart';
+import 'package:fluxer_app/features/settings/utils/guild/guild_invites_utils.dart';
 import 'package:fluxer_app/features/ui/ui.dart';
 import 'package:fluxer_app/l10n/generated/fluxer_localizations.dart';
 import 'package:fluxer_app/material_ui.dart';

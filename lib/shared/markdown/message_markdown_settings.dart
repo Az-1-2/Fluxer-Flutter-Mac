@@ -6,7 +6,7 @@ import 'package:fluxer_app/features/settings/domain/search_provider_engine.dart'
 import 'package:fluxer_app/features/settings/providers/preferences/advanced_preferences_provider.dart';
 import 'package:fluxer_app/features/settings/providers/preferences/appearance_preferences_provider.dart';
 import 'package:fluxer_app/features/settings/providers/preferences/time_format_providers.dart';
-import 'package:fluxer_app/features/settings/utils/search_selection_context_menu.dart';
+import 'package:fluxer_app/features/settings/utils/user_settings/search_selection_context_menu.dart';
 import 'package:fluxer_markdown/fluxer_markdown.dart';
 
 @immutable

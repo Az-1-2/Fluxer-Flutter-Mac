@@ -12,7 +12,7 @@ import 'package:fluxer_app/features/guilds/domain/guild.dart';
 import 'package:fluxer_app/features/guilds/providers/guild_providers.dart';
 import 'package:fluxer_app/features/guilds/providers/invite_accept_provider.dart';
 import 'package:fluxer_app/features/guilds/services/join_community_service.dart';
-import 'package:fluxer_app/features/guilds/utils/guild_invite_action_state.dart';
+import 'package:fluxer_app/features/guilds/utils/invites/guild_invite_action_state.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
 import 'package:fluxer_app/features/shell/utils/shell_popup_navigation.dart';
 import 'package:fluxer_app/features/ui/avatar/fluxer_guild_acronym.dart';

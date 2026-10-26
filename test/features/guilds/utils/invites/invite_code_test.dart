@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fluxer_app/features/guilds/utils/invite_code.dart';
+import 'package:fluxer_app/features/guilds/utils/invites/invite_code.dart';
 import 'package:fluxer_dart/export.dart';
 
 void main() {

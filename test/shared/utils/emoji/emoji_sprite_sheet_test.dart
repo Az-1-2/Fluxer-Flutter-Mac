@@ -4,9 +4,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fluxer_app/material_ui.dart';
-import 'package:fluxer_app/shared/utils/emoji_sprite_sheet.dart';
+import 'package:fluxer_app/shared/utils/emoji/emoji_sprite_sheet.dart';
 
-import '../../helpers/recording_asset_channel.dart';
+import '../../../helpers/recording_asset_channel.dart';
 
 const String _kSpritePrefix = 'assets/emoji-sprites/';
 const String _kWave = '\u{1F44B}';

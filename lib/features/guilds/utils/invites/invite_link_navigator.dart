@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:fluxer_app/features/guilds/presentation/modals/invite_accept_modal.dart';
-import 'package:fluxer_app/features/guilds/utils/invite_link_parser.dart';
+import 'package:fluxer_app/features/guilds/utils/invites/invite_link_parser.dart';
 import 'package:fluxer_app/material_ui.dart';
 
 bool isInviteLink(String url) {

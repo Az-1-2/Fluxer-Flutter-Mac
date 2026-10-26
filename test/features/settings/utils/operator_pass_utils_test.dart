@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fluxer_app/features/settings/utils/operator_pass_utils.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/operator_pass_utils.dart';
 
 void main() {
   test('getOperatorPassWallNameProblem validates name', () {
