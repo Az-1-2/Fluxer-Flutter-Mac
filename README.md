@@ -1,5 +1,5 @@
 > [!CAUTION]
-> This client is experimental and is not recommended for daily use in its current state. These should be noted before using it. This is not officially from Fluxer and is merely code from upstream repackaged into a working mac client. 
+> This client is experimental and is not recommended for daily use in its current state. These should be noted before using it. This is not officially from Fluxer and is merely code from upstream repackaged into a working Mac client. 
 >
 
 # Client
