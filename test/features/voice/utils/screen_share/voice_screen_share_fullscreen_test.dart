@@ -19,6 +19,17 @@ void main() {
       );
     });
 
+    test('user expanded opens fullscreen without a watched stream', () {
+      expect(
+        voiceScreenShareShouldExpand(
+          isWatchingScreenShare: false,
+          landscape: false,
+          prefs: const VoiceScreenShareFullscreenPrefs(userExpanded: true),
+        ),
+        isTrue,
+      );
+    });
+
     test('landscape auto expand while watching', () {
       expect(
         voiceScreenShareShouldExpand(
