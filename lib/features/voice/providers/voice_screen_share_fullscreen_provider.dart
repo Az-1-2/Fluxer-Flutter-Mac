@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fluxer_app/features/voice/providers/voice_screen_share_watch_tile_provider.dart';
-import 'package:fluxer_app/features/voice/utils/voice_screen_share_fullscreen.dart';
+import 'package:fluxer_app/features/voice/utils/screen_share/screen_share_fullscreen.dart';
 
 class VoiceScreenShareFullscreen
     extends Notifier<VoiceScreenShareFullscreenPrefs> {
