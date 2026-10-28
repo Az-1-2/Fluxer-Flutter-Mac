@@ -187,6 +187,22 @@ class _ContextMenuPage extends ConsumerWidget {
   List<Widget> _buildItems(BuildContext context, WidgetRef ref) {
     final FluxerLocalizations l10n = FluxerLocalizations.of(context);
     void pop(MessageAction action) => Navigator.of(context).pop(action);
+    if (message.hasFailed) {
+      return [
+        _MenuItem(
+          label: l10n.retry,
+          icon: PhosphorIconsBold.arrowClockwise,
+          onTap: () => pop(MessageAction.retry),
+        ),
+        const _MenuDivider(),
+        _MenuItem(
+          label: l10n.chatMessageDeleteFailed,
+          icon: PhosphorIconsBold.trash,
+          isDanger: true,
+          onTap: () => pop(MessageAction.deleteFailed),
+        ),
+      ];
+    }
     final bool showShortcuts =
         !isTouchPrimaryInput(ref) &&
         ref.watch(
@@ -209,8 +225,7 @@ class _ContextMenuPage extends ConsumerWidget {
       appearancePreferencesProvider.select((s) => s.showSuppressEmbedsButton),
     );
 
-    final bool canReact =
-        !message.hasFailed && !message.isSending && permissions.canAddReactions;
+    final bool canReact = !message.isSending && permissions.canAddReactions;
 
     return [
       if (canReact)
@@ -244,12 +259,6 @@ class _ContextMenuPage extends ConsumerWidget {
           label: l10n.chatMessageTranslate,
           icon: PhosphorIconsBold.translate,
           onTap: () => pop(MessageAction.translate),
-        ),
-      if (message.hasFailed)
-        _MenuItem(
-          label: l10n.retry,
-          icon: PhosphorIconsBold.arrowClockwise,
-          onTap: () => pop(MessageAction.retry),
         ),
       const _MenuDivider(),
       if (permissions.isOwnMessage)
@@ -334,15 +343,6 @@ class _ContextMenuPage extends ConsumerWidget {
           icon: PhosphorIconsBold.trash,
           isDanger: true,
           onTap: () => pop(MessageAction.delete),
-        ),
-      ],
-      if (message.hasFailed) ...[
-        const _MenuDivider(),
-        _MenuItem(
-          label: l10n.chatMessageDeleteFailed,
-          icon: PhosphorIconsBold.trash,
-          isDanger: true,
-          onTap: () => pop(MessageAction.deleteFailed),
         ),
       ],
       const _MenuDivider(),
