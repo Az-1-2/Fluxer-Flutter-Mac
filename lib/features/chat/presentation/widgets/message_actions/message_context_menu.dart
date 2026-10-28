@@ -194,6 +194,12 @@ class _ContextMenuPage extends ConsumerWidget {
           icon: PhosphorIconsBold.arrowClockwise,
           onTap: () => pop(MessageAction.retry),
         ),
+        if (message.content.isNotEmpty)
+          _MenuItem(
+            label: l10n.chatMessageCopyText,
+            icon: PhosphorIconsBold.copy,
+            onTap: () => pop(MessageAction.copyText),
+          ),
         const _MenuDivider(),
         _MenuItem(
           label: l10n.chatMessageDeleteFailed,
