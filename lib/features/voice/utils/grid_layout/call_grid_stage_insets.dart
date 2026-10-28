@@ -29,7 +29,7 @@ EdgeInsets voiceCallGridStageInsets(
   if (screenShareExpanded) {
     return EdgeInsets.zero;
   }
-  final EdgeInsets systemInsets = hostedUiSystemInsets(context);
+  final EdgeInsets systemInsets = voiceStageSystemInsets(context);
   if (!isHandheldVoiceOverlay(context)) {
     return systemInsets;
   }
@@ -40,4 +40,33 @@ EdgeInsets voiceCallGridStageInsets(
         )
       : systemInsets.bottom;
   return systemInsets.copyWith(bottom: bottom);
+}
+
+EdgeInsets voiceStageSystemInsets(BuildContext context) {
+  return resolveVoiceStageSystemInsets(
+    padding: MediaQuery.paddingOf(context),
+    viewPadding: MediaQuery.viewPaddingOf(context),
+    iphoneDuoHostedUi: usesIphoneDuoHostedUi(context),
+  );
+}
+
+EdgeInsets resolveVoiceStageSystemInsets({
+  required EdgeInsets padding,
+  required EdgeInsets viewPadding,
+  required bool iphoneDuoHostedUi,
+}) {
+  if (iphoneDuoHostedUi) {
+    return EdgeInsets.fromLTRB(
+      padding.left,
+      math.max(padding.top, viewPadding.top),
+      padding.right,
+      math.max(padding.bottom, viewPadding.bottom),
+    );
+  }
+  return EdgeInsets.fromLTRB(
+    math.max(padding.left, viewPadding.left),
+    math.max(padding.top, viewPadding.top),
+    math.max(padding.right, viewPadding.right),
+    math.max(padding.bottom, viewPadding.bottom),
+  );
 }
