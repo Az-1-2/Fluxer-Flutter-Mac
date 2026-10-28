@@ -253,15 +253,13 @@ class _ChannelLayoutState extends ConsumerState<ChannelLayout> {
           ),
     );
 
-    final Color shellBackground = channelChatShellBackgroundColor(context);
-
     return HostedUiChatScaffold(
       channelId: widget.channelId,
       child: MobileChatBackScope(
         child: HostedUiBackgroundBleed(
-          color: shellBackground,
+          color: channelChatHostedUiBleedColor(context),
           child: ColoredBox(
-            color: shellBackground,
+            color: channelChatShellBackgroundColor(context),
             child: SafeArea(
               bottom: reserveBottomSafeArea,
               child: Stack(
