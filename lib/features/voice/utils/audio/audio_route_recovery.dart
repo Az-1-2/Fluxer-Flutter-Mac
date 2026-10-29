@@ -14,10 +14,17 @@ bool isExplicitVoiceDeviceId(String deviceId) {
 }
 
 bool shouldReapplyMobileVoiceOutputOnDeviceChange({
-  required bool isMobile,
+  required bool isIos,
+  required bool isAndroid,
   required bool outputChanged,
 }) {
-  return isMobile && outputChanged;
+  if (!outputChanged) {
+    return false;
+  }
+  if (isAndroid) {
+    return false;
+  }
+  return isIos;
 }
 
 bool shouldReapplyDesktopAudioOutputOnDeviceChange({

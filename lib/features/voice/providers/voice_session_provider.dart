@@ -3235,7 +3235,8 @@ class VoiceSession extends _$VoiceSession {
     _isRecoveringAudioRoute = true;
     try {
       if (shouldReapplyMobileVoiceOutputOnDeviceChange(
-        isMobile: isMobile,
+        isIos: isIos,
+        isAndroid: isAndroid,
         outputChanged: outputChanged,
       )) {
         await _runAudioRouteRecoveryStep(
@@ -3412,6 +3413,7 @@ class VoiceSession extends _$VoiceSession {
         isInVoice: state.isInVoice,
         speakerPreferenceChanged:
             previous != null && previous.outputRoute != next.outputRoute,
+        isAndroid: Platform.isAndroid,
       )) {
         _scheduleSpeakerOutputRetry();
       }

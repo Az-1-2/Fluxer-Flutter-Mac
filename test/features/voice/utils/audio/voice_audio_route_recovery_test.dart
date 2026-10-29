@@ -115,6 +115,30 @@ void main() {
     });
   });
 
+  group('shouldReapplyMobileVoiceOutputOnDeviceChange', () {
+    test('reapplies on iOS when outputs change', () {
+      expect(
+        shouldReapplyMobileVoiceOutputOnDeviceChange(
+          isIos: true,
+          isAndroid: false,
+          outputChanged: true,
+        ),
+        isTrue,
+      );
+    });
+
+    test('skips on Android where native route hold handles drift', () {
+      expect(
+        shouldReapplyMobileVoiceOutputOnDeviceChange(
+          isIos: false,
+          isAndroid: true,
+          outputChanged: true,
+        ),
+        isFalse,
+      );
+    });
+  });
+
   group('shouldReapplyDesktopAudioOutputOnDeviceChange', () {
     test('reapplies when configured output is still present', () {
       expect(

@@ -7,14 +7,15 @@ import android.media.AudioManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import java.util.concurrent.Executor
 
 private const val CHANNEL_NAME = "fluxer_app/voice_speaker_route"
-private const val ROUTE_HOLD_DEBOUNCE_MS = 150L
-private const val ROUTE_FOLLOW_UP_MS = 350L
+private const val ROUTE_HOLD_DEBOUNCE_MS = 300L
+private const val ROUTE_APPLY_SUPPRESS_MS = 600L
 
 internal enum class VoiceOutputRoute {
     Speaker,
@@ -126,8 +127,8 @@ class VoiceSpeakerRouteBridge(
     private val mainHandler = Handler(Looper.getMainLooper())
     private var heldRoute: VoiceOutputRoute? = null
     private var routeHoldDebounce: Runnable? = null
-    private var routeFollowUp: Runnable? = null
     private var communicationDeviceListener: AudioManager.OnCommunicationDeviceChangedListener? = null
+    private var suppressRouteListenerUntilElapsed: Long = 0L
 
     fun register(flutterEngine: FlutterEngine) {
         MethodChannel(
@@ -142,21 +143,15 @@ class VoiceSpeakerRouteBridge(
             "setRoute" -> {
                 val route = voiceOutputRouteFromName(call.argument<String>("route"))
                 val hold = call.argument<Boolean>("hold") ?: false
-                applyVoiceOutputRoute(audioManager, route)
-                if (!hold) {
-                    result.success(null)
-                    return@onMethodCall
+                if (hold) {
+                    routeHoldDebounce?.let(mainHandler::removeCallbacks)
+                    routeHoldDebounce = null
+                    heldRoute = route
+                    startRouteHoldListener(audioManager)
+                    applyHeldRoute(audioManager, route)
+                } else {
+                    applyVoiceOutputRoute(audioManager, route)
                 }
-                heldRoute = route
-                routeFollowUp?.let(mainHandler::removeCallbacks)
-                startRouteHoldListener(audioManager)
-                val followUp = Runnable {
-                    if (heldRoute == route) {
-                        applyVoiceOutputRoute(audioManager, route)
-                    }
-                }
-                routeFollowUp = followUp
-                mainHandler.postDelayed(followUp, ROUTE_FOLLOW_UP_MS)
                 result.success(null)
             }
             "clearRouteHold" -> {
@@ -174,8 +169,7 @@ class VoiceSpeakerRouteBridge(
         heldRoute = null
         routeHoldDebounce?.let(mainHandler::removeCallbacks)
         routeHoldDebounce = null
-        routeFollowUp?.let(mainHandler::removeCallbacks)
-        routeFollowUp = null
+        suppressRouteListenerUntilElapsed = 0L
         stopRouteHoldListener(audioManager)
     }
 
@@ -204,19 +198,30 @@ class VoiceSpeakerRouteBridge(
     }
 
     private fun scheduleReapplyHeldRoute(audioManager: AudioManager) {
+        if (SystemClock.elapsedRealtime() < suppressRouteListenerUntilElapsed) {
+            return
+        }
         val route = heldRoute ?: return
         routeHoldDebounce?.let(mainHandler::removeCallbacks)
         val work = Runnable {
+            if (SystemClock.elapsedRealtime() < suppressRouteListenerUntilElapsed) {
+                return@Runnable
+            }
             if (heldRoute != route) {
                 return@Runnable
             }
             if (routeAlreadyActive(audioManager, route)) {
                 return@Runnable
             }
-            applyVoiceOutputRoute(audioManager, route)
+            applyHeldRoute(audioManager, route)
         }
         routeHoldDebounce = work
         mainHandler.postDelayed(work, ROUTE_HOLD_DEBOUNCE_MS)
+    }
+
+    private fun applyHeldRoute(audioManager: AudioManager, route: VoiceOutputRoute) {
+        markRouteApplySuppressWindow()
+        applyVoiceOutputRoute(audioManager, route)
     }
 
     private fun routeAlreadyActive(audioManager: AudioManager, route: VoiceOutputRoute): Boolean {
@@ -234,6 +239,11 @@ class VoiceSpeakerRouteBridge(
             speakerphoneOn = speakerphoneOn,
             sdkAtLeast31 = sdkAtLeast31,
         )
+    }
+
+    private fun markRouteApplySuppressWindow() {
+        suppressRouteListenerUntilElapsed =
+            SystemClock.elapsedRealtime() + ROUTE_APPLY_SUPPRESS_MS
     }
 
     private fun hasEarpiece(): Boolean {
@@ -281,5 +291,8 @@ internal fun applyVoiceOutputRoute(audioManager: AudioManager, route: VoiceOutpu
         audioManager.clearCommunicationDevice()
         @Suppress("DEPRECATION")
         audioManager.isSpeakerphoneOn = true
+    } else if (route == VoiceOutputRoute.Speaker) {
+        @Suppress("DEPRECATION")
+        audioManager.isSpeakerphoneOn = false
     }
 }
