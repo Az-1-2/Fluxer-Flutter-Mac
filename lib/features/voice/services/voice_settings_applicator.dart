@@ -549,22 +549,31 @@ class VoiceSettingsApplicator {
 
   Future<void> applySpeakerOutput({
     required VoiceSettingsState settings,
+    bool holdRoute = true,
   }) async {
     if (AudioManager.instance.canSwitchSpeakerphone) {
       final Set<VoiceOutputRoute> available =
           await readAvailableVoiceOutputRoutes();
-      final VoiceOutputRoute route = effectiveVoiceOutputRoute(
+      final VoiceOutputRoute route = resolveVoiceOutputRoute(
         preference: settings.outputRoute,
         available: available,
       );
-      final bool speaker = liveKitPrefersSpeaker(route);
+      await applyNativeVoiceOutputRoute(route, hold: holdRoute);
       try {
-        await AudioManager.instance.setSpeakerOutputPreferred(
-          speaker,
-          force: speaker,
-        );
+        switch (route) {
+          case VoiceOutputRoute.speaker:
+            await AudioManager.instance.setSpeakerOutputPreferred(
+              true,
+              force: true,
+            );
+          case VoiceOutputRoute.headset:
+          case VoiceOutputRoute.earpiece:
+            await AudioManager.instance.setSpeakerOutputPreferred(false);
+        }
       } on Object catch (_) {}
-      await applyNativeVoiceOutputRoute(route);
+      if (holdRoute) {
+        await applyNativeVoiceOutputRoute(route);
+      }
     }
   }
 

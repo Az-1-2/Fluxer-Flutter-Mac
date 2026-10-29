@@ -10,9 +10,11 @@ import android.os.Looper
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import java.util.concurrent.Executor
 
 private const val CHANNEL_NAME = "fluxer_app/voice_speaker_route"
-private const val REAPPLY_DELAY_MS = 200L
+private const val ROUTE_HOLD_DEBOUNCE_MS = 150L
+private const val ROUTE_FOLLOW_UP_MS = 350L
 
 internal enum class VoiceOutputRoute {
     Speaker,
@@ -62,6 +64,30 @@ internal fun communicationDeviceForRoute(
     return devices.firstOrNull { it.type == type }
 }
 
+internal fun activeCommunicationDeviceTypeMatchesRoute(
+    route: VoiceOutputRoute,
+    activeDeviceType: Int?,
+    speakerphoneOn: Boolean,
+    sdkAtLeast31: Boolean,
+): Boolean {
+    if (!sdkAtLeast31) {
+        return when (route) {
+            VoiceOutputRoute.Speaker -> speakerphoneOn
+            VoiceOutputRoute.Earpiece, VoiceOutputRoute.Headset -> !speakerphoneOn
+        }
+    }
+    return when (route) {
+        VoiceOutputRoute.Speaker -> {
+            activeDeviceType == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER ||
+                (speakerphoneOn && activeDeviceType == null)
+        }
+        VoiceOutputRoute.Earpiece ->
+            activeDeviceType == AudioDeviceInfo.TYPE_BUILTIN_EARPIECE
+        VoiceOutputRoute.Headset ->
+            activeDeviceType != null && activeDeviceType in headsetCommunicationDeviceTypes
+    }
+}
+
 internal fun needsSpeakerphoneFallback(
     route: VoiceOutputRoute,
     sdkAtLeast31: Boolean,
@@ -98,7 +124,10 @@ class VoiceSpeakerRouteBridge(
     private val context: Context,
 ) {
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var reapply: Runnable? = null
+    private var heldRoute: VoiceOutputRoute? = null
+    private var routeHoldDebounce: Runnable? = null
+    private var routeFollowUp: Runnable? = null
+    private var communicationDeviceListener: AudioManager.OnCommunicationDeviceChangedListener? = null
 
     fun register(flutterEngine: FlutterEngine) {
         MethodChannel(
@@ -112,11 +141,26 @@ class VoiceSpeakerRouteBridge(
         when (call.method) {
             "setRoute" -> {
                 val route = voiceOutputRouteFromName(call.argument<String>("route"))
-                reapply?.let(mainHandler::removeCallbacks)
+                val hold = call.argument<Boolean>("hold") ?: false
                 applyVoiceOutputRoute(audioManager, route)
-                val again = Runnable { applyVoiceOutputRoute(audioManager, route) }
-                reapply = again
-                mainHandler.postDelayed(again, REAPPLY_DELAY_MS)
+                if (!hold) {
+                    result.success(null)
+                    return@onMethodCall
+                }
+                heldRoute = route
+                routeFollowUp?.let(mainHandler::removeCallbacks)
+                startRouteHoldListener(audioManager)
+                val followUp = Runnable {
+                    if (heldRoute == route) {
+                        applyVoiceOutputRoute(audioManager, route)
+                    }
+                }
+                routeFollowUp = followUp
+                mainHandler.postDelayed(followUp, ROUTE_FOLLOW_UP_MS)
+                result.success(null)
+            }
+            "clearRouteHold" -> {
+                clearRouteHold(audioManager)
                 result.success(null)
             }
             "availableRoutes" -> {
@@ -124,6 +168,72 @@ class VoiceSpeakerRouteBridge(
             }
             else -> result.notImplemented()
         }
+    }
+
+    private fun clearRouteHold(audioManager: AudioManager) {
+        heldRoute = null
+        routeHoldDebounce?.let(mainHandler::removeCallbacks)
+        routeHoldDebounce = null
+        routeFollowUp?.let(mainHandler::removeCallbacks)
+        routeFollowUp = null
+        stopRouteHoldListener(audioManager)
+    }
+
+    private fun startRouteHoldListener(audioManager: AudioManager) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            return
+        }
+        if (communicationDeviceListener != null) {
+            return
+        }
+        val executor = Executor { runnable -> mainHandler.post(runnable) }
+        val listener = AudioManager.OnCommunicationDeviceChangedListener {
+            scheduleReapplyHeldRoute(audioManager)
+        }
+        communicationDeviceListener = listener
+        audioManager.addOnCommunicationDeviceChangedListener(executor, listener)
+    }
+
+    private fun stopRouteHoldListener(audioManager: AudioManager) {
+        val listener = communicationDeviceListener ?: return
+        try {
+            audioManager.removeOnCommunicationDeviceChangedListener(listener)
+        } catch (_: Exception) {
+        }
+        communicationDeviceListener = null
+    }
+
+    private fun scheduleReapplyHeldRoute(audioManager: AudioManager) {
+        val route = heldRoute ?: return
+        routeHoldDebounce?.let(mainHandler::removeCallbacks)
+        val work = Runnable {
+            if (heldRoute != route) {
+                return@Runnable
+            }
+            if (routeAlreadyActive(audioManager, route)) {
+                return@Runnable
+            }
+            applyVoiceOutputRoute(audioManager, route)
+        }
+        routeHoldDebounce = work
+        mainHandler.postDelayed(work, ROUTE_HOLD_DEBOUNCE_MS)
+    }
+
+    private fun routeAlreadyActive(audioManager: AudioManager, route: VoiceOutputRoute): Boolean {
+        val sdkAtLeast31 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+        @Suppress("DEPRECATION")
+        val speakerphoneOn = audioManager.isSpeakerphoneOn
+        val activeType = if (sdkAtLeast31) {
+            audioManager.communicationDevice?.type
+        } else {
+            null
+        }
+        return activeCommunicationDeviceTypeMatchesRoute(
+            route = route,
+            activeDeviceType = activeType,
+            speakerphoneOn = speakerphoneOn,
+            sdkAtLeast31 = sdkAtLeast31,
+        )
     }
 
     private fun hasEarpiece(): Boolean {
@@ -155,6 +265,7 @@ internal fun applyVoiceOutputRoute(audioManager: AudioManager, route: VoiceOutpu
         }
         return
     }
+    audioManager.clearCommunicationDevice()
     val devices = audioManager.availableCommunicationDevices
     val availableTypes = devices.map { it.type }.toSet()
     val device = communicationDeviceForRoute(route, devices)
