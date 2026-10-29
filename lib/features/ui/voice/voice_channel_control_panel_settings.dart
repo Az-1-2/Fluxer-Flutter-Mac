@@ -177,30 +177,6 @@ class VoiceChannelControlPanelSettings extends ConsumerWidget {
             SizedBox(height: layout.s4),
           ],
           FluxerListSection(
-            header: l10n.voiceCallViewModeLabel,
-            children: <Widget>[
-              Padding(
-                key: kVoiceControlPanelViewModeKey,
-                padding: EdgeInsets.all(layout.s4),
-                child: FluxerRadioGroup<VoiceCallLayoutMode>(
-                  value: callLayout.mode,
-                  onChanged: callLayoutNotifier.setMode,
-                  items: <FluxerRadioItem<VoiceCallLayoutMode>>[
-                    FluxerRadioItem(
-                      value: VoiceCallLayoutMode.grid,
-                      label: l10n.voiceCallViewModeGrid,
-                    ),
-                    FluxerRadioItem(
-                      value: VoiceCallLayoutMode.focus,
-                      label: l10n.voiceCallViewModeFocus,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: layout.s4),
-          FluxerListSection(
             header: l10n.voicePanelSettingsSectionTitle,
             children: <Widget>[
               if (showNativeVoiceAudioRoutePicker())
@@ -240,6 +216,30 @@ class VoiceChannelControlPanelSettings extends ConsumerWidget {
                     ),
                   );
                 },
+              ),
+            ],
+          ),
+          SizedBox(height: layout.s4),
+          FluxerListSection(
+            header: l10n.voiceCallViewModeLabel,
+            children: <Widget>[
+              Padding(
+                key: kVoiceControlPanelViewModeKey,
+                padding: EdgeInsets.all(layout.s4),
+                child: FluxerRadioGroup<VoiceCallLayoutMode>(
+                  value: callLayout.mode,
+                  onChanged: callLayoutNotifier.setMode,
+                  items: <FluxerRadioItem<VoiceCallLayoutMode>>[
+                    FluxerRadioItem(
+                      value: VoiceCallLayoutMode.grid,
+                      label: l10n.voiceCallViewModeGrid,
+                    ),
+                    FluxerRadioItem(
+                      value: VoiceCallLayoutMode.focus,
+                      label: l10n.voiceCallViewModeFocus,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
