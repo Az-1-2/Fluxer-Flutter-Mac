@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fluxer_app/core/database/fluxer_database.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-const int _expectedSchemaVersion = 101;
+const int _expectedSchemaVersion = 102;
 
 const int _guardedBaselineVersion = 67;
 
@@ -481,6 +481,35 @@ void main() {
         contains('hidden_profile_badges_json'),
       );
       expect((await db.guildDao.getServerById('g1'))?.name, 'Guild');
+      expect(_userVersion(raw), _expectedSchemaVersion);
+    });
+
+    test('upgrade from 101 adds role icon columns', () async {
+      final Database raw = sqlite3.openInMemory();
+      addTearDown(raw.close);
+      await _stampCurrentSchemaAsVersion(raw, 101);
+      raw
+        ..execute('ALTER TABLE roles DROP COLUMN icon')
+        ..execute('ALTER TABLE roles DROP COLUMN unicode_emoji')
+        ..execute(
+          "INSERT INTO roles (id, guild_id, name) VALUES ('r1', 'g1', 'Mods')",
+        );
+      expect(_userVersion(raw), 101);
+
+      final FluxerDatabase db = FluxerDatabase.forTesting(
+        NativeDatabase.opened(raw, closeUnderlyingOnClose: false),
+      );
+      addTearDown(db.close);
+      await db.customSelect('SELECT 1').get();
+
+      expect(
+        _tableColumns(raw, 'roles'),
+        containsAll(<String>['icon', 'unicode_emoji']),
+      );
+      final List<Role> roles = await db.roleDao.getRoles('g1');
+      expect(roles.single.name, 'Mods');
+      expect(roles.single.icon, isNull);
+      expect(roles.single.unicodeEmoji, isNull);
       expect(_userVersion(raw), _expectedSchemaVersion);
     });
 
