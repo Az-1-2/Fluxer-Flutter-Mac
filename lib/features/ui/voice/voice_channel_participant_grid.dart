@@ -2458,9 +2458,12 @@ class _VoiceParticipantCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final database.User? user = data.user;
-    final GuildUserDisplay? resolvedDisplay = ref
-        .watch(guildUserDisplayFromDbProvider((data.userId, guildId)))
-        .value;
+    final GuildUserDisplay? resolvedDisplay = watchGuildScopedUserDisplay(
+      ref: ref,
+      userId: data.userId,
+      guildId: guildId,
+      currentUserId: currentUserId,
+    );
     final String fallbackDisplay = user != null
         ? (user.globalName ?? user.username)
         : data.userId;
@@ -2478,7 +2481,7 @@ class _VoiceParticipantCard extends ConsumerWidget {
       );
       voice = _withLocalAudio(voice, selfMute: selfMute, selfDeaf: selfDeaf);
     }
-    final int? avatarArgb = user?.avatarColor;
+    final int? avatarArgb = resolvedDisplay?.avatarColor ?? user?.avatarColor;
     final VoiceMediaParticipant? participant = resolveVoiceParticipant(
       media: media,
       voice: voice,
@@ -2523,6 +2526,7 @@ class _VoiceParticipantCard extends ConsumerWidget {
         display: display,
         backgroundColor: cardColor,
         user: user,
+        userDisplay: resolvedDisplay,
         tileSource: tileSource,
         isActiveScreenShare: isActiveScreenShare,
         fillContainer: fillContainer,

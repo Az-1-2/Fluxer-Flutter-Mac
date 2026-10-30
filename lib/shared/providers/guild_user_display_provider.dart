@@ -90,6 +90,19 @@ GuildUserDisplay watchMessageAuthorDisplay({
   );
 }
 
+GuildUserDisplay? watchGuildScopedUserDisplay({
+  required WidgetRef ref,
+  required String userId,
+  required String? guildId,
+  required String? currentUserId,
+}) {
+  final bool isCurrentUser = currentUserId != null && userId == currentUserId;
+  final AsyncValue<GuildUserDisplay?> async = isCurrentUser
+      ? ref.watch(guildUserDisplayFromDbProvider((userId, guildId)))
+      : ref.watch(guildUserDisplayProvider((userId, guildId)));
+  return async.value;
+}
+
 final StreamProviderFamily<db.User?, String> _userRowProvider = StreamProvider
     .autoDispose
     .family<db.User?, String>(
