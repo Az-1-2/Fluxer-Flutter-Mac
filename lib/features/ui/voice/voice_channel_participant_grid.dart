@@ -658,9 +658,17 @@ class _VoiceChannelParticipantGridState
                 : s.guildId == widget.guildId),
       ),
     );
-    final database.User? selfUser = me != null && onThisChannel
-        ? ref.watch(userPresenceProvider(me)).value
-        : null;
+    database.User? selfUser;
+    if (me != null && onThisChannel) {
+      ref.watch(
+        userPresenceProvider(me).select(
+          (AsyncValue<database.User?> async) => async.value == null
+              ? null
+              : guildUserProfileSignature(async.value!),
+        ),
+      );
+      selfUser = ref.read(userPresenceProvider(me)).value;
+    }
     final VoiceCallLayoutState layout = ref.watch(voiceCallLayoutProvider);
     final VoiceCallDisplayPreferencesState displayPreferences = ref.watch(
       voiceCallDisplayPreferencesProvider,
@@ -738,10 +746,13 @@ class _VoiceChannelParticipantGridState
     final Set<String> watchedTileIds = ref.watch(
       voiceScreenShareWatchTileProvider,
     );
-    final String? featuredTileId = ref.watch(voicePipFeaturedTileIdProvider);
     final VoicePipOverlayPhase pipPhase = ref.watch(
       voicePipOverlayPhaseProvider,
     );
+    final bool hostFeatured = voicePipHostsFeatured(pipPhase);
+    final String? featuredTileId = hostFeatured
+        ? ref.watch(voicePipFeaturedTileIdProvider)
+        : _featuredTileId;
     final bool isConnected = ref.watch(
       voiceSessionProvider.select((VoiceSessionState s) => s.isConnected),
     );

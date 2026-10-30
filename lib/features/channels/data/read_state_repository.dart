@@ -5,7 +5,9 @@ import 'package:fluxer_app/core/database/fluxer_database.dart';
 import 'package:fluxer_app/core/push/notification/clear.dart';
 import 'package:fluxer_app/core/push/tray/registry.dart';
 import 'package:fluxer_app/features/channels/data/ack_batcher.dart';
+import 'package:fluxer_app/features/channels/data/read_state_change_hub.dart';
 import 'package:fluxer_app/features/channels/data/read_state_decisions.dart';
+import 'package:fluxer_app/features/channels/data/read_state_persist.dart';
 import 'package:fluxer_app/features/channels/data/read_state_utils.dart';
 import 'package:fluxer_app/features/channels/data/unread_settings_resolver.dart';
 import 'package:fluxer_dart/export.dart';
@@ -13,17 +15,19 @@ import 'package:fluxer_dart/export.dart';
 const int readStateFlagIsThread = 1 << 1;
 
 class ReadStateRepository {
-  const ReadStateRepository(
+  ReadStateRepository(
     this._client,
     this._db, {
     this._batcher,
     this._trayRegistry,
+    this._changeHub,
   });
 
   final FluxerClient _client;
   final FluxerDatabase _db;
   final AckBatcher? _batcher;
   final PushTrayRegistry? _trayRegistry;
+  final ReadStateChangeHub? _changeHub;
 
   Future<void> ackLatest(String channelId) async {
     final prior = await _db.readStateDao.getReadState(channelId);
@@ -70,7 +74,8 @@ class ReadStateRepository {
           decision.kind == ReadStateServerAckKind.ignoreOlderMessage) {
         continue;
       }
-      await _db.readStateDao.upsertReadState(
+      await upsertReadStateIfChanged(
+        _db,
         ReadStatesCompanion(
           channelId: Value(rs.id),
           lastMessageId: Value(messageId),
@@ -78,6 +83,7 @@ class ReadStateRepository {
           version: Value(rs.version),
           flags: rs.flags == null ? const Value.absent() : Value(rs.flags),
         ),
+        changeHub: _changeHub,
       );
       final dm = await _db.dmChannelDao.getDmChannelById(rs.id);
       if (dm != null) {
@@ -190,7 +196,8 @@ class ReadStateRepository {
     bool manual = false,
     String? stickyUnreadMessageId,
   }) async {
-    await _db.readStateDao.upsertReadState(
+    await upsertReadStateIfChanged(
+      _db,
       ReadStatesCompanion(
         channelId: Value(channelId),
         lastMessageId: Value(messageId),
@@ -198,6 +205,7 @@ class ReadStateRepository {
         manual: Value(manual),
         stickyUnreadMessageId: Value(stickyUnreadMessageId),
       ),
+      changeHub: _changeHub,
     );
     final dm = await _db.dmChannelDao.getDmChannelById(channelId);
     if (dm != null) {
@@ -320,7 +328,8 @@ class ReadStateRepository {
     if (next == current.mentionCount) {
       return;
     }
-    await _db.readStateDao.upsertReadState(
+    await upsertReadStateIfChanged(
+      _db,
       ReadStatesCompanion(
         channelId: Value(channelId),
         lastMessageId: Value(current.lastMessageId),
@@ -329,6 +338,7 @@ class ReadStateRepository {
         manual: Value(current.manual),
         stickyUnreadMessageId: Value(current.stickyUnreadMessageId),
       ),
+      changeHub: _changeHub,
     );
   }
 

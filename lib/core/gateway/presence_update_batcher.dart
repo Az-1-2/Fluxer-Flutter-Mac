@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:drift/drift.dart';
 import 'package:fluxer_app/core/database/fluxer_database.dart' as db;
 import 'package:fluxer_app/core/platform/fluxer_platform.dart';
 
@@ -45,7 +46,10 @@ class PresenceUpdateBatcher {
     if (userId == _currentUserId) {
       unawaited(() async {
         if (user != null) {
-          await _database.userDao.upsertUser(user);
+          final db.User? existing = await _database.userDao.getUserById(userId);
+          if (existing == null || !_profileCompanionMatches(existing, user)) {
+            await _database.userDao.upsertUser(user);
+          }
         }
         await _database.userDao.updateUserPresence(
           userId,
@@ -78,8 +82,64 @@ class PresenceUpdateBatcher {
     _pendingUsers.clear();
     _flushTimer?.cancel();
     _flushTimer = null;
-    await _database.userDao.upsertUsers(users);
+    final List<db.UsersCompanion> changedUsers = await _profileUsersToUpsert(
+      users,
+    );
+    if (changedUsers.isNotEmpty) {
+      await _database.userDao.upsertUsers(changedUsers);
+    }
     await _database.userDao.updateUserPresencesBatch(updates);
+  }
+
+  Future<List<db.UsersCompanion>> _profileUsersToUpsert(
+    List<db.UsersCompanion> users,
+  ) async {
+    if (users.isEmpty) {
+      return users;
+    }
+    final List<db.UsersCompanion> changed = <db.UsersCompanion>[];
+    for (final db.UsersCompanion user in users) {
+      if (!user.id.present) {
+        changed.add(user);
+        continue;
+      }
+      final db.User? existing = await _database.userDao.getUserById(
+        user.id.value,
+      );
+      if (existing == null || !_profileCompanionMatches(existing, user)) {
+        changed.add(user);
+      }
+    }
+    return changed;
+  }
+
+  bool _profileCompanionMatches(db.User existing, db.UsersCompanion companion) {
+    String? readNullableString(Value<String?> value, String? fallback) =>
+        value.present ? value.value : fallback;
+    String readString(Value<String> value, String fallback) =>
+        value.present ? value.value : fallback;
+    bool readBool(Value<bool> value, {required bool fallback}) =>
+        value.present ? value.value : fallback;
+    int? readInt(Value<int?> value, int? fallback) =>
+        value.present ? value.value : fallback;
+    return existing.username ==
+            readString(companion.username, existing.username) &&
+        existing.globalName ==
+            readNullableString(companion.globalName, existing.globalName) &&
+        existing.avatar ==
+            readNullableString(companion.avatar, existing.avatar) &&
+        existing.avatarColor ==
+            readInt(companion.avatarColor, existing.avatarColor) &&
+        existing.accentColor ==
+            readInt(companion.accentColor, existing.accentColor) &&
+        existing.banner ==
+            readNullableString(companion.banner, existing.banner) &&
+        existing.bio == readNullableString(companion.bio, existing.bio) &&
+        existing.pronouns ==
+            readNullableString(companion.pronouns, existing.pronouns) &&
+        existing.bot == readBool(companion.bot, fallback: existing.bot) &&
+        existing.system ==
+            readBool(companion.system, fallback: existing.system);
   }
 
   void dispose() {

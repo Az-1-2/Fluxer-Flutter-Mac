@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:fluxer_app/core/database/fluxer_database.dart';
 import 'package:sqlite3/sqlite3.dart';
 
-const int _expectedSchemaVersion = 102;
+const int _expectedSchemaVersion = 103;
 
 const int _guardedBaselineVersion = 67;
 
@@ -619,14 +619,9 @@ void main() {
             .map((Row row) => row['name'] as String),
         <String>['id', 'channel_id'],
       );
-      expect(
-        _schemaIndexes(raw),
-        containsAll(<String>[
-          'idx_messages_channel',
-          'idx_messages_author',
-          'idx_messages_channel_timestamp',
-        ]),
-      );
+      expect(_schemaIndexes(raw), contains('idx_messages_channel_timestamp'));
+      expect(_schemaIndexes(raw), isNot(contains('idx_messages_channel')));
+      expect(_schemaIndexes(raw), isNot(contains('idx_messages_author')));
       expect(_userVersion(raw), _expectedSchemaVersion);
     });
 

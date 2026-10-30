@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:drift/drift.dart' show Value;
 import 'package:fluxer_app/core/database/fluxer_database.dart' hide Channel;
 import 'package:fluxer_app/core/talker.dart';
+import 'package:fluxer_app/features/channels/data/read_state_change_hub.dart';
+import 'package:fluxer_app/features/channels/data/read_state_persist.dart';
 import 'package:fluxer_app/features/channels/domain/channel.dart'
     show isThreadChannelType;
 import 'package:fluxer_app/features/guilds/presentation/widgets/guild_menu_data.dart';
@@ -15,8 +17,9 @@ export 'package:fluxer_app/features/guilds/utils/guild_notification_resolution.d
 Future<void> markGuildAsRead(
   String guildId,
   FluxerDatabase db,
-  FluxerClient client,
-) async {
+  FluxerClient client, {
+  ReadStateChangeHub? changeHub,
+}) async {
   var channels = await db.channelDao.getChannels(guildId, includeThreads: true);
   final channelIds = channels.map((c) => c.id).toList();
   final readStates = await db.readStateDao
@@ -58,13 +61,15 @@ Future<void> markGuildAsRead(
   }
 
   for (final entry in ackEntries) {
-    await db.readStateDao.upsertReadState(
+    await upsertReadStateIfChanged(
+      db,
       ReadStatesCompanion(
         channelId: Value(entry.channelId),
         lastMessageId: Value(entry.messageId),
         mentionCount: const Value(0),
         manual: const Value(false),
       ),
+      changeHub: changeHub,
     );
   }
 

@@ -5,7 +5,9 @@ import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluxer_app/core/database/fluxer_database.dart';
 import 'package:fluxer_app/core/talker.dart';
+import 'package:fluxer_app/features/channels/data/read_state_change_hub.dart';
 import 'package:fluxer_app/features/channels/data/read_state_effective.dart';
+import 'package:fluxer_app/features/channels/data/read_state_persist.dart';
 import 'package:fluxer_app/features/channels/data/read_state_utils.dart';
 
 const int kReadStateWriteBatchMs = 1000;
@@ -26,10 +28,12 @@ class ReadStateWriteBatcher {
       milliseconds: kReadStateUnreadMinIntervalMs,
     ),
     this.onOverlayChanged,
+    this._changeHub,
   });
 
   final FluxerDatabase _database;
   final VoidCallback? onOverlayChanged;
+  final ReadStateChangeHub? _changeHub;
   final Duration _window;
   final Duration _ackWindow;
   final Duration _mentionWindow;
@@ -338,7 +342,8 @@ class ReadStateWriteBatcher {
         final bool shouldWrite =
             fieldsChanged || (working == null && unreadMessages > 0);
         if (shouldWrite) {
-          await _database.readStateDao.upsertReadState(
+          await upsertReadStateIfChanged(
+            _database,
             ReadStatesCompanion(
               channelId: Value(channelId),
               lastMessageId: Value(lastMessageId),
@@ -348,6 +353,7 @@ class ReadStateWriteBatcher {
               stickyUnreadMessageId: Value(working?.stickyUnreadMessageId),
               version: Value(working?.version),
             ),
+            changeHub: _changeHub,
           );
         }
 
@@ -384,7 +390,8 @@ class ReadStateWriteBatcher {
         final ReadState? existing = await _database.readStateDao.getReadState(
           channelId,
         );
-        await _database.readStateDao.upsertReadState(
+        await upsertReadStateIfChanged(
+          _database,
           ReadStatesCompanion(
             channelId: Value(channelId),
             lastMessageId: Value(messageId),
@@ -396,6 +403,7 @@ class ReadStateWriteBatcher {
                 : Value(existing?.stickyUnreadMessageId),
             version: Value(existing?.version),
           ),
+          changeHub: _changeHub,
         );
         if (isDm && markDmRead) {
           await _database.dmChannelDao.markAsRead(channelId);

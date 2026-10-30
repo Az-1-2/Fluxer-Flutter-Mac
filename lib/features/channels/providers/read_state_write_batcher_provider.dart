@@ -4,6 +4,7 @@ import 'package:fluxer_app/core/providers/app/app_ui_lifecycle_provider.dart';
 import 'package:fluxer_app/core/providers/database_provider.dart';
 import 'package:fluxer_app/core/providers/gateway/gateway_ready_provider.dart';
 import 'package:fluxer_app/features/channels/data/read_state_write_batcher.dart';
+import 'package:fluxer_app/features/channels/providers/read_state_change_hub_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'read_state_write_batcher_provider.g.dart';
@@ -20,6 +21,7 @@ class ReadStateOverlayVersion extends _$ReadStateOverlayVersion {
 ReadStateWriteBatcher readStateWriteBatcher(Ref ref) {
   final batcher = ReadStateWriteBatcher(
     database: ref.watch(fluxerDatabaseProvider),
+    changeHub: ref.watch(readStateChangeHubProvider),
     onOverlayChanged: () {
       if (!ref.mounted) {
         return;
