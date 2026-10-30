@@ -1071,10 +1071,11 @@ packages:
   flutter_webrtc:
     dependency: "direct main"
     description:
-      name: flutter_webrtc
-      sha256: b98ef03376401e54ff87fc78907b38e562b15ca8424aba589c263eddc3c1ecf9
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "01d3de483e285f7ec8b67fbf85aeab4600ef0a44"
+      url: "https://github.com/fluxerapp/flutter-webrtc"
+    source: git
     version: "1.6.3"
   fluxer_android_notifications:
     dependency: "direct main"
