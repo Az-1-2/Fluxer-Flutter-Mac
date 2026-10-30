@@ -785,6 +785,18 @@ class GuildReadState extends _$GuildReadState {
       ..removeWhere((id, _) => removed.contains(id));
   }
 
+  String _channelOverwriteSignatureKey() {
+    final List<String> parts = <String>[];
+    for (final Channel channel in _channelSnapshot.values) {
+      if (!_tracksUnread(channel.type)) {
+        continue;
+      }
+      parts.add('${channel.id}:${channel.permissionOverwritesJson ?? ''}');
+    }
+    parts.sort();
+    return parts.join('|');
+  }
+
   String _permissionSignatureKey() {
     final List<String> roleParts =
         _roleSignatureByGuild.entries
@@ -796,7 +808,8 @@ class GuildReadState extends _$GuildReadState {
             .map((MapEntry<String, String> e) => '${e.key}:${e.value}')
             .toList()
           ..sort();
-    return '${roleParts.join('|')}|${memberParts.join('|')}';
+    return '${roleParts.join('|')}|${memberParts.join('|')}|'
+        '${_channelOverwriteSignatureKey()}';
   }
 
   Future<ChannelUnreadPermissionSeedCache> _permissionSeedCacheForRecompute(

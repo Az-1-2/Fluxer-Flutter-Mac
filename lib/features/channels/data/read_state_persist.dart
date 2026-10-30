@@ -1,5 +1,4 @@
 import 'package:fluxer_app/core/database/fluxer_database.dart';
-import 'package:fluxer_app/features/channels/data/read_state_change_hub.dart';
 
 bool readStateCompanionMatchesPersisted(
   ReadState? existing,
@@ -40,9 +39,8 @@ bool readStateCompanionMatchesPersisted(
 
 Future<bool> upsertReadStateIfChanged(
   FluxerDatabase database,
-  ReadStatesCompanion companion, {
-  ReadStateChangeHub? changeHub,
-}) async {
+  ReadStatesCompanion companion,
+) async {
   final String channelId = companion.channelId.value;
   final ReadState? existing = await database.readStateDao.getReadState(
     channelId,
@@ -51,19 +49,17 @@ Future<bool> upsertReadStateIfChanged(
     return false;
   }
   await database.readStateDao.upsertReadState(companion);
-  changeHub?.notifyChannelChanged(channelId);
   return true;
 }
 
 Future<void> upsertReadStatesIfChanged(
   FluxerDatabase database,
-  List<ReadStatesCompanion> companions, {
-  ReadStateChangeHub? changeHub,
-}) async {
+  List<ReadStatesCompanion> companions,
+) async {
   if (companions.isEmpty) {
     return;
   }
   for (final ReadStatesCompanion companion in companions) {
-    await upsertReadStateIfChanged(database, companion, changeHub: changeHub);
+    await upsertReadStateIfChanged(database, companion);
   }
 }

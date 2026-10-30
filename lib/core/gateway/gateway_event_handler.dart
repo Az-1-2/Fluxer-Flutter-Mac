@@ -13,7 +13,6 @@ import 'package:fluxer_app/core/push/notification/clear.dart';
 import 'package:fluxer_app/core/talker.dart';
 import 'package:fluxer_app/core/utils/message_mention_resolver.dart';
 import 'package:fluxer_app/features/channels/data/ack_batcher.dart';
-import 'package:fluxer_app/features/channels/data/read_state_change_hub.dart';
 import 'package:fluxer_app/features/channels/data/read_state_decisions.dart';
 import 'package:fluxer_app/features/channels/data/read_state_persist.dart';
 import 'package:fluxer_app/features/channels/data/read_state_repository.dart';
@@ -140,7 +139,6 @@ class GatewayEventHandler {
     required this.database,
     this.readStateRepository,
     this.readStateWriteBatcher,
-    this.readStateChangeHub,
     this.ackBatcher,
     this.messageMentionContextCache,
     this.messageWriteBatcher,
@@ -227,7 +225,6 @@ class GatewayEventHandler {
   final db.FluxerDatabase database;
   final ReadStateRepository? readStateRepository;
   final ReadStateWriteBatcher? readStateWriteBatcher;
-  final ReadStateChangeHub? readStateChangeHub;
   final AckBatcher? ackBatcher;
   final MessageMentionContextCache? messageMentionContextCache;
   final MessageWriteBatcher? messageWriteBatcher;
@@ -1281,11 +1278,7 @@ class GatewayEventHandler {
             flags: rs.flags,
           );
         }
-        await upsertReadStatesIfChanged(
-          database,
-          readStateCompanions,
-          changeHub: readStateChangeHub,
-        );
+        await upsertReadStatesIfChanged(database, readStateCompanions);
       }
 
       readstatesMs = phase.elapsedMilliseconds;
@@ -2032,7 +2025,6 @@ class GatewayEventHandler {
             : Value(existing?.stickyUnreadMessageId),
         version: Value(existing?.version),
       ),
-      changeHub: readStateChangeHub,
     );
     if (isDm) {
       await database.dmChannelDao.markAsRead(channelId);
@@ -2072,7 +2064,6 @@ class GatewayEventHandler {
           stickyUnreadMessageId: Value(existing?.stickyUnreadMessageId),
           version: Value(existing?.version),
         ),
-        changeHub: readStateChangeHub,
       );
     }
     if (isDm) {
@@ -3163,7 +3154,6 @@ class GatewayEventHandler {
         version: Value(version ?? current?.version),
         flags: flags == null ? const Value.absent() : Value(flags),
       ),
-      changeHub: readStateChangeHub,
     );
     final dm = await database.dmChannelDao.getDmChannelById(channelId);
     if (dm != null) {

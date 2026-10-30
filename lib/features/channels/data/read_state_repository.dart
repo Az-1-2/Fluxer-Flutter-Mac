@@ -5,7 +5,6 @@ import 'package:fluxer_app/core/database/fluxer_database.dart';
 import 'package:fluxer_app/core/push/notification/clear.dart';
 import 'package:fluxer_app/core/push/tray/registry.dart';
 import 'package:fluxer_app/features/channels/data/ack_batcher.dart';
-import 'package:fluxer_app/features/channels/data/read_state_change_hub.dart';
 import 'package:fluxer_app/features/channels/data/read_state_decisions.dart';
 import 'package:fluxer_app/features/channels/data/read_state_persist.dart';
 import 'package:fluxer_app/features/channels/data/read_state_utils.dart';
@@ -20,14 +19,12 @@ class ReadStateRepository {
     this._db, {
     this._batcher,
     this._trayRegistry,
-    this._changeHub,
   });
 
   final FluxerClient _client;
   final FluxerDatabase _db;
   final AckBatcher? _batcher;
   final PushTrayRegistry? _trayRegistry;
-  final ReadStateChangeHub? _changeHub;
 
   Future<void> ackLatest(String channelId) async {
     final prior = await _db.readStateDao.getReadState(channelId);
@@ -83,7 +80,6 @@ class ReadStateRepository {
           version: Value(rs.version),
           flags: rs.flags == null ? const Value.absent() : Value(rs.flags),
         ),
-        changeHub: _changeHub,
       );
       final dm = await _db.dmChannelDao.getDmChannelById(rs.id);
       if (dm != null) {
@@ -205,7 +201,6 @@ class ReadStateRepository {
         manual: Value(manual),
         stickyUnreadMessageId: Value(stickyUnreadMessageId),
       ),
-      changeHub: _changeHub,
     );
     final dm = await _db.dmChannelDao.getDmChannelById(channelId);
     if (dm != null) {
@@ -338,7 +333,6 @@ class ReadStateRepository {
         manual: Value(current.manual),
         stickyUnreadMessageId: Value(current.stickyUnreadMessageId),
       ),
-      changeHub: _changeHub,
     );
   }
 

@@ -25,7 +25,6 @@ import 'package:fluxer_app/features/auth/providers/auth_providers.dart';
 import 'package:fluxer_app/features/auth/providers/current_auth_session_provider.dart';
 import 'package:fluxer_app/features/bookmarks/providers/saved_messages_provider.dart';
 import 'package:fluxer_app/features/channels/providers/ack_batcher_provider.dart';
-import 'package:fluxer_app/features/channels/providers/read_state_change_hub_provider.dart';
 import 'package:fluxer_app/features/channels/providers/read_state_repository_provider.dart';
 import 'package:fluxer_app/features/channels/providers/read_state_write_batcher_provider.dart';
 import 'package:fluxer_app/features/chat/providers/core/chat_read_viewport_provider.dart';
@@ -179,7 +178,6 @@ Raw<StreamSubscription<GatewayEvent>?> gatewayEventListener(Ref ref) {
   final handler = GatewayEventHandler(
     database: db,
     readStateRepository: ref.read(readStateRepositoryProvider),
-    readStateChangeHub: ref.read(readStateChangeHubProvider),
     readStateWriteBatcher: ref.read(readStateWriteBatcherProvider),
     ackBatcher: ref.read(ackBatcherProvider),
     messageMentionContextCache: mentionCache,

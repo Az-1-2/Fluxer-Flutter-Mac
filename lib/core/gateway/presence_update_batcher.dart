@@ -8,6 +8,18 @@ const Duration kPresenceUpdateBatchDelay = Duration(milliseconds: 500);
 
 bool get isFluxerMobileClient => isFluxerMobileOs;
 
+String? _companionNullableString(Value<String?> value, String? fallback) =>
+    value.present ? value.value : fallback;
+
+String _companionString(Value<String> value, String fallback) =>
+    value.present ? value.value : fallback;
+
+bool _companionBool(Value<bool> value, {required bool fallback}) =>
+    value.present ? value.value : fallback;
+
+int? _companionInt(Value<int?> value, int? fallback) =>
+    value.present ? value.value : fallback;
+
 typedef PresenceUpdateRecord = ({
   String userId,
   String status,
@@ -114,32 +126,27 @@ class PresenceUpdateBatcher {
   }
 
   bool _profileCompanionMatches(db.User existing, db.UsersCompanion companion) {
-    String? readNullableString(Value<String?> value, String? fallback) =>
-        value.present ? value.value : fallback;
-    String readString(Value<String> value, String fallback) =>
-        value.present ? value.value : fallback;
-    bool readBool(Value<bool> value, {required bool fallback}) =>
-        value.present ? value.value : fallback;
-    int? readInt(Value<int?> value, int? fallback) =>
-        value.present ? value.value : fallback;
     return existing.username ==
-            readString(companion.username, existing.username) &&
+            _companionString(companion.username, existing.username) &&
         existing.globalName ==
-            readNullableString(companion.globalName, existing.globalName) &&
+            _companionNullableString(
+              companion.globalName,
+              existing.globalName,
+            ) &&
         existing.avatar ==
-            readNullableString(companion.avatar, existing.avatar) &&
+            _companionNullableString(companion.avatar, existing.avatar) &&
         existing.avatarColor ==
-            readInt(companion.avatarColor, existing.avatarColor) &&
+            _companionInt(companion.avatarColor, existing.avatarColor) &&
         existing.accentColor ==
-            readInt(companion.accentColor, existing.accentColor) &&
+            _companionInt(companion.accentColor, existing.accentColor) &&
         existing.banner ==
-            readNullableString(companion.banner, existing.banner) &&
-        existing.bio == readNullableString(companion.bio, existing.bio) &&
+            _companionNullableString(companion.banner, existing.banner) &&
+        existing.bio == _companionNullableString(companion.bio, existing.bio) &&
         existing.pronouns ==
-            readNullableString(companion.pronouns, existing.pronouns) &&
-        existing.bot == readBool(companion.bot, fallback: existing.bot) &&
+            _companionNullableString(companion.pronouns, existing.pronouns) &&
+        existing.bot == _companionBool(companion.bot, fallback: existing.bot) &&
         existing.system ==
-            readBool(companion.system, fallback: existing.system);
+            _companionBool(companion.system, fallback: existing.system);
   }
 
   void dispose() {
