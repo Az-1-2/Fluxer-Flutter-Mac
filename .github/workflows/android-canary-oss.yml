@@ -3,12 +3,23 @@ name: Android Canary OSS Build
 on:
   workflow_dispatch:
   workflow_call:
+    outputs:
+      build_number:
+        description: Android versionCode allocated by Nodus
+        value: ${{ jobs.build-canary-oss.outputs.build_number }}
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
 
 jobs:
   build-canary-oss:
     name: Build canary OSS APK (UnifiedPush)
     runs-on: macos-26
     environment: release-builds
+    outputs:
+      build_number: ${{ steps.android_build_number.outputs.build_number }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -18,21 +29,9 @@ jobs:
       - name: Fetch Android build number
         id: android_build_number
         env:
-          BUILD_SERVICE_TOKEN: ${{ secrets.BUILD_SERVICE_TOKEN }}
-          BUILD_SERVICE_URL: ${{ secrets.BUILD_SERVICE_URL }}
-        run: |
-          set -euo pipefail
-          URL="https://$BUILD_SERVICE_URL/v1/build-number?platform=android"
-          echo "Calling build service at $URL"
-          RESPONSE=$(curl -sS -X POST "$URL" \
-            -H "Authorization: Bearer $BUILD_SERVICE_TOKEN")
-          RESPONSE_ONE_LINE=$(printf '%s' "$RESPONSE" | tr -d '\n')
-          BUILD_NUMBER=$(printf '%s\n' "$RESPONSE_ONE_LINE" | sed -n 's/.*"buildNumber"[[:space:]]*:[[:space:]]*\([0-9][0-9]*\).*/\1/p')
-          if ! [[ "$BUILD_NUMBER" =~ ^[0-9]+$ ]]; then
-            echo "::error::Invalid or missing buildNumber in response: $RESPONSE"
-            exit 1
-          fi
-          echo "build_number=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
+          NODUS_CI_TOKEN: ${{ secrets.NODUS_CI_TOKEN }}
+          NODUS_APP: fluxer
+        run: bash .github/scripts/fetch_nodus_android_build_number.sh
 
       - name: Sync submodules
         run: git submodule update --init --recursive
@@ -132,19 +131,16 @@ jobs:
         run: flutter build apk --release --flavor canaryUnifiedpush --build-number ${{ steps.android_build_number.outputs.build_number }} --dart-define-from-file=tool/dart_defines/canary.json --dart-define=PUSH_PROVIDER=unifiedpush --dart-define=BUILD_TIMESTAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)" --dart-define=CANARY_NUMBER=${{ steps.android_build_number.outputs.build_number }}
 
       - name: Rename canary OSS APK artifacts
-        run: |
-          set -euo pipefail
-          APK_DIR="build/app/outputs/flutter-apk"
-          for apk in "$APK_DIR"/*canaryunifiedpush*.apk; do
-            new_name=$(basename "$apk" | sed 's/unifiedpush/oss/g')
-            mv "$apk" "$APK_DIR/$new_name"
-          done
+        run: bash .github/scripts/rename_oss_apk_artifacts.sh canaryunifiedpush
+
+      - name: Attest canary OSS release binaries
+        uses: ./.github/actions/attest-android-binaries
+        with:
+          patterns: build/app/outputs/flutter-apk/*-canaryoss-release.apk
 
       - name: Upload canary OSS APK artifacts
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         with:
           name: canary-oss-apk
-          path: |
-            build/app/outputs/flutter-apk/app-*-canaryoss-release.apk
-            build/app/outputs/flutter-apk/app-canaryoss-release.apk
+          path: build/app/outputs/flutter-apk/*-canaryoss-release.apk
           if-no-files-found: error
