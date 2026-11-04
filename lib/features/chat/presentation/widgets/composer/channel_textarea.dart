@@ -88,7 +88,9 @@ import 'package:fluxer_app/features/input/providers/composer_focus_coordinator_p
 import 'package:fluxer_app/features/input/providers/physical_keyboard_provider.dart';
 import 'package:fluxer_app/features/settings/providers/preferences/advanced_preferences_provider.dart';
 import 'package:fluxer_app/features/settings/providers/preferences/appearance_preferences_provider.dart';
+import 'package:fluxer_app/features/settings/utils/commerce/open_user_billing_settings.dart';
 import 'package:fluxer_app/features/shell/presentation/responsive_layout.dart';
+import 'package:fluxer_app/features/threads/utils/thread_title.dart';
 import 'package:fluxer_app/features/ui/bottom_sheet/fluxer_confirm_sheet.dart';
 import 'package:fluxer_app/features/ui/input/inline_token_clipboard.dart';
 import 'package:fluxer_app/features/ui/ui.dart';
@@ -701,30 +703,6 @@ class _ChannelTextareaState extends ConsumerState<ChannelTextarea>
     return _composerContentLength(_sendableWireText()) > maxMessageLength;
   }
 
-  void _showPlutoniumSheet(BuildContext context) {
-    final FluxerLocalizations l10n = FluxerLocalizations.of(context);
-    unawaited(
-      FluxerBottomSheet.show<void>(
-        context,
-        title: l10n.plutoniumNotAvailableTitle,
-        builder: (sheetContext, _) => Padding(
-          padding: EdgeInsets.fromLTRB(
-            sheetContext.layout.s4,
-            sheetContext.layout.s4,
-            sheetContext.layout.s4,
-            0,
-          ),
-          child: Text(
-            l10n.plutoniumNotAvailableBody,
-            style: sheetContext.textStyles.bodyMedium.copyWith(
-              color: sheetContext.colors.textSecondary,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Future<void> _handlePasteExceedsLimit(
     String pastedText,
     String channelId,
@@ -770,7 +748,7 @@ class _ChannelTextareaState extends ConsumerState<ChannelTextarea>
         maxLines: maxLines,
         enterSends: _enterSends,
         showComposerCounter: _showComposerCounter,
-        sendableWireLength: _composerContentLength(_sendableWireText()),
+        sendableWireLength: () => _composerContentLength(_sendableWireText()),
         hintSemanticsLabel: _resolveHintText(),
         onSendPressed: () => unawaited(_onSendPressed()),
         onComposerFieldTap: () => _keyboardSession.onComposerFieldTap(context),
@@ -778,7 +756,7 @@ class _ChannelTextareaState extends ConsumerState<ChannelTextarea>
             unawaited(_handlePasteExceedsLimit(pastedText, channelId)),
         onPasteLostContent: _showCorruptedCustomEmojiToast,
         onValidationResult: _toastUploadValidation,
-        onUpgradePressed: () => _showPlutoniumSheet(context),
+        onUpgradePressed: () => unawaited(openPlutoniumCommerce(context, ref)),
         textAlignVertical: textAlignVertical,
         cursorColor: cursorColor,
         fitLinesToHeight: fitLinesToHeight,
@@ -1226,6 +1204,10 @@ class _ChannelTextareaState extends ConsumerState<ChannelTextarea>
     final String channelId = _composerDisplayChannelId();
     final Channel? channel = resolveGuildChannel(ref, channelId);
     if (channel != null) {
+      if (channel.isThread &&
+          threadOwnerBlocked(channel, ref.read(blockedUserIdsProvider))) {
+        return readThreadTitleText(ref, channel, l10n);
+      }
       return l10n.channelComposerHint(channel.name);
     }
     final ComposerWatch? dm = ref.read(composerWatchProvider(channelId));
@@ -1254,22 +1236,22 @@ class _ChannelTextareaState extends ConsumerState<ChannelTextarea>
     required Widget recordingChild,
     required Widget idleChild,
   }) {
-    return FluxerConstrainedUiTextScale(
-      child: AnimatedSwitcher(
-        duration: context.motion.panel,
-        switchInCurve: context.motion.emphasizedCurve,
-        switchOutCurve: context.motion.curve,
-        layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
-          return Stack(
-            alignment: Alignment.bottomCenter,
-            clipBehavior: Clip.none,
-            children: <Widget>[...previousChildren, ?currentChild],
-          );
-        },
-        child: KeyedSubtree(
-          key: ValueKey<bool>(recording),
-          child: recording ? recordingChild : idleChild,
-        ),
+    return AnimatedSwitcher(
+      duration: context.motion.panel,
+      switchInCurve: context.motion.emphasizedCurve,
+      switchOutCurve: context.motion.curve,
+      layoutBuilder: (Widget? currentChild, List<Widget> previousChildren) {
+        return Stack(
+          alignment: Alignment.bottomCenter,
+          clipBehavior: Clip.none,
+          children: <Widget>[...previousChildren, ?currentChild],
+        );
+      },
+      child: KeyedSubtree(
+        key: ValueKey<bool>(recording),
+        child: recording
+            ? FluxerConstrainedUiTextScale(child: recordingChild)
+            : idleChild,
       ),
     );
   }
@@ -2015,6 +1997,20 @@ class _ChannelTextareaState extends ConsumerState<ChannelTextarea>
         );
   }
 
+  void _showOverCharacterLimitToast() {
+    final FluxerLocalizations l10n = FluxerLocalizations.of(context);
+    ref
+        .read(toastProvider.notifier)
+        .show(
+          FluxerToast(
+            message: l10n.characterCounterTooLongToast(
+              ref.read(maxMessageLengthProvider),
+            ),
+            variant: FluxerToastVariant.warning,
+          ),
+        );
+  }
+
   Future<void> _onSendPressed() async {
     final String channelId = ref.read(
       chatViewModelProvider.select((s) => s.channelId),
@@ -2041,6 +2037,7 @@ class _ChannelTextareaState extends ConsumerState<ChannelTextarea>
       return;
     }
     if (_isOverCharacterLimit(ref)) {
+      _showOverCharacterLimitToast();
       return;
     }
     final ChatViewModel vm = ref.read(chatViewModelProvider.notifier);

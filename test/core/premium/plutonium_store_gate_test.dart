@@ -145,26 +145,11 @@ void main() {
   });
 
   group('iOS App Store distribution', () {
-    const Map<AppStoreDistribution, bool> official =
-        <AppStoreDistribution, bool>{
-          AppStoreDistribution.production: true,
-          AppStoreDistribution.testflight: false,
-          AppStoreDistribution.development: false,
-          AppStoreDistribution.unknown: false,
-        };
-    const Map<AppStoreDistribution, bool> officialWithSandboxToggle =
-        <AppStoreDistribution, bool>{
-          AppStoreDistribution.production: true,
-          AppStoreDistribution.testflight: true,
-          AppStoreDistribution.development: false,
-          AppStoreDistribution.unknown: false,
-        };
-
     bool resolve({
       required AppStoreDistribution distribution,
       required bool officialInstance,
-      required bool sandboxPurchases,
-      bool iosBetaOrCanaryBuild = false,
+      required bool stableBuild,
+      required bool developerPurchases,
     }) {
       return resolvePremiumStorePurchasesEnabled(
         isAndroid: false,
@@ -172,50 +157,64 @@ void main() {
         pushProvider: PushProviderKind.apple,
         officialInstance: officialInstance,
         appStoreDistribution: distribution,
-        sandboxPurchases: sandboxPurchases,
-        iosBetaOrCanaryBuild: iosBetaOrCanaryBuild,
+        stableBuild: stableBuild,
+        developerPurchases: developerPurchases,
       );
     }
 
     for (final AppStoreDistribution distribution
         in AppStoreDistribution.values) {
-      test('${distribution.name} on official', () {
+      final bool storeInstall =
+          distribution != AppStoreDistribution.development;
+
+      test('${distribution.name} stable build on official', () {
         expect(
           resolve(
             distribution: distribution,
             officialInstance: true,
-            sandboxPurchases: false,
+            stableBuild: true,
+            developerPurchases: false,
           ),
-          official[distribution],
+          storeInstall,
         );
       });
 
-      test('${distribution.name} on official with the sandbox toggle', () {
+      test('${distribution.name} beta or canary build on official', () {
         expect(
           resolve(
             distribution: distribution,
             officialInstance: true,
-            sandboxPurchases: true,
+            stableBuild: false,
+            developerPurchases: false,
           ),
-          officialWithSandboxToggle[distribution],
+          isFalse,
+        );
+        expect(
+          resolve(
+            distribution: distribution,
+            officialInstance: true,
+            stableBuild: false,
+            developerPurchases: true,
+          ),
+          isTrue,
         );
       });
 
-      for (final bool sandboxPurchases in <bool>[false, true]) {
-        test(
-          '${distribution.name} on self-hosted, toggle $sandboxPurchases',
-          () {
+      test('${distribution.name} on self-hosted with every flag', () {
+        for (final bool stableBuild in <bool>[false, true]) {
+          for (final bool developerPurchases in <bool>[false, true]) {
             expect(
               resolve(
                 distribution: distribution,
                 officialInstance: false,
-                sandboxPurchases: sandboxPurchases,
+                stableBuild: stableBuild,
+                developerPurchases: developerPurchases,
               ),
               isFalse,
             );
-          },
-        );
-      }
+          }
+        }
+      });
     }
 
     test('Android ignores the App Store distribution', () {
@@ -228,28 +227,11 @@ void main() {
             pushProvider: PushProviderKind.firebaseMessaging,
             officialInstance: true,
             appStoreDistribution: distribution,
-            sandboxPurchases: false,
-            iosBetaOrCanaryBuild: false,
+            stableBuild: false,
+            developerPurchases: false,
           ),
           isTrue,
         );
-      }
-    });
-
-    test('beta and canary iOS builds never enable purchases', () {
-      for (final bool sandboxPurchases in <bool>[false, true]) {
-        for (final AppStoreDistribution distribution
-            in AppStoreDistribution.values) {
-          expect(
-            resolve(
-              distribution: distribution,
-              officialInstance: true,
-              sandboxPurchases: sandboxPurchases,
-              iosBetaOrCanaryBuild: true,
-            ),
-            isFalse,
-          );
-        }
       }
     });
   });
@@ -267,8 +249,8 @@ void main() {
           pushProvider: pushProvider,
           officialInstance: official,
           appStoreDistribution: AppStoreDistribution.production,
-          sandboxPurchases: false,
-          iosBetaOrCanaryBuild: false,
+          stableBuild: true,
+          developerPurchases: false,
         );
         final bool commerceVisible = resolvePremiumCommerceVisible(
           selfHosted: !official,
@@ -302,8 +284,8 @@ void main() {
             pushProvider: pushProvider,
             officialInstance: true,
             appStoreDistribution: AppStoreDistribution.production,
-            sandboxPurchases: true,
-            iosBetaOrCanaryBuild: false,
+            stableBuild: true,
+            developerPurchases: true,
           ),
           isFalse,
         );
