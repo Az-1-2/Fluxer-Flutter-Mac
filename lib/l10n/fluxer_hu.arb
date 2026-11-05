@@ -14456,6 +14456,15 @@
     "@premiumPlanUnavailableSelfHosted": {
         "description": "Error shown on a self-hosted instance when the selected Plutonium plan is not available. Names no support mailbox."
     },
+    "premiumDistributionPriceNote": "Az alkalmazás ezen verziójában az árak kicsit magasabbak, mert minden fizetés {percent}-a a terjesztés költségeit fedezi.",
+    "@premiumDistributionPriceNote": {
+        "description": "Note under the Plutonium plan prices in app builds whose prices include an extra charge for the place the app was installed from. percent is a formatted percentage such as 5%.",
+        "placeholders": {
+            "percent": {
+                "type": "String"
+            }
+        }
+    },
     "premiumCompletePaymentTitle": "Fizetés befejezése",
     "premiumCompletePaymentBody": "Most a rendszer átirányít a Stripe oldalára a fizetés befejezéséhez. Miután befejezted, térj vissza a Fluxerbe.",
     "premiumChoosePaymentMethodTitle": "Fizetési mód kiválasztása",
@@ -19878,5 +19887,53 @@
                 "example": "fluxer.com"
             }
         }
+    },
+    "passkeyNoCredentialsForAccount": "Ezen az eszközön nincs jelszókulcs ehhez a fiókhoz. Használd azt az eszközt vagy jelszókezelőt, ahová elmentetted.",
+    "@passkeyNoCredentialsForAccount": {
+        "description": "Error on the two-factor step when the account needs a passkey and none for it is available on this device."
+    },
+    "matureContentIosWebOptInBody": "Kapcsold be a korhatáros közösségeket és csatornákat a fluxer.com oldalon a böngésződben vagy az asztali alkalmazásban. Addig rejtve maradnak az iOS-alkalmazásban.",
+    "@matureContentIosWebOptInBody": {
+        "description": "Body when mature access must be enabled on web or desktop instead of in the iOS app."
+    },
+    "notificationChannelMessages": "Üzenetek",
+    "@notificationChannelMessages": {
+        "description": "Android notification channel name for community messages."
+    },
+    "notificationChannelDirectMessages": "Közvetlen üzenetek",
+    "@notificationChannelDirectMessages": {
+        "description": "Android notification channel name for direct messages."
+    },
+    "notificationChannelForumPosts": "Új fórumbejegyzések",
+    "@notificationChannelForumPosts": {
+        "description": "Android notification channel name for new forum posts."
+    },
+    "notificationChannelMessagesSilent": "Üzenetek hang nélkül",
+    "@notificationChannelMessagesSilent": {
+        "description": "Android notification channel name for community messages when the message sound is turned off."
+    },
+    "notificationChannelDirectMessagesSilent": "Közvetlen üzenetek hang nélkül",
+    "@notificationChannelDirectMessagesSilent": {
+        "description": "Android notification channel name for direct messages when the direct message sound is turned off."
+    },
+    "notificationChannelDescription": "Üzenetek és figyelmeztetések",
+    "@notificationChannelDescription": {
+        "description": "Description shown for Fluxer notification channels in Android settings."
+    },
+    "notificationNewMessageFallback": "Új üzenet",
+    "@notificationNewMessageFallback": {
+        "description": "Notification text used when a push has no message body."
+    },
+    "notificationLocalUserName": "Én",
+    "@notificationLocalUserName": {
+        "description": "Name used for the signed-in user inside a conversation notification."
+    },
+    "notificationGroupDmTitle": "Csoportos üzenet",
+    "@notificationGroupDmTitle": {
+        "description": "Notification title for a group direct message."
+    },
+    "notificationUnknownSender": "Ismeretlen",
+    "@notificationUnknownSender": {
+        "description": "Notification sender name used when a push has no sender."
     }
 }

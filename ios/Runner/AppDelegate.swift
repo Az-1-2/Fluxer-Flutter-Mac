@@ -18,7 +18,7 @@ import flutter_callkit_incoming
     let result = super.application(application, didFinishLaunchingWithOptions: launchOptions)
     UNUserNotificationCenter.current().delegate = self
     ApplePushBridge.shared.registerReplyCategory()
-    AssistantAppShortcuts.updateAppShortcutParameters()
+    AssistantBridge.shared.refreshAppShortcutsInBackground()
     startMeasureIfEnabled()
     return result
   }
@@ -187,6 +187,9 @@ import flutter_callkit_incoming
       messenger: engineBridge.applicationRegistrar.messenger()
     )
     DeclaredAgeRangeBridge.shared.register(
+      messenger: engineBridge.applicationRegistrar.messenger()
+    )
+    AppAttestBridge.shared.register(
       messenger: engineBridge.applicationRegistrar.messenger()
     )
     registerMeasureReporting(messenger: engineBridge.applicationRegistrar.messenger())
