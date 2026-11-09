@@ -6,7 +6,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'fluxer_localizations_ar.dart';
+import 'fluxer_localizations_art.dart';
+import 'fluxer_localizations_be.dart';
 import 'fluxer_localizations_bg.dart';
+import 'fluxer_localizations_bn.dart';
+import 'fluxer_localizations_ca.dart';
 import 'fluxer_localizations_cs.dart';
 import 'fluxer_localizations_da.dart';
 import 'fluxer_localizations_de.dart';
@@ -14,6 +18,7 @@ import 'fluxer_localizations_el.dart';
 import 'fluxer_localizations_en.dart';
 import 'fluxer_localizations_es.dart';
 import 'fluxer_localizations_fi.dart';
+import 'fluxer_localizations_fil.dart';
 import 'fluxer_localizations_fr.dart';
 import 'fluxer_localizations_he.dart';
 import 'fluxer_localizations_hi.dart';
@@ -24,12 +29,16 @@ import 'fluxer_localizations_it.dart';
 import 'fluxer_localizations_ja.dart';
 import 'fluxer_localizations_ko.dart';
 import 'fluxer_localizations_lt.dart';
+import 'fluxer_localizations_lv.dart';
 import 'fluxer_localizations_nb.dart';
 import 'fluxer_localizations_nl.dart';
 import 'fluxer_localizations_pl.dart';
 import 'fluxer_localizations_pt.dart';
 import 'fluxer_localizations_ro.dart';
 import 'fluxer_localizations_ru.dart';
+import 'fluxer_localizations_sk.dart';
+import 'fluxer_localizations_sl.dart';
+import 'fluxer_localizations_sq.dart';
 import 'fluxer_localizations_sv.dart';
 import 'fluxer_localizations_th.dart';
 import 'fluxer_localizations_tr.dart';
@@ -125,7 +134,11 @@ abstract class FluxerLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('en'),
     Locale('ar'),
+    Locale('art'),
+    Locale('be'),
     Locale('bg'),
+    Locale('bn'),
+    Locale('ca'),
     Locale('cs'),
     Locale('da'),
     Locale('de'),
@@ -135,6 +148,7 @@ abstract class FluxerLocalizations {
     Locale('es'),
     Locale('es', '419'),
     Locale('fi'),
+    Locale('fil'),
     Locale('fr'),
     Locale('he'),
     Locale('hi'),
@@ -145,6 +159,7 @@ abstract class FluxerLocalizations {
     Locale('ja'),
     Locale('ko'),
     Locale('lt'),
+    Locale('lv'),
     Locale('nb'),
     Locale('nl'),
     Locale('pl'),
@@ -152,6 +167,9 @@ abstract class FluxerLocalizations {
     Locale('pt', 'BR'),
     Locale('ro'),
     Locale('ru'),
+    Locale('sk'),
+    Locale('sl'),
+    Locale('sq'),
     Locale('sv'),
     Locale('th'),
     Locale('tr'),
@@ -584,6 +602,24 @@ abstract class FluxerLocalizations {
   /// **'Log in with a passkey'**
   String get logInWithPasskey;
 
+  /// Button on the iOS sign-in and verification screens for a self-hosted instance. It opens the instance's web sign-in in a browser sheet, where the user can use a passkey, and signs the app in when they finish.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with your browser'**
+  String get signInWithBrowser;
+
+  /// Short note under the Sign in with your browser button on iOS for a self-hosted instance, where passkeys only work in the browser.
+  ///
+  /// In en, this message translates to:
+  /// **'To use a passkey on this instance, sign in with your browser.'**
+  String get signInWithBrowserPasskeyHint;
+
+  /// Error on the sign-in screen when signing in through the browser sheet fails.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t sign in with your browser. Try again.'**
+  String get browserSignInFailed;
+
   /// Sentence under the sign-in button. Keep the <terms> and <privacy> tags around the words that open each document, and inflect those words to fit the sentence. 'both' shows both links, 'terms' only the terms of service, 'other' only the privacy policy.
   ///
   /// In en, this message translates to:
@@ -761,7 +797,7 @@ abstract class FluxerLocalizations {
   /// Shown on the sign-in verification screen on iOS for a self-hosted instance when a passkey is the account's only verification method.
   ///
   /// In en, this message translates to:
-  /// **'Passkeys from this instance don\'t work in this app, and your account has no other verification method. Sign in on the web instead.'**
+  /// **'Passkeys from this instance don\'t work in this app, and your account has no other verification method. Sign in with your browser instead.'**
   String get mfaPasskeyUnavailable;
 
   /// Link to switch to WebAuthn from code entry.
@@ -28071,6 +28107,282 @@ abstract class FluxerLocalizations {
   /// In en, this message translates to:
   /// **'Can\'t connect to {domain}. Check your internet connection and try again.'**
   String splashGatewayUnreachable(String domain);
+
+  /// App lock: appLockSettingTitle
+  ///
+  /// In en, this message translates to:
+  /// **'App lock'**
+  String get appLockSettingTitle;
+
+  /// App lock: appLockConfigure
+  ///
+  /// In en, this message translates to:
+  /// **'Configure'**
+  String get appLockConfigure;
+
+  /// App lock: appLockSettingDescription
+  ///
+  /// In en, this message translates to:
+  /// **'Fluxer asks for your PIN after it has been in the background for the time you choose. App lock applies to every account on this device.'**
+  String get appLockSettingDescription;
+
+  /// App lock: appLockTimeoutLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Lock after'**
+  String get appLockTimeoutLabel;
+
+  /// App lock: appLockTimeoutImmediately
+  ///
+  /// In en, this message translates to:
+  /// **'Immediately'**
+  String get appLockTimeoutImmediately;
+
+  /// App lock: appLockTimeoutThirtySeconds
+  ///
+  /// In en, this message translates to:
+  /// **'30 seconds'**
+  String get appLockTimeoutThirtySeconds;
+
+  /// App lock: appLockTimeoutOneMinute
+  ///
+  /// In en, this message translates to:
+  /// **'1 minute'**
+  String get appLockTimeoutOneMinute;
+
+  /// App lock: appLockTimeoutFiveMinutes
+  ///
+  /// In en, this message translates to:
+  /// **'5 minutes'**
+  String get appLockTimeoutFiveMinutes;
+
+  /// App lock: appLockTimeoutFifteenMinutes
+  ///
+  /// In en, this message translates to:
+  /// **'15 minutes'**
+  String get appLockTimeoutFifteenMinutes;
+
+  /// App lock: appLockTimeoutOneHour
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get appLockTimeoutOneHour;
+
+  /// App lock: appLockTurnOff
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off app lock'**
+  String get appLockTurnOff;
+
+  /// App lock: appLockTurnOffConfirmTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off app lock?'**
+  String get appLockTurnOffConfirmTitle;
+
+  /// App lock: appLockTurnOffConfirmBody
+  ///
+  /// In en, this message translates to:
+  /// **'Fluxer will open without asking for your PIN.'**
+  String get appLockTurnOffConfirmBody;
+
+  /// App lock: appLockEnterCurrentPinTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your PIN'**
+  String get appLockEnterCurrentPinTitle;
+
+  /// App lock: appLockEnterCurrentPinSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current {digits}-digit PIN to continue.'**
+  String appLockEnterCurrentPinSubtitle(int digits);
+
+  /// App lock: appLockSetPinTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Set a PIN'**
+  String get appLockSetPinTitle;
+
+  /// App lock: appLockCreatePinSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a {digits}-digit PIN.'**
+  String appLockCreatePinSubtitle(int digits);
+
+  /// App lock: appLockConfirmPinSubtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the PIN again to confirm'**
+  String get appLockConfirmPinSubtitle;
+
+  /// App lock: appLockPinMismatch
+  ///
+  /// In en, this message translates to:
+  /// **'The PINs don\'t match. Try again.'**
+  String get appLockPinMismatch;
+
+  /// App lock: appLockTooManyAttemptsShort
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Wait before trying again.'**
+  String get appLockTooManyAttemptsShort;
+
+  /// App lock: appLockUnlockTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Fluxer'**
+  String get appLockUnlockTitle;
+
+  /// App lock: appLockUnlockSubtitlePin
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your {digits}-digit PIN'**
+  String appLockUnlockSubtitlePin(int digits);
+
+  /// App lock: appLockCooldownMessage
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Try again in {time}.'**
+  String appLockCooldownMessage(String time);
+
+  /// App lock: appLockWrongPin
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect PIN'**
+  String get appLockWrongPin;
+
+  /// App lock: appLockForgotPin
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot PIN? Sign out'**
+  String get appLockForgotPin;
+
+  /// App lock: appLockSignOutConfirmTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out and turn off app lock?'**
+  String get appLockSignOutConfirmTitle;
+
+  /// App lock: appLockSignOutConfirmBody
+  ///
+  /// In en, this message translates to:
+  /// **'Every account on this device will be signed out and app lock will be turned off.'**
+  String get appLockSignOutConfirmBody;
+
+  /// App lock: appLockBiometricReason
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Fluxer'**
+  String get appLockBiometricReason;
+
+  /// App lock: appLockPinFieldLabel
+  ///
+  /// In en, this message translates to:
+  /// **'PIN'**
+  String get appLockPinFieldLabel;
+
+  /// App lock: appLockBiometricFailed
+  ///
+  /// In en, this message translates to:
+  /// **'That didn\'t match. Try again.'**
+  String get appLockBiometricFailed;
+
+  /// App lock: appLockBiometricFaceId
+  ///
+  /// In en, this message translates to:
+  /// **'Face ID'**
+  String get appLockBiometricFaceId;
+
+  /// App lock: appLockBiometricFaceUnlock
+  ///
+  /// In en, this message translates to:
+  /// **'face unlock'**
+  String get appLockBiometricFaceUnlock;
+
+  /// App lock: appLockBiometricFingerprint
+  ///
+  /// In en, this message translates to:
+  /// **'fingerprint'**
+  String get appLockBiometricFingerprint;
+
+  /// App lock: appLockBiometricTouchId
+  ///
+  /// In en, this message translates to:
+  /// **'Touch ID'**
+  String get appLockBiometricTouchId;
+
+  /// App lock: appLockBiometricGeneric
+  ///
+  /// In en, this message translates to:
+  /// **'biometrics'**
+  String get appLockBiometricGeneric;
+
+  /// App lock: appLockUseBiometric
+  ///
+  /// In en, this message translates to:
+  /// **'Use {method}'**
+  String appLockUseBiometric(String method);
+
+  /// App lock: appLockUnlockSubtitleWithBiometric
+  ///
+  /// In en, this message translates to:
+  /// **'Use {method} or enter your PIN'**
+  String appLockUnlockSubtitleWithBiometric(String method);
+
+  /// App lock: appLockBiometricSwitchLabel
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with {method}'**
+  String appLockBiometricSwitchLabel(String method);
+
+  /// App lock: appLockSetPinButton
+  ///
+  /// In en, this message translates to:
+  /// **'Set PIN'**
+  String get appLockSetPinButton;
+
+  /// App lock: appLockChangePinButton
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get appLockChangePinButton;
+
+  /// App lock: appLockRowDescription
+  ///
+  /// In en, this message translates to:
+  /// **'Require a PIN to open Fluxer'**
+  String get appLockRowDescription;
+
+  /// App lock: settings row description while app lock is on
+  ///
+  /// In en, this message translates to:
+  /// **'On. Locks after {duration} in the background.'**
+  String appLockRowDescriptionEnabled(String duration);
+
+  /// App lock: settings row description while app lock is on with no delay
+  ///
+  /// In en, this message translates to:
+  /// **'On. Locks as soon as you leave Fluxer.'**
+  String get appLockRowDescriptionEnabledImmediately;
+
+  /// App lock: appLockRowDescriptionWithBiometric
+  ///
+  /// In en, this message translates to:
+  /// **'Require a PIN or {method} to open Fluxer'**
+  String appLockRowDescriptionWithBiometric(String method);
+
+  /// App lock: appLockBiometricSwitchHint
+  ///
+  /// In en, this message translates to:
+  /// **'Your PIN still works too'**
+  String get appLockBiometricSwitchHint;
+
+  /// App lock: appLockBiometricEither
+  ///
+  /// In en, this message translates to:
+  /// **'{first} or {second}'**
+  String appLockBiometricEither(String first, String second);
 }
 
 class _FluxerLocalizationsDelegate
@@ -28087,7 +28399,11 @@ class _FluxerLocalizationsDelegate
   @override
   bool isSupported(Locale locale) => <String>[
     'ar',
+    'art',
+    'be',
     'bg',
+    'bn',
+    'ca',
     'cs',
     'da',
     'de',
@@ -28095,6 +28411,7 @@ class _FluxerLocalizationsDelegate
     'en',
     'es',
     'fi',
+    'fil',
     'fr',
     'he',
     'hi',
@@ -28105,12 +28422,16 @@ class _FluxerLocalizationsDelegate
     'ja',
     'ko',
     'lt',
+    'lv',
     'nb',
     'nl',
     'pl',
     'pt',
     'ro',
     'ru',
+    'sk',
+    'sl',
+    'sq',
     'sv',
     'th',
     'tr',
@@ -28170,8 +28491,16 @@ FluxerLocalizations lookupFluxerLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'ar':
       return FluxerLocalizationsAr();
+    case 'art':
+      return FluxerLocalizationsArt();
+    case 'be':
+      return FluxerLocalizationsBe();
     case 'bg':
       return FluxerLocalizationsBg();
+    case 'bn':
+      return FluxerLocalizationsBn();
+    case 'ca':
+      return FluxerLocalizationsCa();
     case 'cs':
       return FluxerLocalizationsCs();
     case 'da':
@@ -28186,6 +28515,8 @@ FluxerLocalizations lookupFluxerLocalizations(Locale locale) {
       return FluxerLocalizationsEs();
     case 'fi':
       return FluxerLocalizationsFi();
+    case 'fil':
+      return FluxerLocalizationsFil();
     case 'fr':
       return FluxerLocalizationsFr();
     case 'he':
@@ -28206,6 +28537,8 @@ FluxerLocalizations lookupFluxerLocalizations(Locale locale) {
       return FluxerLocalizationsKo();
     case 'lt':
       return FluxerLocalizationsLt();
+    case 'lv':
+      return FluxerLocalizationsLv();
     case 'nb':
       return FluxerLocalizationsNb();
     case 'nl':
@@ -28218,6 +28551,12 @@ FluxerLocalizations lookupFluxerLocalizations(Locale locale) {
       return FluxerLocalizationsRo();
     case 'ru':
       return FluxerLocalizationsRu();
+    case 'sk':
+      return FluxerLocalizationsSk();
+    case 'sl':
+      return FluxerLocalizationsSl();
+    case 'sq':
+      return FluxerLocalizationsSq();
     case 'sv':
       return FluxerLocalizationsSv();
     case 'th':
