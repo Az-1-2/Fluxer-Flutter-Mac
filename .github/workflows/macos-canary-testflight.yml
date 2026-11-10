@@ -114,13 +114,13 @@ jobs:
 
       - name: Ad-hoc sign app
         run: |
-          APP="build/macos/Build/Products/Release/Fluxer Lite.app"
+          APP="build/macos/Build/Products/Release/Fluxer Oxygen.app"
           test -d "$APP" || { echo "App not found at $APP"; exit 1; }
           codesign --force --deep --sign - "$APP"
 
       - name: Package app
         run: |
-          APP="build/macos/Build/Products/Release/Fluxer Lite.app"
+          APP="build/macos/Build/Products/Release/Fluxer Oxygen.app"
           ditto -c -k --sequesterRsrc --keepParent "$APP" Fluxer-macos.zip
 
       - name: Upload build log on failure
