@@ -4886,6 +4886,14 @@ class FluxerLocalizationsId extends FluxerLocalizations {
       'Tema sistem secara otomatis menonaktifkan sinkronisasi untuk melacak preferensi sistem Anda di perangkat ini.';
 
   @override
+  String get lookAndFeelUseSystemDynamicColorsLabel =>
+      'Use Material You colors';
+
+  @override
+  String get lookAndFeelUseSystemDynamicColorsDescription =>
+      'Tint the theme with your device\'s system colors.';
+
+  @override
   String get lookAndFeelThemeSyncFailed =>
       'Tema tidak dapat disinkronkan ke akun Anda. Coba lagi.';
 
@@ -17270,4 +17278,23 @@ class FluxerLocalizationsId extends FluxerLocalizations {
   String appLockBiometricEither(String first, String second) {
     return '$first or $second';
   }
+
+  @override
+  String get voiceDiagnosticsCopy => 'Copy voice diagnostics';
+
+  @override
+  String get voiceDiagnosticsCopyDescription =>
+      'Share with the developers to help fix call issues';
+
+  @override
+  String get voiceDiagnosticsCopied => 'Copied voice diagnostics to clipboard';
+
+  @override
+  String get voiceDiagnosticsInCallHint => 'In a call';
+
+  @override
+  String get oxygenUpdateAvailable => 'Update available';
+
+  @override
+  String get oxygenUpdating => 'Updating…';
 }

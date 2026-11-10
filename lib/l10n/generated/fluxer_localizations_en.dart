@@ -4884,6 +4884,14 @@ class FluxerLocalizationsEn extends FluxerLocalizations {
       'System theme automatically disables sync to track your system\'s preference on this device.';
 
   @override
+  String get lookAndFeelUseSystemDynamicColorsLabel =>
+      'Use Material You colors';
+
+  @override
+  String get lookAndFeelUseSystemDynamicColorsDescription =>
+      'Tint the theme with your device\'s system colors.';
+
+  @override
   String get lookAndFeelThemeSyncFailed =>
       'Couldn\'t sync theme to your account. Please try again.';
 
@@ -17156,6 +17164,25 @@ class FluxerLocalizationsEn extends FluxerLocalizations {
   String appLockBiometricEither(String first, String second) {
     return '$first or $second';
   }
+
+  @override
+  String get voiceDiagnosticsCopy => 'Copy voice diagnostics';
+
+  @override
+  String get voiceDiagnosticsCopyDescription =>
+      'Share with the developers to help fix call issues';
+
+  @override
+  String get voiceDiagnosticsCopied => 'Copied voice diagnostics to clipboard';
+
+  @override
+  String get voiceDiagnosticsInCallHint => 'In a call';
+
+  @override
+  String get oxygenUpdateAvailable => 'Update available';
+
+  @override
+  String get oxygenUpdating => 'Updating…';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -33957,6 +33984,19 @@ class FluxerLocalizationsEnGb extends FluxerLocalizationsEn {
   String splashGatewayUnreachable(String domain) {
     return 'Can\'t connect to $domain. Check your internet connection and try again.';
   }
+
+  @override
+  String get voiceDiagnosticsCopy => 'Copy voice diagnostics';
+
+  @override
+  String get voiceDiagnosticsCopyDescription =>
+      'Share with the developers to help fix call issues';
+
+  @override
+  String get voiceDiagnosticsCopied => 'Copied voice diagnostics to clipboard';
+
+  @override
+  String get voiceDiagnosticsInCallHint => 'In a call';
 }
 
 /// The translations for English, as used in the United States (`en_US`).
@@ -50759,4 +50799,17 @@ class FluxerLocalizationsEnUs extends FluxerLocalizationsEn {
   String splashGatewayUnreachable(String domain) {
     return 'Can\'t connect to $domain. Check your internet connection and try again.';
   }
+
+  @override
+  String get voiceDiagnosticsCopy => 'Copy voice diagnostics';
+
+  @override
+  String get voiceDiagnosticsCopyDescription =>
+      'Share with the developers to help fix call issues';
+
+  @override
+  String get voiceDiagnosticsCopied => 'Copied voice diagnostics to clipboard';
+
+  @override
+  String get voiceDiagnosticsInCallHint => 'In a call';
 }

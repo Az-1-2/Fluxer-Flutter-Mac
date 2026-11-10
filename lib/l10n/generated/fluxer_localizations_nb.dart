@@ -4902,6 +4902,14 @@ class FluxerLocalizationsNb extends FluxerLocalizations {
       'Systemtema deaktiverer automatisk synkronisering for å spore systemets preferanser på denne enheten.';
 
   @override
+  String get lookAndFeelUseSystemDynamicColorsLabel =>
+      'Use Material You colors';
+
+  @override
+  String get lookAndFeelUseSystemDynamicColorsDescription =>
+      'Tint the theme with your device\'s system colors.';
+
+  @override
   String get lookAndFeelThemeSyncFailed =>
       'Kunne ikke synkronisere tema til kontoen din. Prøv igjen.';
 
@@ -17293,4 +17301,23 @@ class FluxerLocalizationsNb extends FluxerLocalizations {
   String appLockBiometricEither(String first, String second) {
     return '$first or $second';
   }
+
+  @override
+  String get voiceDiagnosticsCopy => 'Copy voice diagnostics';
+
+  @override
+  String get voiceDiagnosticsCopyDescription =>
+      'Share with the developers to help fix call issues';
+
+  @override
+  String get voiceDiagnosticsCopied => 'Copied voice diagnostics to clipboard';
+
+  @override
+  String get voiceDiagnosticsInCallHint => 'In a call';
+
+  @override
+  String get oxygenUpdateAvailable => 'Update available';
+
+  @override
+  String get oxygenUpdating => 'Updating…';
 }

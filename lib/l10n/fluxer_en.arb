@@ -6269,6 +6269,14 @@
   "@lookAndFeelSyncThemeAcrossDevicesSystemDescription": {
     "description": "Description shown under the sync toggle when System theme is active and the toggle is therefore disabled."
   },
+  "lookAndFeelUseSystemDynamicColorsLabel": "Use Material You colors",
+  "@lookAndFeelUseSystemDynamicColorsLabel": {
+    "description": "Label for the Android toggle that tints the app theme with the system's Material You (dynamic) colors."
+  },
+  "lookAndFeelUseSystemDynamicColorsDescription": "Tint the theme with your device's system colors.",
+  "@lookAndFeelUseSystemDynamicColorsDescription": {
+    "description": "Description for the Material You dynamic colors toggle."
+  },
   "lookAndFeelThemeSyncFailed": "Couldn't sync theme to your account. Please try again.",
   "@lookAndFeelThemeSyncFailed": {
     "description": "Toast message shown when the server PATCH for a theme change or sync toggle fails."
@@ -20460,5 +20468,29 @@
         "type": "String"
       }
     }
+  },
+  "voiceDiagnosticsCopy": "Copy voice diagnostics",
+  "@voiceDiagnosticsCopy": {
+    "description": "Action label that copies voice call diagnostics as JSON to the clipboard so they can be shared with the developers."
+  },
+  "voiceDiagnosticsCopyDescription": "Share with the developers to help fix call issues",
+  "@voiceDiagnosticsCopyDescription": {
+    "description": "Subtitle under the copy voice diagnostics row in the voice call controls sheet."
+  },
+  "voiceDiagnosticsCopied": "Copied voice diagnostics to clipboard",
+  "@voiceDiagnosticsCopied": {
+    "description": "Toast shown after voice diagnostics JSON was copied to the clipboard."
+  },
+  "voiceDiagnosticsInCallHint": "In a call",
+  "@voiceDiagnosticsInCallHint": {
+    "description": "Muted hint next to the copy voice diagnostics action when the user is currently connected to a voice call."
+  },
+  "oxygenUpdateAvailable": "Update available",
+  "@oxygenUpdateAvailable": {
+    "description": "Tooltip and accessible label on the channel header updater icon in the desktop app. Clicking it downloads the update, then restarts the app."
+  },
+  "oxygenUpdating": "Updating…",
+  "@oxygenUpdating": {
+    "description": "Tooltip and accessible label on the channel header updater icon in the desktop app while an update the user started is downloading. The app restarts by itself when it is done."
   }
 }

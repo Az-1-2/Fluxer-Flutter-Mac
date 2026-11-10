@@ -4640,6 +4640,14 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
       '系统主题会自动禁用同步，以跟踪此设备上的系统偏好设置。';
 
   @override
+  String get lookAndFeelUseSystemDynamicColorsLabel =>
+      'Use Material You colors';
+
+  @override
+  String get lookAndFeelUseSystemDynamicColorsDescription =>
+      'Tint the theme with your device\'s system colors.';
+
+  @override
   String get lookAndFeelThemeSyncFailed => '无法将主题同步到您的帐户。请重试。';
 
   @override
@@ -16163,6 +16171,25 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
   String appLockBiometricEither(String first, String second) {
     return '$first or $second';
   }
+
+  @override
+  String get voiceDiagnosticsCopy => 'Copy voice diagnostics';
+
+  @override
+  String get voiceDiagnosticsCopyDescription =>
+      'Share with the developers to help fix call issues';
+
+  @override
+  String get voiceDiagnosticsCopied => 'Copied voice diagnostics to clipboard';
+
+  @override
+  String get voiceDiagnosticsInCallHint => 'In a call';
+
+  @override
+  String get oxygenUpdateAvailable => 'Update available';
+
+  @override
+  String get oxygenUpdating => 'Updating…';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -31990,4 +32017,17 @@ class FluxerLocalizationsZhHant extends FluxerLocalizationsZh {
   String splashGatewayUnreachable(String domain) {
     return '無法連線到 $domain。請檢查您的網路連線，然後再試一次。';
   }
+
+  @override
+  String get voiceDiagnosticsCopy => 'Copy voice diagnostics';
+
+  @override
+  String get voiceDiagnosticsCopyDescription =>
+      'Share with the developers to help fix call issues';
+
+  @override
+  String get voiceDiagnosticsCopied => 'Copied voice diagnostics to clipboard';
+
+  @override
+  String get voiceDiagnosticsInCallHint => 'In a call';
 }

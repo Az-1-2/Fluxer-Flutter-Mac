@@ -7880,6 +7880,18 @@ abstract class FluxerLocalizations {
   /// **'System theme automatically disables sync to track your system\'s preference on this device.'**
   String get lookAndFeelSyncThemeAcrossDevicesSystemDescription;
 
+  /// Label for the Android toggle that tints the app theme with the system's Material You (dynamic) colors.
+  ///
+  /// In en, this message translates to:
+  /// **'Use Material You colors'**
+  String get lookAndFeelUseSystemDynamicColorsLabel;
+
+  /// Description for the Material You dynamic colors toggle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tint the theme with your device\'s system colors.'**
+  String get lookAndFeelUseSystemDynamicColorsDescription;
+
   /// Toast message shown when the server PATCH for a theme change or sync toggle fails.
   ///
   /// In en, this message translates to:
@@ -28383,6 +28395,42 @@ abstract class FluxerLocalizations {
   /// In en, this message translates to:
   /// **'{first} or {second}'**
   String appLockBiometricEither(String first, String second);
+
+  /// Action label that copies voice call diagnostics as JSON to the clipboard so they can be shared with the developers.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy voice diagnostics'**
+  String get voiceDiagnosticsCopy;
+
+  /// Subtitle under the copy voice diagnostics row in the voice call controls sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Share with the developers to help fix call issues'**
+  String get voiceDiagnosticsCopyDescription;
+
+  /// Toast shown after voice diagnostics JSON was copied to the clipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied voice diagnostics to clipboard'**
+  String get voiceDiagnosticsCopied;
+
+  /// Muted hint next to the copy voice diagnostics action when the user is currently connected to a voice call.
+  ///
+  /// In en, this message translates to:
+  /// **'In a call'**
+  String get voiceDiagnosticsInCallHint;
+
+  /// Tooltip and accessible label on the channel header updater icon in the desktop app. Clicking it downloads the update, then restarts the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Update available'**
+  String get oxygenUpdateAvailable;
+
+  /// Tooltip and accessible label on the channel header updater icon in the desktop app while an update the user started is downloading. The app restarts by itself when it is done.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating…'**
+  String get oxygenUpdating;
 }
 
 class _FluxerLocalizationsDelegate
