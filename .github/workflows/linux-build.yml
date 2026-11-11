@@ -103,11 +103,36 @@ jobs:
 
       - name: Pin window_manager for Linux CI
         run: |
-          cat >> pubspec.yaml <<'EOF'
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
 
-          dependency_overrides:
-            window_manager: 0.5.2
-          EOF
+          path = Path("pubspec.yaml")
+          lines = path.read_text().splitlines(keepends=True)
+
+          start = next(
+              (i for i, line in enumerate(lines)
+               if re.match(r"^dependency_overrides\s*:", line)),
+              None,
+          )
+          if start is None:
+              raise SystemExit("No dependency_overrides block found in pubspec.yaml")
+
+          end = next(
+              (i for i in range(start + 1, len(lines))
+               if lines[i].strip() and not lines[i][0].isspace()),
+              len(lines),
+          )
+
+          for i in range(start + 1, end):
+              if re.match(r"^\s+window_manager\s*:", lines[i]):
+                  lines[i] = "  window_manager: 0.5.2\n"
+                  break
+          else:
+              lines.insert(end, "  window_manager: 0.5.2\n")
+
+          path.write_text("".join(lines))
+          PY
 
       - name: Get dependencies
         run: flutter pub get
