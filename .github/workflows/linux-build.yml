@@ -101,6 +101,14 @@ jobs:
       - name: Configure OSS build tree
         run: dart tool/configure_build.dart --profile=oss
 
+      - name: Pin window_manager for Linux CI
+        run: |
+          cat >> pubspec.yaml <<'EOF'
+
+          dependency_overrides:
+            window_manager: 0.5.2
+          EOF
+
       - name: Get dependencies
         run: flutter pub get
 
