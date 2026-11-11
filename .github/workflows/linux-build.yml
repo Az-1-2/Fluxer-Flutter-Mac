@@ -1,80 +1,46 @@
-name: Linux Canary Build 
+name: Build Linux builds
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-linux:
-    name: Build Linux (canary)
-    runs-on: ubuntu-latest
-
-    container:
-      image: debian:sid
+    name: Build Linux
+    runs-on: ubuntu-26.04
 
     env:
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      LANGUAGE: en_US.UTF-8
       PUSH_PROVIDER: unifiedpush
-      DEBIAN_FRONTEND: noninteractive
-
-    defaults:
-      run:
-        shell: bash
 
     steps:
-      - name: Install base tools
+      - name: Install Linux build dependencies
         run: |
-          apt-get update
-          apt-get install -y \
-            ca-certificates curl git unzip xz-utils zip tar zstd jq file \
-            build-essential
+          sudo apt-get update
+          sudo apt-get install -y \
+            clang \
+            cmake \
+            ninja-build \
+            pkg-config \
+            libgtk-3-dev \
+            libstdc++-12-dev \
+            libsecret-1-dev
 
-      - name: Checkout repository
+      - name: Checkout upstream repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
+          repository: fluxerapp/flutter_client
+          ref: canary
           submodules: recursive
 
       - name: Sync submodules
-        run: |
-          git config --global --add safe.directory '*'
-          git submodule update --init --recursive
-
-      - name: Install Linux build dependencies
-        run: |
-          apt-get install -y \
-            clang cmake ninja-build pkg-config \
-            libgtk-3-dev liblzma-dev \
-            libsecret-1-dev libjsoncpp-dev \
-            libayatana-appindicator3-dev \
-            libmpv-dev \
-            libasound2-dev libpulse-dev \
-            libwebkit2gtk-4.1-dev \
-            libunwind-dev libx11-dev libxkbcommon-dev \
-            libnotify-dev libkeybinder-3.0-dev \
-            libglu1-mesa-dev libepoxy-dev \
-            libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
-            libgstreamer-plugins-bad1.0-dev \
-            gstreamer1.0-plugins-good gstreamer1.0-libav \
-            libwayland-dev libwpe-1.0-dev libwpebackend-fdo-1.0-dev
-
-      - name: Install WPE WebKit
-        run: |
-          apt-cache search wpewebkit || true
-          FOUND=""
-          for pkg in libwpewebkit-2.0-dev libwpewebkit-1.1-dev libwpewebkit-1.0-dev; do
-            if apt-cache show "$pkg" >/dev/null 2>&1; then
-              apt-get install -y "$pkg"
-              FOUND="$pkg"
-              break
-            fi
-          done
-          if [ -z "$FOUND" ]; then
-            echo "No WPE WebKit dev package available in the apt repositories"
-            exit 1
-          fi
-          echo "Installed $FOUND"
-          pkg-config --list-all | grep -i wpe || true
+        run: git submodule update --init --recursive
 
       - name: Set up Flutter
         uses: axi92/flutter-action@72633a794ba0b23276fa4fc465a6cacb758a90c5
@@ -83,114 +49,64 @@ jobs:
 
       - name: Set up Rust and native asset build hooks
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
-            | sh -s -- -y --profile minimal --default-toolchain stable
-          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
-          . "$HOME/.cargo/env"
-          flutter config --enable-linux-desktop
+          if ! command -v cargo >/dev/null 2>&1; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+              | sh -s -- -y --profile minimal --default-toolchain stable
+            echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+            . "$HOME/.cargo/env"
+          fi
+          rustup show active-toolchain || rustup toolchain install stable
           flutter config --enable-native-assets
 
       - name: Restore pub cache
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
           path: ~/.pub-cache
-          key: ${{ runner.os }}-sid-pub-${{ hashFiles('**/pubspec.lock') }}
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
-            ${{ runner.os }}-sid-pub-
+            ${{ runner.os }}-pub-
 
       - name: Configure OSS build tree
         run: dart tool/configure_build.dart --profile=oss
 
-      - name: Pin window_manager for Linux CI
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-
-          path = Path("pubspec.yaml")
-          lines = path.read_text().splitlines(keepends=True)
-
-          start = next(
-              (i for i, line in enumerate(lines)
-               if re.match(r"^dependency_overrides\s*:", line)),
-              None,
-          )
-          if start is None:
-              raise SystemExit("No dependency_overrides block found in pubspec.yaml")
-
-          end = next(
-              (i for i in range(start + 1, len(lines))
-               if lines[i].strip() and not lines[i][0].isspace()),
-              len(lines),
-          )
-
-          for i in range(start + 1, end):
-              if re.match(r"^\s+window_manager\s*:", lines[i]):
-                  lines[i] = "  window_manager: 0.5.2\n"
-                  break
-          else:
-              lines.insert(end, "  window_manager: 0.5.2\n")
-
-          path.write_text("".join(lines))
-          PY
-
       - name: Get dependencies
         run: flutter pub get
-
-      - name: Patch inappwebview Linux plugin for older WPE headers
-        run: |
-          CACHE_DIR="${PUB_CACHE:-$HOME/.pub-cache}"
-          FILE=$(find "$CACHE_DIR/hosted/pub.dev" -path '*flutter_inappwebview_linux-*/linux/in_app_webview/in_app_webview_settings.cc' | head -n 1)
-          if [ -z "$FILE" ]; then
-            echo "in_app_webview_settings.cc not found"
-            exit 1
-          fi
-          sed -i 's|WPE_SETTING_DISABLE_ANIMATIONS|"/wpe-platform/disable-animations"|g' "$FILE"
-          grep -n "disable-animations" "$FILE"
 
       - name: Run build_runner
         run: dart run build_runner build
 
-      - name: Build Linux release
+      - name: Build Linux app
         run: |
-          flutter build linux --release -v \
+          flutter build linux --release \
             --dart-define-from-file=tool/dart_defines/canary.json \
-            --dart-define=PUSH_PROVIDER=${PUSH_PROVIDER} 2>&1 | tee build.log
+            --dart-define=PUSH_PROVIDER=${PUSH_PROVIDER}
 
-      - name: Rename bundled libraries to their sonames
+      - name: Package app
         run: |
-          cd build/linux/x64/release/bundle/lib
-          for f in libWPEWebKit-2.0.so.1.* libwpe-1.0.so.1.*; do
-            [ -e "$f" ] || continue
-            mv "$f" "$(echo "$f" | sed -E 's/(\.so\.[0-9]+)\..*/\1/')"
-          done
-          ls -la | grep -iE 'wpe'
-
-      - name: Show build errors
-        if: failure()
-        run: |
-          grep -nE "error:|Error:|CMake Error|fatal error|FAILED|undefined reference|not found" build.log | head -60
-          echo "-----"
-          tail -n 40 build.log
+          test -d build/linux/x64/release/bundle
+          tar -C build/linux/x64/release -czf Fluxer-linux-x64.tar.gz bundle
 
       - name: Upload build log on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: linux-build-log
-          path: build.log
-          retention-days: 7
-
-      - name: Package build
-        run: |
-          mkdir -p dist
-          tar -czf dist/fluxer-canary-linux-x64.tar.gz \
-            -C build/linux/x64/release/bundle .
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: fluxer-canary-linux-x64
-          path: dist/fluxer-canary-linux-x64.tar.gz
-          if-no-files-found: error
+          path: |
+            build
           retention-days: 14
+
+      - name: Publish daily GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LATEST=$(gh release list \
+            --repo "$GITHUB_REPOSITORY" \
+            --limit 1000 \
+            --json tagName \
+            --jq '[.[].tagName | select(test("^[0-9]+$")) | tonumber] | max // 0')
+
+          TAG=$((LATEST + 1))
+          gh release create "$TAG" Fluxer-linux-x64.tar.gz \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Daily Linux canary" \
+            --notes "Automated daily Linux canary build from the upstream canary branch."
