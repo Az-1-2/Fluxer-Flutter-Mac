@@ -31,6 +31,7 @@ jobs:
             libmpv-dev \
             libasound2-dev libpulse-dev \
             libwebkit2gtk-4.1-dev \
+            libwpewebkit-1.0-dev \
             libunwind-dev libx11-dev libxkbcommon-dev \
             libnotify-dev libkeybinder-3.0-dev \
             libglu1-mesa-dev libepoxy-dev \
