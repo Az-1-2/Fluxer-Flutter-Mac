@@ -17,7 +17,6 @@ jobs:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
       LANGUAGE: en_US.UTF-8
-      PUSH_PROVIDER: unifiedpush
 
     steps:
       - name: Install Linux build dependencies
@@ -87,7 +86,6 @@ jobs:
         run: |
           flutter build linux --release \
             --dart-define-from-file=tool/dart_defines/canary.json \
-            --dart-define=PUSH_PROVIDER=${PUSH_PROVIDER}
 
       - name: Package app
         run: |
