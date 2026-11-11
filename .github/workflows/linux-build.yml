@@ -1,0 +1,163 @@
+name: Linux Canary Build 
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux:
+    name: Build Linux (canary)
+    runs-on: ubuntu-latest
+
+    container:
+      image: debian:sid
+
+    env:
+      PUSH_PROVIDER: unifiedpush
+      DEBIAN_FRONTEND: noninteractive
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Install base tools
+        run: |
+          apt-get update
+          apt-get install -y \
+            ca-certificates curl git unzip xz-utils zip tar zstd jq file \
+            build-essential
+
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          submodules: recursive
+
+      - name: Sync submodules
+        run: |
+          git config --global --add safe.directory '*'
+          git submodule update --init --recursive
+
+      - name: Install Linux build dependencies
+        run: |
+          apt-get install -y \
+            clang cmake ninja-build pkg-config \
+            libgtk-3-dev liblzma-dev \
+            libsecret-1-dev libjsoncpp-dev \
+            libayatana-appindicator3-dev \
+            libmpv-dev \
+            libasound2-dev libpulse-dev \
+            libwebkit2gtk-4.1-dev \
+            libunwind-dev libx11-dev libxkbcommon-dev \
+            libnotify-dev libkeybinder-3.0-dev \
+            libglu1-mesa-dev libepoxy-dev \
+            libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+            libgstreamer-plugins-bad1.0-dev \
+            gstreamer1.0-plugins-good gstreamer1.0-libav \
+            libwayland-dev libwpe-1.0-dev libwpebackend-fdo-1.0-dev
+
+      - name: Install WPE WebKit
+        run: |
+          apt-cache search wpewebkit || true
+          FOUND=""
+          for pkg in libwpewebkit-2.0-dev libwpewebkit-1.1-dev libwpewebkit-1.0-dev; do
+            if apt-cache show "$pkg" >/dev/null 2>&1; then
+              apt-get install -y "$pkg"
+              FOUND="$pkg"
+              break
+            fi
+          done
+          if [ -z "$FOUND" ]; then
+            echo "No WPE WebKit dev package available in the apt repositories"
+            exit 1
+          fi
+          echo "Installed $FOUND"
+          pkg-config --list-all | grep -i wpe || true
+
+      - name: Set up Flutter
+        uses: axi92/flutter-action@72633a794ba0b23276fa4fc465a6cacb758a90c5
+        with:
+          channel: stable
+
+      - name: Set up Rust and native asset build hooks
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+            | sh -s -- -y --profile minimal --default-toolchain stable
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          . "$HOME/.cargo/env"
+          flutter config --enable-linux-desktop
+          flutter config --enable-native-assets
+
+      - name: Restore pub cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-sid-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-sid-pub-
+
+      - name: Configure OSS build tree
+        run: dart tool/configure_build.dart --profile=oss
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Patch inappwebview Linux plugin for older WPE headers
+        run: |
+          CACHE_DIR="${PUB_CACHE:-$HOME/.pub-cache}"
+          FILE=$(find "$CACHE_DIR/hosted/pub.dev" -path '*flutter_inappwebview_linux-*/linux/in_app_webview/in_app_webview_settings.cc' | head -n 1)
+          if [ -z "$FILE" ]; then
+            echo "in_app_webview_settings.cc not found"
+            exit 1
+          fi
+          sed -i 's|WPE_SETTING_DISABLE_ANIMATIONS|"/wpe-platform/disable-animations"|g' "$FILE"
+          grep -n "disable-animations" "$FILE"
+
+      - name: Run build_runner
+        run: dart run build_runner build
+
+      - name: Build Linux release
+        run: |
+          flutter build linux --release -v \
+            --dart-define-from-file=tool/dart_defines/canary.json \
+            --dart-define=PUSH_PROVIDER=${PUSH_PROVIDER} 2>&1 | tee build.log
+
+      - name: Rename bundled libraries to their sonames
+        run: |
+          cd build/linux/x64/release/bundle/lib
+          for f in libWPEWebKit-2.0.so.1.* libwpe-1.0.so.1.*; do
+            [ -e "$f" ] || continue
+            mv "$f" "$(echo "$f" | sed -E 's/(\.so\.[0-9]+)\..*/\1/')"
+          done
+          ls -la | grep -iE 'wpe'
+
+      - name: Show build errors
+        if: failure()
+        run: |
+          grep -nE "error:|Error:|CMake Error|fatal error|FAILED|undefined reference|not found" build.log | head -60
+          echo "-----"
+          tail -n 40 build.log
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build-log
+          path: build.log
+          retention-days: 7
+
+      - name: Package build
+        run: |
+          mkdir -p dist
+          tar -czf dist/fluxer-canary-linux-x64.tar.gz \
+            -C build/linux/x64/release/bundle .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fluxer-canary-linux-x64
+          path: dist/fluxer-canary-linux-x64.tar.gz
+          if-no-files-found: error
+          retention-days: 14
