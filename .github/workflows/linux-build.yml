@@ -11,7 +11,7 @@ permissions:
 jobs:
   build-linux:
     name: Build Linux
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-22.04
 
     env:
       LANG: en_US.UTF-8
@@ -32,7 +32,8 @@ jobs:
             libstdc++-12-dev \
             libsecret-1-dev \
             libgstreamer1.0-dev \
-            libgstreamer-plugins-base1.0-dev
+            libgstreamer-plugins-base1.0-dev \
+            libwebkit2gtk-4.0-dev
 
       - name: Checkout upstream repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
