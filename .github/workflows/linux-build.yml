@@ -24,17 +24,21 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            clang \
-            cmake \
-            ninja-build \
-            pkg-config \
-            libgtk-3-dev \
-            libstdc++-12-dev \
-            libsecret-1-dev \
-            libgstreamer1.0-dev \
-            libgstreamer-plugins-base1.0-dev \
-            libwebkit2gtk-4.0-dev
-
+            clang cmake ninja-build pkg-config \
+            libgtk-3-dev liblzma-dev \
+            libsecret-1-dev libjsoncpp-dev \
+            libayatana-appindicator3-dev \
+            libmpv-dev \
+            libasound2-dev libpulse-dev \
+            libwebkit2gtk-4.1-dev \
+            libunwind-dev libx11-dev libxkbcommon-dev \
+            libnotify-dev libkeybinder-3.0-dev \
+            libglu1-mesa-dev libepoxy-dev \
+            libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+            libgstreamer-plugins-bad1.0-dev \
+            gstreamer1.0-plugins-good gstreamer1.0-libav \
+            libwayland-dev libwpe-1.0-dev libwpebackend-fdo-1.0-dev
+            
       - name: Checkout upstream repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
