@@ -39,13 +39,6 @@ jobs:
             gstreamer1.0-plugins-good gstreamer1.0-libav \
             libwayland-dev libwpe-1.0-dev libwpebackend-fdo-1.0-dev
             
-      - name: Checkout upstream repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-        with:
-          repository: fluxerapp/flutter_client
-          ref: canary
-          submodules: recursive
-
       - name: Sync submodules
         run: git submodule update --init --recursive
 
