@@ -86,6 +86,7 @@ jobs:
         run: |
           flutter build linux --release \
             --dart-define-from-file=tool/dart_defines/canary.json \
+            --dart-define=PUSH_PROVIDER=none \
 
       - name: Package app
         run: |
