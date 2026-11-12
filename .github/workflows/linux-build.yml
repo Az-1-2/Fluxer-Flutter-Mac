@@ -17,6 +17,9 @@ jobs:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
       LANGUAGE: en_US.UTF-8
+      CC: clang-18
+      CXX: clang++-18
+
 
     steps:
       - name: Checkout repository
@@ -41,6 +44,12 @@ jobs:
             libgstreamer-plugins-bad1.0-dev \
             gstreamer1.0-plugins-good gstreamer1.0-libav \
             libwayland-dev libwpe-1.0-dev libwpebackend-fdo-1.0-dev
+
+      - name: Install Clang 18
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 18
             
       - name: Sync submodules
         run: git submodule update --init --recursive
@@ -82,7 +91,7 @@ jobs:
         run: |
           flutter build linux --release \
             --dart-define-from-file=tool/dart_defines/canary.json \
-            --dart-define=PUSH_PROVIDER=none \
+            --dart-define=PUSH_PROVIDER=none 
 
       - name: Package app
         run: |
