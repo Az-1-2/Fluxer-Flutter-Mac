@@ -295,9 +295,6 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Enable notifications';
 
   @override
-  String get welcomeBack => 'Welcome back';
-
-  @override
   String get email => 'Email';
 
   @override
@@ -364,6 +361,19 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
 
   @override
   String get register => 'Register';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'OR';
@@ -1553,7 +1563,7 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
   String get addFriendSheetTitle => 'Add friend';
 
   @override
-  String get addFriendUsernameHint => 'Username#0000';
+  String get addFriendUsernameHint => 'username#1234';
 
   @override
   String get addFriendUsernameLabel => 'Friend\'s username';
@@ -1566,7 +1576,7 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
 
   @override
   String get addFriendInvalidUsername =>
-      'Enter a valid username (Username#0000).';
+      'Enter a username, then # and the 4-digit tag.';
 
   @override
   String get addFriendOutgoingSuccess => 'Friend request sent';
@@ -5055,6 +5065,11 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'Message display mode';
 
   @override
@@ -5139,7 +5154,7 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
       'When enabled, shortcut badges are hidden in tooltip popups.';
 
   @override
-  String get lookAndFeelGuildSidebarTitle => 'Guild sidebar';
+  String get lookAndFeelGuildSidebarTitle => 'Community list';
 
   @override
   String get lookAndFeelGuildSidebarDescription =>
@@ -5190,7 +5205,7 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
 
   @override
   String lookAndFeelCollapseDMsDescription(String productName) {
-    return 'When enabled, unread DMs in the guild sidebar are collapsed into a folder on the $productName button. Click the $productName button while on the DMs page to expand or collapse the folder.';
+    return 'When enabled, unread DMs in the community list are collapsed into a folder on the $productName button. Click the $productName button while on the DMs page to expand or collapse the folder.';
   }
 
   @override
@@ -7840,6 +7855,12 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
   String get chatMessagesLoadError => 'Couldn\'t load messages.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'Messages failed to load';
 
   @override
@@ -9615,13 +9636,8 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
   }
 
   @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Welcome to $channelName';
-  }
-
-  @override
   String channelWelcomeDescription(String channelName) {
-    return 'This is the start of $channelName.';
+    return 'There are no older messages in $channelName.';
   }
 
   @override
@@ -10353,7 +10369,7 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
 
   @override
   String get storePlutoniumHighlightProfile =>
-      'Animated profile, badge, and custom 4-digit number';
+      'Animated profile and badge, and a custom tag number';
 
   @override
   String get storePlutoniumHighlightFiles => 'Uploads up to 500 MB';
@@ -12239,14 +12255,14 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
   String get friendsPageTitle => 'My friends';
 
   @override
-  String get friendsActiveNowTitle => 'Active now';
+  String get friendsActiveNowTitle => 'In voice now';
 
   @override
-  String get friendsActiveNowEmptyTitle => 'It\'s quiet for now...';
+  String get friendsActiveNowEmptyTitle => 'Nobody is in a voice channel';
 
   @override
   String get friendsActiveNowEmptyBody =>
-      'When friends are active in voice channels, their activity will appear here.';
+      'Friends who join a voice channel will show up here.';
 
   @override
   String get friendsTabOnline => 'Online';
@@ -12290,7 +12306,7 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
   String get friendsEmptyAllTitle => 'No friends yet';
 
   @override
-  String get friendsEmptyAllBody => 'Where we\'re going, we need more friends.';
+  String get friendsEmptyAllBody => 'Add a friend with their username and tag.';
 
   @override
   String get friendsEmptyPendingTitle => 'No pending requests';
@@ -16093,6 +16109,23 @@ class FluxerLocalizationsCa extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'Add the default reaction';

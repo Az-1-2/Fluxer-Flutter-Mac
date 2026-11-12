@@ -297,9 +297,6 @@ class FluxerLocalizationsFr extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Activer les notifications';
 
   @override
-  String get welcomeBack => 'Bon retour';
-
-  @override
   String get email => 'E-mail';
 
   @override
@@ -368,6 +365,19 @@ class FluxerLocalizationsFr extends FluxerLocalizations {
 
   @override
   String get register => 'S\'inscrire';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'OU';
@@ -5157,6 +5167,11 @@ class FluxerLocalizationsFr extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel =>
       'Mode d\'affichage des messages';
 
@@ -7989,6 +8004,12 @@ class FluxerLocalizationsFr extends FluxerLocalizations {
   String get chatMessagesLoadError => 'Impossible de charger les messages.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'Échec du chargement des messages';
 
   @override
@@ -9801,11 +9822,6 @@ class FluxerLocalizationsFr extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'Créé par $name. Expire dans $time.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Bienvenue sur $channelName';
   }
 
   @override
@@ -16464,6 +16480,23 @@ class FluxerLocalizationsFr extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'Ajouter la réaction par défaut';

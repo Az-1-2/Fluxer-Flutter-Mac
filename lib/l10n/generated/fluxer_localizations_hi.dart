@@ -294,9 +294,6 @@ class FluxerLocalizationsHi extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'नोटिफ़िकेशन चालू करें';
 
   @override
-  String get welcomeBack => 'वापस आपका स्वागत है';
-
-  @override
   String get email => 'ईमेल';
 
   @override
@@ -363,6 +360,19 @@ class FluxerLocalizationsHi extends FluxerLocalizations {
 
   @override
   String get register => 'रजिस्टर करें';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'या';
@@ -5059,6 +5069,11 @@ class FluxerLocalizationsHi extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'मैसेज डिस्प्ले मोड';
 
   @override
@@ -7861,6 +7876,12 @@ class FluxerLocalizationsHi extends FluxerLocalizations {
   String get chatMessagesLoadError => 'संदेश लोड नहीं हो सके।';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'मैसेज लोड नहीं हो पाए';
 
   @override
@@ -9648,11 +9669,6 @@ class FluxerLocalizationsHi extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return '$name द्वारा बनाया गया। $time में समाप्त हो रहा है।';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return '$channelName में आपका स्वागत है';
   }
 
   @override
@@ -16162,6 +16178,23 @@ class FluxerLocalizationsHi extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'डिफ़ॉल्ट रिएक्शन जोड़ें';

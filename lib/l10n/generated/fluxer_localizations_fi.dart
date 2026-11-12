@@ -294,9 +294,6 @@ class FluxerLocalizationsFi extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Ota ilmoitukset käyttöön';
 
   @override
-  String get welcomeBack => 'Tervetuloa takaisin';
-
-  @override
   String get email => 'Sähköposti';
 
   @override
@@ -362,6 +359,19 @@ class FluxerLocalizationsFi extends FluxerLocalizations {
 
   @override
   String get register => 'Rekisteröidy';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'TAI';
@@ -5086,6 +5096,11 @@ class FluxerLocalizationsFi extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'Viestien näyttötila';
 
   @override
@@ -7892,6 +7907,12 @@ class FluxerLocalizationsFi extends FluxerLocalizations {
   String get chatMessagesLoadError => 'Viestien lataaminen epäonnistui.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'Viestien lataus epäonnistui';
 
   @override
@@ -9680,11 +9701,6 @@ class FluxerLocalizationsFi extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'Luonut $name. Vanhenee $time.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Tervetuloa kanavalle $channelName';
   }
 
   @override
@@ -16233,6 +16249,23 @@ class FluxerLocalizationsFi extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'Lisää oletusreaktio';

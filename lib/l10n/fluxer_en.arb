@@ -395,10 +395,6 @@
   "@nagbarEnableNotifications": {
     "description": "Push notification permission nagbar CTA."
   },
-  "welcomeBack": "Welcome back",
-  "@welcomeBack": {
-    "description": "Greeting on the login screen; usable wherever returning users are welcomed."
-  },
   "email": "Email",
   "@email": {
     "description": "Generic label for an email field."
@@ -481,6 +477,28 @@
   "register": "Register",
   "@register": {
     "description": "Generic label to create a new account."
+  },
+  "loginHeading": "Sign in to {productName}",
+  "@loginHeading": {
+    "description": "Heading on the sign-in screen. {productName} is the name of the instance the user is signing in to, for example Fluxer.",
+    "placeholders": {
+      "productName": {
+        "type": "String"
+      }
+    }
+  },
+  "loginNewAccountPrompt": "New to {productName}? ",
+  "@loginNewAccountPrompt": {
+    "description": "Lead text before the create account link on the sign-in screen. The trailing space keeps spacing before the link.",
+    "placeholders": {
+      "productName": {
+        "type": "String"
+      }
+    }
+  },
+  "loginCreateAccountLink": "Create an account",
+  "@loginCreateAccountLink": {
+    "description": "Link on the sign-in screen that opens the registration screen."
   },
   "orDivider": "OR",
   "@orDivider": {
@@ -2033,7 +2051,7 @@
   "@addFriendSheetTitle": {
     "description": "Title for the mobile add friends bottom sheet."
   },
-  "addFriendUsernameHint": "Username#0000",
+  "addFriendUsernameHint": "username#1234",
   "@addFriendUsernameHint": {
     "description": "Placeholder for the add friend username input."
   },
@@ -2049,7 +2067,7 @@
   "@addFriendNoUserFound": {
     "description": "Error when no user matches the entered username."
   },
-  "addFriendInvalidUsername": "Enter a valid username (Username#0000).",
+  "addFriendInvalidUsername": "Enter a username, then # and the 4-digit tag.",
   "@addFriendInvalidUsername": {
     "description": "Error when the username format is invalid."
   },
@@ -6457,6 +6475,15 @@
       }
     }
   },
+  "lookAndFeelPixelsAccessibleValue": "{value} pixels",
+  "@lookAndFeelPixelsAccessibleValue": {
+    "description": "Value that screen readers announce for the chat font size and message group spacing sliders. Shown on screen as, for example, 16px.",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
   "lookAndFeelMessageDisplayModeLabel": "Message display mode",
   "@lookAndFeelMessageDisplayModeLabel": {
     "description": "Accessibility label for message display mode radio group."
@@ -6549,13 +6576,13 @@
   "@lookAndFeelHideKeyboardHintsDescription": {
     "description": "Toggle description for the hide-keyboard-hints switch."
   },
-  "lookAndFeelGuildSidebarTitle": "Guild sidebar",
+  "lookAndFeelGuildSidebarTitle": "Community list",
   "@lookAndFeelGuildSidebarTitle": {
-    "description": "Subsection title under Interface — guild sidebar config."
+    "description": "Subsection title under Interface for the community list settings."
   },
   "lookAndFeelGuildSidebarDescription": "Configure how direct messages and communities behave in the sidebar.",
   "@lookAndFeelGuildSidebarDescription": {
-    "description": "Subsection description for guild sidebar config."
+    "description": "Subsection description for the community list settings."
   },
   "guildUnavailableOutageTooltip": "{count, plural, =1{1 community is temporarily unavailable due to a flux capacitor malfunction.} other{{count} communities are temporarily unavailable due to a flux capacitor malfunction.}}",
   "@guildUnavailableOutageTooltip": {
@@ -6602,7 +6629,7 @@
   "@lookAndFeelCollapseDMsLabel": {
     "description": "Toggle label — collapse unread DMs into the Fluxer button folder."
   },
-  "lookAndFeelCollapseDMsDescription": "When enabled, unread DMs in the guild sidebar are collapsed into a folder on the {productName} button. Click the {productName} button while on the DMs page to expand or collapse the folder.",
+  "lookAndFeelCollapseDMsDescription": "When enabled, unread DMs in the community list are collapsed into a folder on the {productName} button. Click the {productName} button while on the DMs page to expand or collapse the folder.",
   "@lookAndFeelCollapseDMsDescription": {
     "description": "Toggle description for the DM folder collapse behavior.",
     "placeholders": {
@@ -9947,6 +9974,14 @@
   "@chatMessagesLoadError": {
     "description": "Shown in the chat message list when the initial message history request fails. The user can retry from the same screen."
   },
+  "dmEmptyStateTitle": "No messages yet",
+  "@dmEmptyStateTitle": {
+    "description": "Title shown in an empty one-to-one direct message before anyone has sent a message."
+  },
+  "dmEmptyStateBody": "Send a message to start the conversation.",
+  "@dmEmptyStateBody": {
+    "description": "Body shown under the title in an empty one-to-one direct message."
+  },
   "chatMessagesFailedToLoad": "Messages failed to load",
   "@chatMessagesFailedToLoad": {
     "description": "Shown in a bottom bar when message history fails to load while scrolling in a channel."
@@ -12242,18 +12277,9 @@
       }
     }
   },
-  "channelWelcomeHeading": "Welcome to {channelName}",
-  "@channelWelcomeHeading": {
-    "description": "Heading on the start-of-channel welcome shown at the top of a guild channel's loaded message history and as its empty state. {channelName} already includes the leading # (e.g. #general).",
-    "placeholders": {
-      "channelName": {
-        "type": "String"
-      }
-    }
-  },
-  "channelWelcomeDescription": "This is the start of {channelName}.",
+  "channelWelcomeDescription": "There are no older messages in {channelName}.",
   "@channelWelcomeDescription": {
-    "description": "Body text on the start-of-channel welcome. {channelName} already includes the leading # (e.g. #general).",
+    "description": "Text under the channel title at the top of a community channel, shown above its oldest message and when the channel is empty. {channelName} already includes the leading # (e.g. #general).",
     "placeholders": {
       "channelName": {
         "type": "String"
@@ -12789,7 +12815,7 @@
   "storePlutoniumDonateLink": "Donate instead.",
   "storePlutoniumHighlightsLead": "Subscribing funds Fluxer and unlocks",
   "storePlutoniumHighlightEmoji": "Custom emoji and stickers in any chat",
-  "storePlutoniumHighlightProfile": "Animated profile, badge, and custom 4-digit number",
+  "storePlutoniumHighlightProfile": "Animated profile and badge, and a custom tag number",
   "storePlutoniumHighlightFiles": "Uploads up to 500 MB",
   "storePlutoniumHighlightMessages": "Send messages up to 4,000 characters",
   "storePlutoniumHighlightCommunityProfile": "A separate profile for each community",
@@ -14672,15 +14698,15 @@
   "@friendsPageTitle": {
     "description": "Title of the friends page on tablets and desktop."
   },
-  "friendsActiveNowTitle": "Active now",
+  "friendsActiveNowTitle": "In voice now",
   "@friendsActiveNowTitle": {
-    "description": "Heading of the active now panel on the friends page."
+    "description": "Heading of the panel on the friends page that lists friends who are in a voice channel."
   },
-  "friendsActiveNowEmptyTitle": "It's quiet for now...",
+  "friendsActiveNowEmptyTitle": "Nobody is in a voice channel",
   "@friendsActiveNowEmptyTitle": {
     "description": "Title shown in the active now panel when no friends are in voice channels."
   },
-  "friendsActiveNowEmptyBody": "When friends are active in voice channels, their activity will appear here.",
+  "friendsActiveNowEmptyBody": "Friends who join a voice channel will show up here.",
   "@friendsActiveNowEmptyBody": {
     "description": "Body shown in the active now panel when no friends are in voice channels."
   },
@@ -14736,9 +14762,9 @@
   "@friendsEmptyAllTitle": {
     "description": "Title shown on the all tab of the friends page when the user has no friends."
   },
-  "friendsEmptyAllBody": "Where we're going, we need more friends.",
+  "friendsEmptyAllBody": "Add a friend with their username and tag.",
   "@friendsEmptyAllBody": {
-    "description": "Body shown on the all tab of the friends page when the user has no friends. A light film reference, translate the joke freely."
+    "description": "Body shown on the all tab of the friends page when the user has no friends."
   },
   "friendsEmptyPendingTitle": "No pending requests",
   "@friendsEmptyPendingTitle": {
@@ -19138,6 +19164,23 @@
         "type": "int"
       }
     }
+  },
+  "forumPostNewMessagesShort": "{count, plural, =1{1 new} other{{count} new}}",
+  "@forumPostNewMessagesShort": {
+    "description": "Short label in the footer of a forum post card, meaning a number of new messages. Keep it as short as possible, it shares one line with the message count and the time.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "forumPostHasNewMessagesShort": "New",
+  "@forumPostHasNewMessagesShort": {
+    "description": "Short label in the footer of a forum post card when it has new messages but the number is unknown. Keep it as short as possible."
+  },
+  "forumPostHasNewMessages": "New messages",
+  "@forumPostHasNewMessages": {
+    "description": "Screen reader label in the footer of a forum post card when it has new messages but the number is unknown."
   },
   "forumPostReact": "Add the default reaction",
   "@forumPostReact": {

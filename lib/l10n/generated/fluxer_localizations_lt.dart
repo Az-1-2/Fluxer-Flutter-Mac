@@ -299,9 +299,6 @@ class FluxerLocalizationsLt extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Įjungti pranešimus';
 
   @override
-  String get welcomeBack => 'Sveiki sugrįžę';
-
-  @override
   String get email => 'El. paštas';
 
   @override
@@ -368,6 +365,19 @@ class FluxerLocalizationsLt extends FluxerLocalizations {
 
   @override
   String get register => 'Registruotis';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'ARBA';
@@ -5117,6 +5127,11 @@ class FluxerLocalizationsLt extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'Žinučių rodymo režimas';
 
   @override
@@ -7972,6 +7987,12 @@ class FluxerLocalizationsLt extends FluxerLocalizations {
   String get chatMessagesLoadError => 'Nepavyko įkelti žinučių.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'Nepavyko įkelti žinučių';
 
   @override
@@ -9762,11 +9783,6 @@ class FluxerLocalizationsLt extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'Sukurta $name. Baigiasi po $time.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Sveiki atvykę į $channelName';
   }
 
   @override
@@ -16355,6 +16371,23 @@ class FluxerLocalizationsLt extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'Pridėti numatytąją reakciją';

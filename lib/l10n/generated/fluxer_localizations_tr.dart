@@ -295,9 +295,6 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Bildirimleri etkinleştir';
 
   @override
-  String get welcomeBack => 'Tekrar hoş geldiniz';
-
-  @override
   String get email => 'E-posta';
 
   @override
@@ -364,6 +361,19 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
 
   @override
   String get register => 'Kaydol';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'VEYA';
@@ -5069,6 +5079,11 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'Mesaj görüntüleme modu';
 
   @override
@@ -7866,6 +7881,12 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
   String get chatMessagesLoadError => 'Mesajlar yüklenemedi.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'Mesajlar yüklenemedi';
 
   @override
@@ -9658,11 +9679,6 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return '$name tarafından oluşturuldu. $time sonra sona eriyor.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return '$channelName kanalına hoş geldiniz';
   }
 
   @override
@@ -16183,6 +16199,23 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'Varsayılan tepkiyi ekle';

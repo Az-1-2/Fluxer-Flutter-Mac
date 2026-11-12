@@ -296,9 +296,6 @@ class FluxerLocalizationsEs extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Activar notificaciones';
 
   @override
-  String get welcomeBack => 'Te damos la bienvenida de nuevo';
-
-  @override
   String get email => 'Correo electrónico';
 
   @override
@@ -366,6 +363,19 @@ class FluxerLocalizationsEs extends FluxerLocalizations {
 
   @override
   String get register => 'Registrarse';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'O';
@@ -5135,6 +5145,11 @@ class FluxerLocalizationsEs extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel =>
       'Modo de visualización de mensajes';
 
@@ -7966,6 +7981,12 @@ class FluxerLocalizationsEs extends FluxerLocalizations {
   String get chatMessagesLoadError => 'No se pudieron cargar los mensajes.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'No se pudieron cargar los mensajes';
 
   @override
@@ -9769,11 +9790,6 @@ class FluxerLocalizationsEs extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'Creada por $name. Expira en $time.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Bienvenido a $channelName';
   }
 
   @override
@@ -16402,6 +16418,23 @@ class FluxerLocalizationsEs extends FluxerLocalizations {
   }
 
   @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
+
+  @override
   String get forumPostReact => 'Añadir la reacción predeterminada';
 
   @override
@@ -17936,9 +17969,6 @@ class FluxerLocalizationsEs419 extends FluxerLocalizationsEs {
 
   @override
   String get nagbarEnableNotifications => 'Activar notificaciones';
-
-  @override
-  String get welcomeBack => 'Te damos la bienvenida de nuevo';
 
   @override
   String get email => 'Correo electrónico';
@@ -27223,11 +27253,6 @@ class FluxerLocalizationsEs419 extends FluxerLocalizationsEs {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'Creado por $name. Caduca en $time.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Bienvenido a $channelName';
   }
 
   @override

@@ -299,9 +299,6 @@ class FluxerLocalizationsUk extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Увімкнути сповіщення';
 
   @override
-  String get welcomeBack => 'З поверненням';
-
-  @override
   String get email => 'Електронна пошта';
 
   @override
@@ -369,6 +366,19 @@ class FluxerLocalizationsUk extends FluxerLocalizations {
 
   @override
   String get register => 'Зареєструватися';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'АБО';
@@ -5115,6 +5125,11 @@ class FluxerLocalizationsUk extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel =>
       'Режим відображення повідомлень';
 
@@ -7951,6 +7966,12 @@ class FluxerLocalizationsUk extends FluxerLocalizations {
   String get chatMessagesLoadError => 'Не вдалося завантажити повідомлення.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'Не вдалося завантажити повідомлення';
 
   @override
@@ -9751,11 +9772,6 @@ class FluxerLocalizationsUk extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'Створено $name. Термін дії: $time.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Ласкаво просимо до $channelName';
   }
 
   @override
@@ -16350,6 +16366,23 @@ class FluxerLocalizationsUk extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'Додати стандартну реакцію';

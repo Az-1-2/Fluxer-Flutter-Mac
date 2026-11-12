@@ -294,9 +294,6 @@ class FluxerLocalizationsTh extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'เปิดการแจ้งเตือน';
 
   @override
-  String get welcomeBack => 'ยินดีต้อนรับกลับมา';
-
-  @override
   String get email => 'อีเมล';
 
   @override
@@ -363,6 +360,19 @@ class FluxerLocalizationsTh extends FluxerLocalizations {
 
   @override
   String get register => 'ลงทะเบียน';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'หรือ';
@@ -5027,6 +5037,11 @@ class FluxerLocalizationsTh extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'โหมดการแสดงข้อความ';
 
   @override
@@ -7810,6 +7825,12 @@ class FluxerLocalizationsTh extends FluxerLocalizations {
   String get chatMessagesLoadError => 'ไม่สามารถโหลดข้อความได้';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'โหลดข้อความไม่สำเร็จ';
 
   @override
@@ -9572,11 +9593,6 @@ class FluxerLocalizationsTh extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'สร้างโดย $name หมดอายุใน $time';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'ยินดีต้อนรับสู่ $channelName';
   }
 
   @override
@@ -16039,6 +16055,23 @@ class FluxerLocalizationsTh extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'เพิ่มรีแอ็กชันเริ่มต้น';

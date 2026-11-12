@@ -285,9 +285,6 @@ class FluxerLocalizationsKo extends FluxerLocalizations {
   String get nagbarEnableNotifications => '알림 켜기';
 
   @override
-  String get welcomeBack => '다시 오신 것을 환영합니다';
-
-  @override
   String get email => '이메일';
 
   @override
@@ -351,6 +348,19 @@ class FluxerLocalizationsKo extends FluxerLocalizations {
 
   @override
   String get register => '가입하기';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => '또는';
@@ -4890,6 +4900,11 @@ class FluxerLocalizationsKo extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => '메시지 표시 모드';
 
   @override
@@ -7563,6 +7578,12 @@ class FluxerLocalizationsKo extends FluxerLocalizations {
   String get chatMessagesLoadError => '메시지를 불러올 수 없습니다.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => '메시지를 불러오지 못했습니다';
 
   @override
@@ -9262,11 +9283,6 @@ class FluxerLocalizationsKo extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return '$name님이 만들었으며, $time 후에 만료됩니다.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return '$channelName에 오신 것을 환영합니다';
   }
 
   @override
@@ -15504,6 +15520,23 @@ class FluxerLocalizationsKo extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => '기본 반응 추가';

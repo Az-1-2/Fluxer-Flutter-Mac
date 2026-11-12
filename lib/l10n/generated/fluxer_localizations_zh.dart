@@ -282,9 +282,6 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
   String get nagbarEnableNotifications => '开启通知';
 
   @override
-  String get welcomeBack => '欢迎回来';
-
-  @override
   String get email => '邮箱';
 
   @override
@@ -347,6 +344,19 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
 
   @override
   String get register => '注册';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => '或';
@@ -4801,6 +4811,11 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => '消息显示模式';
 
   @override
@@ -7407,6 +7422,12 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
   String get chatMessagesLoadError => '无法加载消息。';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => '消息加载失败';
 
   @override
@@ -9076,11 +9097,6 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return '由 $name 创建。将在 $time 后过期。';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return '欢迎来到 $channelName';
   }
 
   @override
@@ -15189,6 +15205,23 @@ class FluxerLocalizationsZh extends FluxerLocalizations {
   }
 
   @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
+
+  @override
   String get forumPostReact => '添加默认反应';
 
   @override
@@ -16587,9 +16620,6 @@ class FluxerLocalizationsZhHant extends FluxerLocalizationsZh {
 
   @override
   String get nagbarEnableNotifications => '開啟通知';
-
-  @override
-  String get welcomeBack => '歡迎回來';
 
   @override
   String get email => '電子郵件';
@@ -25208,11 +25238,6 @@ class FluxerLocalizationsZhHant extends FluxerLocalizationsZh {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return '由 $name 建立。將於 $time 過期。';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return '歡迎來到 $channelName';
   }
 
   @override

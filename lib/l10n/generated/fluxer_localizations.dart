@@ -560,12 +560,6 @@ abstract class FluxerLocalizations {
   /// **'Enable notifications'**
   String get nagbarEnableNotifications;
 
-  /// Greeting on the login screen; usable wherever returning users are welcomed.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome back'**
-  String get welcomeBack;
-
   /// Generic label for an email field.
   ///
   /// In en, this message translates to:
@@ -667,6 +661,24 @@ abstract class FluxerLocalizations {
   /// In en, this message translates to:
   /// **'Register'**
   String get register;
+
+  /// Heading on the sign-in screen. {productName} is the name of the instance the user is signing in to, for example Fluxer.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to {productName}'**
+  String loginHeading(String productName);
+
+  /// Lead text before the create account link on the sign-in screen. The trailing space keeps spacing before the link.
+  ///
+  /// In en, this message translates to:
+  /// **'New to {productName}? '**
+  String loginNewAccountPrompt(String productName);
+
+  /// Link on the sign-in screen that opens the registration screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account'**
+  String get loginCreateAccountLink;
 
   /// Divider between alternative actions (e.g. email login vs SSO).
   ///
@@ -2681,7 +2693,7 @@ abstract class FluxerLocalizations {
   /// Placeholder for the add friend username input.
   ///
   /// In en, this message translates to:
-  /// **'Username#0000'**
+  /// **'username#1234'**
   String get addFriendUsernameHint;
 
   /// Accessibility label for the add friend username input.
@@ -2705,7 +2717,7 @@ abstract class FluxerLocalizations {
   /// Error when the username format is invalid.
   ///
   /// In en, this message translates to:
-  /// **'Enter a valid username (Username#0000).'**
+  /// **'Enter a username, then # and the 4-digit tag.'**
   String get addFriendInvalidUsername;
 
   /// Success message after sending a friend request by tag.
@@ -8162,6 +8174,12 @@ abstract class FluxerLocalizations {
   /// **'{spacing}px'**
   String lookAndFeelMessageGroupSpacingValue(int spacing);
 
+  /// Value that screen readers announce for the chat font size and message group spacing sliders. Shown on screen as, for example, 16px.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} pixels'**
+  String lookAndFeelPixelsAccessibleValue(int value);
+
   /// Accessibility label for message display mode radio group.
   ///
   /// In en, this message translates to:
@@ -8300,13 +8318,13 @@ abstract class FluxerLocalizations {
   /// **'When enabled, shortcut badges are hidden in tooltip popups.'**
   String get lookAndFeelHideKeyboardHintsDescription;
 
-  /// Subsection title under Interface — guild sidebar config.
+  /// Subsection title under Interface for the community list settings.
   ///
   /// In en, this message translates to:
-  /// **'Guild sidebar'**
+  /// **'Community list'**
   String get lookAndFeelGuildSidebarTitle;
 
-  /// Subsection description for guild sidebar config.
+  /// Subsection description for the community list settings.
   ///
   /// In en, this message translates to:
   /// **'Configure how direct messages and communities behave in the sidebar.'**
@@ -8366,7 +8384,7 @@ abstract class FluxerLocalizations {
   /// Toggle description for the DM folder collapse behavior.
   ///
   /// In en, this message translates to:
-  /// **'When enabled, unread DMs in the guild sidebar are collapsed into a folder on the {productName} button. Click the {productName} button while on the DMs page to expand or collapse the folder.'**
+  /// **'When enabled, unread DMs in the community list are collapsed into a folder on the {productName} button. Click the {productName} button while on the DMs page to expand or collapse the folder.'**
   String lookAndFeelCollapseDMsDescription(String productName);
 
   /// Toggle label. When on, tapping a community in the community list opens the last channel the user viewed there instead of its channel list.
@@ -12697,6 +12715,18 @@ abstract class FluxerLocalizations {
   /// **'Couldn\'t load messages.'**
   String get chatMessagesLoadError;
 
+  /// Title shown in an empty one-to-one direct message before anyone has sent a message.
+  ///
+  /// In en, this message translates to:
+  /// **'No messages yet'**
+  String get dmEmptyStateTitle;
+
+  /// Body shown under the title in an empty one-to-one direct message.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a message to start the conversation.'**
+  String get dmEmptyStateBody;
+
   /// Shown in a bottom bar when message history fails to load while scrolling in a channel.
   ///
   /// In en, this message translates to:
@@ -15735,16 +15765,10 @@ abstract class FluxerLocalizations {
   /// **'Created by {name}. Expires in {time}.'**
   String groupDmInviteCreatedByExpires(String name, String time);
 
-  /// Heading on the start-of-channel welcome shown at the top of a guild channel's loaded message history and as its empty state. {channelName} already includes the leading # (e.g. #general).
+  /// Text under the channel title at the top of a community channel, shown above its oldest message and when the channel is empty. {channelName} already includes the leading # (e.g. #general).
   ///
   /// In en, this message translates to:
-  /// **'Welcome to {channelName}'**
-  String channelWelcomeHeading(String channelName);
-
-  /// Body text on the start-of-channel welcome. {channelName} already includes the leading # (e.g. #general).
-  ///
-  /// In en, this message translates to:
-  /// **'This is the start of {channelName}.'**
+  /// **'There are no older messages in {channelName}.'**
   String channelWelcomeDescription(String channelName);
 
   /// Placeholder in the message composer when viewing personal notes.
@@ -16962,7 +16986,7 @@ abstract class FluxerLocalizations {
   /// No description provided for @storePlutoniumHighlightProfile.
   ///
   /// In en, this message translates to:
-  /// **'Animated profile, badge, and custom 4-digit number'**
+  /// **'Animated profile and badge, and a custom tag number'**
   String get storePlutoniumHighlightProfile;
 
   /// No description provided for @storePlutoniumHighlightFiles.
@@ -20188,22 +20212,22 @@ abstract class FluxerLocalizations {
   /// **'My friends'**
   String get friendsPageTitle;
 
-  /// Heading of the active now panel on the friends page.
+  /// Heading of the panel on the friends page that lists friends who are in a voice channel.
   ///
   /// In en, this message translates to:
-  /// **'Active now'**
+  /// **'In voice now'**
   String get friendsActiveNowTitle;
 
   /// Title shown in the active now panel when no friends are in voice channels.
   ///
   /// In en, this message translates to:
-  /// **'It\'s quiet for now...'**
+  /// **'Nobody is in a voice channel'**
   String get friendsActiveNowEmptyTitle;
 
   /// Body shown in the active now panel when no friends are in voice channels.
   ///
   /// In en, this message translates to:
-  /// **'When friends are active in voice channels, their activity will appear here.'**
+  /// **'Friends who join a voice channel will show up here.'**
   String get friendsActiveNowEmptyBody;
 
   /// Friends page tab that lists online friends.
@@ -20284,10 +20308,10 @@ abstract class FluxerLocalizations {
   /// **'No friends yet'**
   String get friendsEmptyAllTitle;
 
-  /// Body shown on the all tab of the friends page when the user has no friends. A light film reference, translate the joke freely.
+  /// Body shown on the all tab of the friends page when the user has no friends.
   ///
   /// In en, this message translates to:
-  /// **'Where we\'re going, we need more friends.'**
+  /// **'Add a friend with their username and tag.'**
   String get friendsEmptyAllBody;
 
   /// Title shown on the pending tab of the friends page when there are no requests.
@@ -26612,6 +26636,24 @@ abstract class FluxerLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one {{count} new message} other {{count} new messages}}'**
   String forumPostNewMessages(int count);
+
+  /// Short label in the footer of a forum post card, meaning a number of new messages. Keep it as short as possible, it shares one line with the message count and the time.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 new} other{{count} new}}'**
+  String forumPostNewMessagesShort(int count);
+
+  /// Short label in the footer of a forum post card when it has new messages but the number is unknown. Keep it as short as possible.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get forumPostHasNewMessagesShort;
+
+  /// Screen reader label in the footer of a forum post card when it has new messages but the number is unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'New messages'**
+  String get forumPostHasNewMessages;
 
   /// Forum and media channel UI.
   ///

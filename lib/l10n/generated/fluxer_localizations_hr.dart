@@ -296,9 +296,6 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Omogući obavijesti';
 
   @override
-  String get welcomeBack => 'Dobro došli natrag';
-
-  @override
   String get email => 'E-pošta';
 
   @override
@@ -363,6 +360,19 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
 
   @override
   String get register => 'Registracija';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'ILI';
@@ -5094,6 +5104,11 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'Način prikaza poruka';
 
   @override
@@ -7903,6 +7918,12 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
   String get chatMessagesLoadError => 'Nije moguće učitati poruke.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'Učitavanje poruka nije uspjelo';
 
   @override
@@ -9696,11 +9717,6 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'Stvorio/la $name. Istječe za $time.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Dobrodošli u $channelName';
   }
 
   @override
@@ -16271,6 +16287,23 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'Dodaj zadanu reakciju';

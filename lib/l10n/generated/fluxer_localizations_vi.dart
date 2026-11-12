@@ -294,9 +294,6 @@ class FluxerLocalizationsVi extends FluxerLocalizations {
   String get nagbarEnableNotifications => 'Bật thông báo';
 
   @override
-  String get welcomeBack => 'Chào mừng bạn trở lại';
-
-  @override
   String get email => 'Email';
 
   @override
@@ -363,6 +360,19 @@ class FluxerLocalizationsVi extends FluxerLocalizations {
 
   @override
   String get register => 'Đăng ký';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'HOẶC';
@@ -5056,6 +5066,11 @@ class FluxerLocalizationsVi extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'Chế độ hiển thị tin nhắn';
 
   @override
@@ -7863,6 +7878,12 @@ class FluxerLocalizationsVi extends FluxerLocalizations {
   String get chatMessagesLoadError => 'Không thể tải tin nhắn.';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'Không tải được tin nhắn';
 
   @override
@@ -9652,11 +9673,6 @@ class FluxerLocalizationsVi extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return 'Được tạo bởi $name. Hết hạn sau $time.';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return 'Chào mừng bạn đến với $channelName';
   }
 
   @override
@@ -16197,6 +16213,23 @@ class FluxerLocalizationsVi extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'Thêm cảm xúc mặc định';

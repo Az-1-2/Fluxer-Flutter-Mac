@@ -285,9 +285,6 @@ class FluxerLocalizationsJa extends FluxerLocalizations {
   String get nagbarEnableNotifications => '通知をオンにする';
 
   @override
-  String get welcomeBack => 'おかえりなさい';
-
-  @override
   String get email => 'メールアドレス';
 
   @override
@@ -351,6 +348,19 @@ class FluxerLocalizationsJa extends FluxerLocalizations {
 
   @override
   String get register => '登録';
+
+  @override
+  String loginHeading(String productName) {
+    return 'Sign in to $productName';
+  }
+
+  @override
+  String loginNewAccountPrompt(String productName) {
+    return 'New to $productName? ';
+  }
+
+  @override
+  String get loginCreateAccountLink => 'Create an account';
 
   @override
   String get orDivider => 'または';
@@ -4885,6 +4895,11 @@ class FluxerLocalizationsJa extends FluxerLocalizations {
   }
 
   @override
+  String lookAndFeelPixelsAccessibleValue(int value) {
+    return '$value pixels';
+  }
+
+  @override
   String get lookAndFeelMessageDisplayModeLabel => 'メッセージ表示モード';
 
   @override
@@ -7570,6 +7585,12 @@ class FluxerLocalizationsJa extends FluxerLocalizations {
   String get chatMessagesLoadError => 'メッセージを読み込めませんでした。';
 
   @override
+  String get dmEmptyStateTitle => 'No messages yet';
+
+  @override
+  String get dmEmptyStateBody => 'Send a message to start the conversation.';
+
+  @override
   String get chatMessagesFailedToLoad => 'メッセージの読み込みに失敗しました';
 
   @override
@@ -9273,11 +9294,6 @@ class FluxerLocalizationsJa extends FluxerLocalizations {
   @override
   String groupDmInviteCreatedByExpires(String name, String time) {
     return '$nameさんが作成しました。$time後に期限切れです。';
-  }
-
-  @override
-  String channelWelcomeHeading(String channelName) {
-    return '$channelNameへようこそ';
   }
 
   @override
@@ -15521,6 +15537,23 @@ class FluxerLocalizationsJa extends FluxerLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String forumPostNewMessagesShort(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new',
+      one: '1 new',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get forumPostHasNewMessagesShort => 'New';
+
+  @override
+  String get forumPostHasNewMessages => 'New messages';
 
   @override
   String get forumPostReact => 'デフォルトのリアクションを追加';
