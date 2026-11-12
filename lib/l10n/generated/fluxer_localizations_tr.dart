@@ -1364,6 +1364,9 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
   String get incomingVoiceCallTitle => 'Gelen sesli arama';
 
   @override
+  String get incomingVoiceCallSubtitle => 'Voice call';
+
+  @override
   String get incomingVoiceCallAccept => 'Kabul Et';
 
   @override
@@ -7437,6 +7440,16 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
   String get notificationUnknownSender => 'Bilinmiyor';
 
   @override
+  String notificationAttachmentPreview(String filename) {
+    return 'Attachment: $filename';
+  }
+
+  @override
+  String notificationStickerPreview(String name) {
+    return 'Sticker: $name';
+  }
+
+  @override
   String get chatMessageForward => 'İlet';
 
   @override
@@ -11790,6 +11803,33 @@ class FluxerLocalizationsTr extends FluxerLocalizations {
   @override
   String get quickSwitcherEmptyHint =>
       'Farklı bir ad deneyin veya sonuçları filtrelemek için @ / # / ! / * ön eklerini kullanın.';
+
+  @override
+  String get quickSwitcherTitle => 'Quick switcher';
+
+  @override
+  String quickSwitcherFooterPrefixHint(
+    String peoplePrefix,
+    String textChannelPrefix,
+    String voiceChannelPrefix,
+    String communityPrefix,
+  ) {
+    return 'Start searches with $peoplePrefix $textChannelPrefix $voiceChannelPrefix $communityPrefix to narrow down results.';
+  }
+
+  @override
+  String get discoverySidebarApps => 'Apps';
+
+  @override
+  String get discoverySidebarThemes => 'Themes';
+
+  @override
+  String get discoverySidebarComingSoon => 'Coming soon';
+
+  @override
+  String discoverySidebarComingSoonItem(String itemLabel) {
+    return '$itemLabel, coming soon';
+  }
 
   @override
   String get quickSwitcherSectionPeople => 'Kişiler';

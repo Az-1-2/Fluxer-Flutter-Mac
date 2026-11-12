@@ -1368,6 +1368,9 @@ class FluxerLocalizationsArt extends FluxerLocalizations {
   String get incomingVoiceCallTitle => 'Incoming voice call';
 
   @override
+  String get incomingVoiceCallSubtitle => 'Voice call';
+
+  @override
   String get incomingVoiceCallAccept => 'Accept';
 
   @override
@@ -3811,21 +3814,21 @@ class FluxerLocalizationsArt extends FluxerLocalizations {
 
   @override
   String typingIndicatorOne(String name) {
-    return '$name is typing...';
+    return '$name li sitelen...';
   }
 
   @override
   String typingIndicatorTwo(String name1, String name2) {
-    return '$name1 and $name2 are typing...';
+    return '$name1 en $name2 li sitelen...';
   }
 
   @override
   String typingIndicatorThree(String name1, String name2, String name3) {
-    return '$name1, $name2 and $name3 are typing...';
+    return '$name1 en $name2 en $name3 li sietelen...';
   }
 
   @override
-  String get typingIndicatorMultiple => 'Several people are typing...';
+  String get typingIndicatorMultiple => 'jan mute li sitelen...';
 
   @override
   String get typingIndicatorHandful =>
@@ -7408,6 +7411,16 @@ class FluxerLocalizationsArt extends FluxerLocalizations {
 
   @override
   String get notificationUnknownSender => 'Unknown';
+
+  @override
+  String notificationAttachmentPreview(String filename) {
+    return 'Attachment: $filename';
+  }
+
+  @override
+  String notificationStickerPreview(String name) {
+    return 'Sticker: $name';
+  }
 
   @override
   String get chatMessageForward => 'Forward';
@@ -11723,6 +11736,33 @@ class FluxerLocalizationsArt extends FluxerLocalizations {
   @override
   String get quickSwitcherEmptyHint =>
       'Try a different name or use @ / # / ! / * prefixes to filter results.';
+
+  @override
+  String get quickSwitcherTitle => 'Quick switcher';
+
+  @override
+  String quickSwitcherFooterPrefixHint(
+    String peoplePrefix,
+    String textChannelPrefix,
+    String voiceChannelPrefix,
+    String communityPrefix,
+  ) {
+    return 'Start searches with $peoplePrefix $textChannelPrefix $voiceChannelPrefix $communityPrefix to narrow down results.';
+  }
+
+  @override
+  String get discoverySidebarApps => 'Apps';
+
+  @override
+  String get discoverySidebarThemes => 'Themes';
+
+  @override
+  String get discoverySidebarComingSoon => 'Coming soon';
+
+  @override
+  String discoverySidebarComingSoonItem(String itemLabel) {
+    return '$itemLabel, coming soon';
+  }
 
   @override
   String get quickSwitcherSectionPeople => 'People';
