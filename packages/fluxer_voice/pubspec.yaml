@@ -13,6 +13,8 @@ flutter:
       android:
         package: com.fluxer.voice
         pluginClass: FluxerVoicePlugin
+      ios:
+        pluginClass: FluxerVoicePlugin
 
 dependencies:
   flutter:
@@ -22,3 +24,4 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  pigeon: ^27.3.0

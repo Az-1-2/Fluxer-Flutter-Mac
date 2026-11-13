@@ -48,7 +48,7 @@ class VoiceAudioSessionTest {
     private val keepalive = FakeKeepalive()
     private var now = 0L
     private var calls: List<CallkitConnection> = emptyList()
-    private val events = mutableListOf<Map<String, Any?>>()
+    private val events = mutableListOf<NativeVoiceSessionState>()
 
     @Before
     fun setUp() {
@@ -228,7 +228,7 @@ class VoiceAudioSessionTest {
         drift(speaker)
 
         assertEquals(1, audioManager.communicationDevice?.id)
-        assertEquals("speaker", events.last()["route"])
+        assertEquals(NativeVoiceRoute.SPEAKER, events.last().route)
     }
 
     @Test
@@ -320,6 +320,50 @@ class VoiceAudioSessionTest {
     }
 
     @Test
+    fun routeIsReclaimedWhenTheTelecomCallVanishesWithoutAModeChange() {
+        activate(VoiceOutputRoute.Speaker)
+        calls = listOf(CallkitConnection(context, "live", Bundle()))
+        session.setPreferredRoute(VoiceOutputRoute.Speaker, null, true)
+        assertTrue(session.diagnostics(), session.diagnostics().contains("telecomOwnsRoute=true"))
+        calls = emptyList()
+        audioManager.setCommunicationDevice(earpiece)
+
+        idle(1_500)
+
+        assertTrue(session.diagnostics(), session.diagnostics().contains("telecomOwnsRoute=false"))
+        assertEquals(AudioManager.MODE_IN_COMMUNICATION, audioManager.mode)
+        assertEquals(1, audioManager.communicationDevice?.id)
+    }
+
+    @Test
+    fun communicationDeviceChangeReclaimsTheRouteOnceTelecomIsGone() {
+        activate(VoiceOutputRoute.Speaker)
+        calls = listOf(CallkitConnection(context, "live", Bundle()))
+        session.setPreferredRoute(VoiceOutputRoute.Speaker, null, true)
+        calls = emptyList()
+        audioManager.setCommunicationDevice(earpiece)
+
+        session.onCommunicationDeviceChanged(earpiece)
+
+        assertTrue(session.diagnostics(), session.diagnostics().contains("telecomEnded"))
+        assertEquals(1, audioManager.communicationDevice?.id)
+    }
+
+    @Test
+    fun telecomWatchStopsAfterRelease() {
+        activate(VoiceOutputRoute.Speaker)
+        calls = listOf(CallkitConnection(context, "live", Bundle()))
+        session.setPreferredRoute(VoiceOutputRoute.Speaker, null, true)
+        session.release("call")
+        calls = emptyList()
+
+        idle(2_000)
+
+        assertFalse(session.diagnostics(), session.diagnostics().contains("telecomEnded"))
+        assertNull(audioManager.communicationDevice)
+    }
+
+    @Test
     fun repeatingTheSamePreferredRouteDoesNotResetTheReassertCap() {
         activate(VoiceOutputRoute.Earpiece)
         repeat(10) {
@@ -339,8 +383,8 @@ class VoiceAudioSessionTest {
 
         session.onMicrophoneSilenced(true)
 
-        assertEquals("micSilenced", events.last()["type"])
-        assertEquals(true, events.last()["micSilenced"])
+        assertEquals("micSilenced", events.last().type)
+        assertEquals(true, events.last().micSilenced)
     }
 
     @Test
@@ -351,9 +395,9 @@ class VoiceAudioSessionTest {
         session.hasListeners = true
         session.setPreferredRoute(VoiceOutputRoute.Earpiece, null, true)
 
-        assertEquals("routeChanged", events.last()["type"])
-        assertEquals("earpiece", events.last()["route"])
-        assertEquals(listOf("speaker", "earpiece"), events.last()["routes"])
+        assertEquals("routeChanged", events.last().type)
+        assertEquals(NativeVoiceRoute.EARPIECE, events.last().route)
+        assertEquals(listOf(NativeVoiceRoute.SPEAKER, NativeVoiceRoute.EARPIECE), events.last().routes)
     }
 
     @Test
