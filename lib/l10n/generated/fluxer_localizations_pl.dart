@@ -1176,9 +1176,6 @@ class FluxerLocalizationsPl extends FluxerLocalizations {
   String get embedGiftClaim => 'Odbierz prezent';
 
   @override
-  String get embedGiftClaimed => 'Prezent odebrany';
-
-  @override
   String get embedGiftClaimAccount =>
       'Dokończ rejestrację konta, aby odebrać prezent';
 
@@ -1188,9 +1185,6 @@ class FluxerLocalizationsPl extends FluxerLocalizations {
   @override
   String get embedGiftUnknownSubtitle =>
       'Ten kod podarunkowy jest nieprawidłowy lub został już wykorzystany.';
-
-  @override
-  String get embedGiftUnavailable => 'Prezent niedostępny';
 
   @override
   String giftAcceptClaimSubscription(String productName) {
@@ -6341,6 +6335,27 @@ class FluxerLocalizationsPl extends FluxerLocalizations {
 
   @override
   String get voiceControlVideo => 'Wideo';
+
+  @override
+  String get voiceControlMoreOptions => 'More options';
+
+  @override
+  String get voiceControlInputSettings => 'Input settings';
+
+  @override
+  String get voiceControlOutputSettings => 'Output settings';
+
+  @override
+  String get voiceControlCameraSettings => 'Camera settings';
+
+  @override
+  String get voiceControlScreenShareSettings => 'Screen share settings';
+
+  @override
+  String get voiceControlStartScreenShare => 'Share your screen';
+
+  @override
+  String get voiceControlStopScreenShare => 'Stop sharing';
 
   @override
   String get voiceControlFlipCamera => 'Obróć kamerę';
@@ -12841,6 +12856,10 @@ class FluxerLocalizationsPl extends FluxerLocalizations {
       'Zaproszenia są obecnie wstrzymane w tej społeczności';
 
   @override
+  String get guildNavbarInvitesPausedRaid =>
+      'Zaproszenia wstrzymane z powodu podejrzenia nalotu';
+
+  @override
   String get guildNavbarDurationNever => 'nigdy';
 
   @override
@@ -17593,6 +17612,11 @@ class FluxerLocalizationsPl extends FluxerLocalizations {
   String get oxygenUpdating => 'Updating…';
 
   @override
+  String oxygenUpdatingProgress(int percent) {
+    return 'Updating… $percent%';
+  }
+
+  @override
   String desktopTrayShow(String productName) {
     return 'Show $productName';
   }
@@ -17600,6 +17624,15 @@ class FluxerLocalizationsPl extends FluxerLocalizations {
   @override
   String desktopTrayHide(String productName) {
     return 'Hide $productName';
+  }
+
+  @override
+  String desktopBadgeUnreadMessages(int count) {
+    final intl.NumberFormat countNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+
+    return 'Unread messages: $countString';
   }
 
   @override

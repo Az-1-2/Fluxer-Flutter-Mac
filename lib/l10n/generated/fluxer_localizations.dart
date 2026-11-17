@@ -1958,12 +1958,6 @@ abstract class FluxerLocalizations {
   /// **'Claim gift'**
   String get embedGiftClaim;
 
-  /// Disabled button label after a gift is claimed.
-  ///
-  /// In en, this message translates to:
-  /// **'Gift claimed'**
-  String get embedGiftClaimed;
-
   /// Button on a gift embed for unclaimed accounts.
   ///
   /// In en, this message translates to:
@@ -1981,12 +1975,6 @@ abstract class FluxerLocalizations {
   /// In en, this message translates to:
   /// **'This gift code is invalid or already claimed.'**
   String get embedGiftUnknownSubtitle;
-
-  /// Disabled button when a gift cannot be claimed.
-  ///
-  /// In en, this message translates to:
-  /// **'Gift unavailable'**
-  String get embedGiftUnavailable;
 
   /// Help text on the gift accept modal for a claimable gift.
   ///
@@ -10076,6 +10064,48 @@ abstract class FluxerLocalizations {
   /// In en, this message translates to:
   /// **'Video'**
   String get voiceControlVideo;
+
+  /// Tooltip: opens the overflow menu of call options in the desktop voice call control bar.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get voiceControlMoreOptions;
+
+  /// Tooltip: small caret on the mute button that opens microphone device options in the desktop voice call control bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Input settings'**
+  String get voiceControlInputSettings;
+
+  /// Tooltip: small caret on the deafen button that opens speaker device options in the desktop voice call control bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Output settings'**
+  String get voiceControlOutputSettings;
+
+  /// Tooltip: small caret on the camera button that opens camera options in the desktop voice call control bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera settings'**
+  String get voiceControlCameraSettings;
+
+  /// Tooltip: small caret on the screen share button that opens screen share options in the desktop voice call control bar.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen share settings'**
+  String get voiceControlScreenShareSettings;
+
+  /// Menu item in the desktop screen share options menu that starts sharing the screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your screen'**
+  String get voiceControlStartScreenShare;
+
+  /// Menu item in the desktop screen share options menu that stops the active screen share.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop sharing'**
+  String get voiceControlStopScreenShare;
 
   /// Tooltip: switch between front and back camera while video is on.
   ///
@@ -20902,6 +20932,12 @@ abstract class FluxerLocalizations {
   /// **'Invites are currently paused in this community'**
   String get guildNavbarInvitesPaused;
 
+  /// Guild tooltip when invites are paused after a suspected raid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invites are paused after a suspected raid'**
+  String get guildNavbarInvitesPausedRaid;
+
   /// Invite expiry duration label for no expiry.
   ///
   /// In en, this message translates to:
@@ -28557,6 +28593,12 @@ abstract class FluxerLocalizations {
   /// **'Updating…'**
   String get oxygenUpdating;
 
+  /// Tooltip and accessible label on the channel header updater icon in the desktop app while an update is downloading and its progress is known. percent is a whole number from 0 to 100. The app restarts by itself when it is done.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating… {percent}%'**
+  String oxygenUpdatingProgress(int percent);
+
   /// Desktop tray/menu bar menu item that shows the hidden app window.
   ///
   /// In en, this message translates to:
@@ -28568,6 +28610,12 @@ abstract class FluxerLocalizations {
   /// In en, this message translates to:
   /// **'Hide {productName}'**
   String desktopTrayHide(String productName);
+
+  /// Accessible description of the taskbar badge showing the number of unread mentions and pending friend requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread messages: {count}'**
+  String desktopBadgeUnreadMessages(int count);
 
   /// Desktop tray/menu bar menu item that opens user settings.
   ///

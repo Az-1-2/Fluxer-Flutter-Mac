@@ -2,7 +2,6 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -105,15 +104,27 @@ val measureApiUrl = readMeasureApiUrl(
     localProperties = localProperties,
 )
 
-val bundledRootCertificatesRes = layout.buildDirectory.dir("generated/bundledRootCertificates/res")
-val copyBundledRootCertificates = tasks.register<Copy>("copyBundledRootCertificates") {
-    from(file("../../assets/certificates/root_certificates.pem"))
-    into(bundledRootCertificatesRes.map { it.dir("raw") })
+abstract class CopyBundledRootCertificatesTask : DefaultTask() {
+    @get:InputFile
+    @get:PathSensitive(PathSensitivity.NONE)
+    abstract val certificates: RegularFileProperty
+
+    @get:OutputDirectory
+    abstract val outputDirectory: DirectoryProperty
+
+    @TaskAction
+    fun copy() {
+        val rawDirectory = outputDirectory.get().dir("raw").asFile
+        rawDirectory.mkdirs()
+        certificates.get().asFile.copyTo(rawDirectory.resolve("root_certificates.pem"), overwrite = true)
+    }
 }
+
+val bundledRootCertificates = file("../../assets/certificates/root_certificates.pem")
 
 android {
     namespace = "com.fluxer"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
     flavorDimensions += listOf("environment", "push")
 
@@ -121,10 +132,6 @@ android {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     signingConfigs {
@@ -219,12 +226,6 @@ android {
         }
     }
 
-    sourceSets {
-        getByName("main") {
-            res.srcDir(bundledRootCertificatesRes)
-        }
-    }
-
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
@@ -234,8 +235,21 @@ android {
     }
 }
 
-tasks.named("preBuild") {
-    dependsOn(copyBundledRootCertificates)
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
+
+androidComponents {
+    onVariants { variant ->
+        val copyTask = tasks.register<CopyBundledRootCertificatesTask>(
+            "copy${variant.name.replaceFirstChar { it.uppercase() }}BundledRootCertificates",
+        ) {
+            certificates.set(bundledRootCertificates)
+        }
+        variant.sources.res?.addGeneratedSourceDirectory(copyTask, CopyBundledRootCertificatesTask::outputDirectory)
+    }
 }
 
 flutter {
@@ -246,9 +260,9 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.14.1")
-    add("fcmImplementation", platform("com.google.firebase:firebase-bom:33.9.0"))
+    add("fcmImplementation", platform("com.google.firebase:firebase-bom:35.2.0"))
     add("fcmImplementation", "com.google.firebase:firebase-messaging")
-    add("fcmImplementation", "com.google.android.gms:play-services-cloud-messaging")
+    add("fcmImplementation", "com.google.android.gms:play-services-cloud-messaging:17.4.0")
     add("fcmImplementation", "com.google.android.play:age-signals:0.0.4")
     add("fcmImplementation", "com.google.android.play:integrity:1.5.0")
 }

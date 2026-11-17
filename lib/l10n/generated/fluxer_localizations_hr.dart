@@ -1166,9 +1166,6 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
   String get embedGiftClaim => 'Preuzmi poklon';
 
   @override
-  String get embedGiftClaimed => 'Poklon preuzet';
-
-  @override
   String get embedGiftClaimAccount => 'Preuzmite račun za iskorištavanje';
 
   @override
@@ -1177,9 +1174,6 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
   @override
   String get embedGiftUnknownSubtitle =>
       'Ovaj kôd poklona nije važeći ili je već iskorišten.';
-
-  @override
-  String get embedGiftUnavailable => 'Poklon nije dostupan';
 
   @override
   String giftAcceptClaimSubscription(String productName) {
@@ -6298,6 +6292,27 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
 
   @override
   String get voiceControlVideo => 'Videozapis';
+
+  @override
+  String get voiceControlMoreOptions => 'More options';
+
+  @override
+  String get voiceControlInputSettings => 'Input settings';
+
+  @override
+  String get voiceControlOutputSettings => 'Output settings';
+
+  @override
+  String get voiceControlCameraSettings => 'Camera settings';
+
+  @override
+  String get voiceControlScreenShareSettings => 'Screen share settings';
+
+  @override
+  String get voiceControlStartScreenShare => 'Share your screen';
+
+  @override
+  String get voiceControlStopScreenShare => 'Stop sharing';
 
   @override
   String get voiceControlFlipCamera => 'Promijeni kameru';
@@ -12758,6 +12773,10 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
       'Pozivnice su trenutačno pauzirane u ovoj zajednici';
 
   @override
+  String get guildNavbarInvitesPausedRaid =>
+      'Pozivnice su pauzirane nakon sumnje na napad';
+
+  @override
   String get guildNavbarDurationNever => 'nikad';
 
   @override
@@ -17481,6 +17500,11 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
   String get oxygenUpdating => 'Updating…';
 
   @override
+  String oxygenUpdatingProgress(int percent) {
+    return 'Updating… $percent%';
+  }
+
+  @override
   String desktopTrayShow(String productName) {
     return 'Show $productName';
   }
@@ -17488,6 +17512,15 @@ class FluxerLocalizationsHr extends FluxerLocalizations {
   @override
   String desktopTrayHide(String productName) {
     return 'Hide $productName';
+  }
+
+  @override
+  String desktopBadgeUnreadMessages(int count) {
+    final intl.NumberFormat countNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+
+    return 'Unread messages: $countString';
   }
 
   @override
